@@ -24,6 +24,12 @@ export const PROJECTS: Metadata = {
     "A collection of my projects with links to repositories and live demos.",
 };
 
+// Cal.com booking link - replace with your own Cal.com username
+export const CAL_BOOKING = {
+  USERNAME: "danielcspaiva",
+  MEETING_SLUG: "30min",
+};
+
 export const SOCIALS: Socials = [
   {
     NAME: "X (formerly Twitter)",

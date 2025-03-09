@@ -33,7 +33,7 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       astro:
-        specifier: link:@vercel/analytics/astro
+        specifier: ^5.4.2
         version: 5.4.2(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.35.0)(typescript@5.8.2)(yaml@2.7.0)
       astro-pagefind:
         specifier: ^1.8.1

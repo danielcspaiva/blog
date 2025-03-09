@@ -1,0 +1,156 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import BackToPrevious from "@components/BackToPrevious.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import PostNavigation from "@components/PostNavigation.astro";
+import TableOfContents from "@components/TableOfContents.astro";
+import Giscus from "@components/Giscus.astro";
+import Link from "@components/Link.astro";
+import { readingTime } from "@lib/utils";
+import { languages, ui } from "../../../i18n/ui";
+import { useTranslations, getLocalizedRoute } from "../../../i18n/utils";
+import { getSlugFromId } from "../../../i18n/blog";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  const locales = Object.keys(languages);
+  
+  return posts.flatMap(post => {
+    // Get the slug from the id (filename)
+    const slug = getSlugFromId(post.id);
+    
+    return locales.map(locale => ({
+      params: {
+        locale,
+        slug
+      },
+      props: {
+        post,
+        locale
+      }
+    }));
+  });
+}
+
+// Access the post directly
+const { post, locale } = Astro.props;
+const lang = locale as keyof typeof ui;
+const t = useTranslations(lang);
+
+// Get all posts for navigation
+const posts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Find adjacent posts for navigation
+function getNextPost() {
+  let postIndex;
+  for (const p of posts) {
+    if (p.id === post.id) {
+      postIndex = posts.indexOf(p);
+      return posts[postIndex + 1];
+    }
+  }
+}
+
+function getPrevPost() {
+  let postIndex;
+  for (const p of posts) {
+    if (p.id === post.id) {
+      postIndex = posts.indexOf(p);
+      return posts[postIndex - 1];
+    }
+  }
+}
+
+const nextPost = getNextPost();
+const prevPost = getPrevPost();
+
+// Prepare localized URLs for next and prev posts and blog index
+const prevPostSlug = prevPost ? getSlugFromId(prevPost.id) : null;
+const nextPostSlug = nextPost ? getSlugFromId(nextPost.id) : null;
+const localizedPrevUrl = prevPostSlug ? `/${locale}/blog/${prevPostSlug}` : null;
+const localizedNextUrl = nextPostSlug ? `/${locale}/blog/${nextPostSlug}` : null;
+const localizedBlogUrl = `/${locale}/blog`;
+
+// Use Astro's render function to get the Content component
+const { Content, headings } = await render(post);
+
+// Content based on locale
+const content = {
+  en: {
+    publishedOn: "Published on",
+    backToBlog: "Back to blog",
+    minuteRead: "min read"
+  },
+  'pt-br': {
+    publishedOn: "Publicado em",
+    backToBlog: "Voltar para o blog",
+    minuteRead: "min de leitura"
+  }
+};
+
+const pageContent = content[lang];
+
+// Function to get localized tag URLs
+function getLocalizedTagUrl(tag: string) {
+  return `/${locale}/tags/${tag}`;
+}
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <Container>
+    <div class="animate">
+      <BackToPrevious href={localizedBlogUrl}>
+        {pageContent.backToBlog}
+      </BackToPrevious>
+    </div>
+    <div class="my-10 space-y-1">
+      <div class="animate flex items-center gap-1.5">
+        <div class="font-base text-sm">
+          <FormattedDate date={post.data.date} />
+        </div>
+        &bull;
+        {post.body && (
+          <div class="font-base text-sm">
+            {readingTime(post.body)} {pageContent.minuteRead}
+          </div>
+        )}        
+      </div>
+      <h1 class="animate text-3xl font-semibold text-black dark:text-white">
+        {post.data.title}
+      </h1>
+      {
+        post.data.tags && post.data.tags?.length > 0 ? (
+          <div class="animate flex gap-2 pt-1">
+            {post.data.tags.map((tag) => (
+              <a 
+                href={getLocalizedTagUrl(tag)}
+                class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        ) : null
+      }
+    </div>
+    {headings.length > 0 && <TableOfContents headings={headings} />}
+    <article class="animate prose-sm prose max-w-none dark:prose-invert sm:prose-base">
+      <Content />
+      <div class="mt-24">
+        <PostNavigation 
+          prevPost={prevPost} 
+          nextPost={nextPost} 
+          prevUrl={localizedPrevUrl}
+          nextUrl={localizedNextUrl}
+        />
+      </div>
+      <div class="mt-24">
+        <Giscus />
+      </div>
+    </article>
+  </Container>
+</Layout> 

@@ -1,11 +1,13 @@
 ---
 import { cn } from "@lib/utils";
+import { getLangFromUrl, getLocalizedRoute } from "../i18n/utils";
 
 type Props = {
   href: string;
   external?: boolean;
   underline?: boolean;
   group?: boolean;
+  localize?: boolean;
 };
 
 const {
@@ -13,12 +15,29 @@ const {
   external,
   underline = true,
   group = false,
+  localize = true,
   ...rest
 } = Astro.props;
+
+// Get the current locale
+const lang = getLangFromUrl(Astro.url);
+let finalHref = href;
+
+// Only localize internal links that don't start with a locale prefix
+if (localize && !external) {
+  // Check if the href already starts with a locale prefix
+  const startsWithLocale = Object.keys(import.meta.glob('/src/i18n/ui.ts')).some(locale => 
+    href.startsWith(`/${locale.split('/').pop()?.replace('.ts', '')}/`)
+  );
+  
+  if (!startsWithLocale) {
+    finalHref = getLocalizedRoute(href, lang);
+  }
+}
 ---
 
 <a
-  href={href}
+  href={finalHref}
   target={external ? "_blank" : "_self"}
   class={cn(
     "inline-block decoration-black/30 dark:decoration-white/30 hover:decoration-black/50 focus-visible:decoration-black/50 dark:hover:decoration-white/50 dark:focus-visible:decoration-white/50 text-current hover:text-black focus-visible:text-black dark:hover:text-white dark:focus-visible:text-white transition-colors duration-300 ease-in-out",

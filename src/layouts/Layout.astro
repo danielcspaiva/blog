@@ -5,6 +5,7 @@ import Footer from "@components/Footer.astro";
 import Pagefind from "@components/PageFind.astro";
 import { SITE } from "@consts";
 import { getLangFromUrl } from "../i18n/utils";
+import Analytics from "@vercel/analytics/astro";
 
 type Props = {
   title: string;
@@ -27,5 +28,6 @@ const lang = getLangFromUrl(Astro.url);
     </main>
     <Footer />
     <Pagefind />
+    <Analytics />
   </body>
 </html>

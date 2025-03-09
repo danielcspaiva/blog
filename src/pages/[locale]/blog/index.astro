@@ -1,0 +1,88 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import { SITE } from "@consts";
+import { getCollection } from "astro:content";
+import { useTranslations } from "../../../i18n/utils";
+import { languages, ui } from "../../../i18n/ui";
+import { type BlogPost } from "../../../i18n/blog";
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(locale => ({
+    params: { locale },
+    props: { locale }
+  }));
+}
+
+const { locale } = Astro.params;
+const lang = locale as keyof typeof ui;
+const t = useTranslations(lang);
+
+const allPosts = await getCollection("blog");
+const blog = allPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()) as BlogPost[];
+
+// Group posts by year
+type YearPosts = { [year: string]: BlogPost[] };
+const postsByYear = blog.reduce((acc: YearPosts, post) => {
+  const year = post.data.date.getFullYear().toString();
+  if (!acc[year]) {
+    acc[year] = [];
+  }
+  acc[year].push(post);
+  return acc;
+}, {});
+
+const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
+
+// Content based on locale
+const content = {
+  en: {
+    title: "Blog",
+    description: "Read the latest articles and posts about Astro, web development, and more."
+  },
+  'pt-br': {
+    title: "Blog",
+    description: "Leia os artigos e posts mais recentes sobre Astro, desenvolvimento web e mais."
+  }
+};
+
+const pageContent = content[lang];
+---
+
+<Layout title={pageContent.title} description={pageContent.description}>
+  <Container>
+    <aside data-pagefind-ignore>
+      <div class="space-y-10">
+        <section>
+          <h1 class="font-semibold text-black dark:text-white">
+            {pageContent.title}
+          </h1>
+          <p>{pageContent.description}</p>
+        </section>
+        <div class="space-y-4">
+          {
+            years.map((year) => (
+              <section class="animate space-y-4">
+                <div class="font-semibold text-black dark:text-white">
+                  {year}
+                </div>
+                <div>
+                  <ul class="not-prose flex flex-col gap-4">
+                    {postsByYear[year].map((post) => (
+                      <li>
+                        <ArrowCard entry={post} locale={locale} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            ))
+          }
+        </div>
+      </div>
+    </aside>
+  </Container>
+</Layout> 

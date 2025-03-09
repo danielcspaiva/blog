@@ -2,20 +2,49 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
+import { useTranslations } from "../../../i18n/utils";
+import { languages, ui } from "../../../i18n/ui";
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(locale => ({
+    params: { locale },
+    props: { locale }
+  }));
+}
+
+const { locale } = Astro.params;
+const lang = locale as keyof typeof ui;
+const t = useTranslations(lang);
 
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))].sort();
+
+// Content based on locale
+const content = {
+  en: {
+    title: "Tags",
+    description: "List of tags used.",
+    allTags: "All Tags"
+  },
+  'pt-br': {
+    title: "Tags",
+    description: "Lista de tags utilizadas.",
+    allTags: "Todas as Tags"
+  }
+};
+
+const pageContent = content[lang];
 ---
 
-<Layout title="Tags" description="List of tags used.">
+<Layout title={pageContent.title} description={pageContent.description}>
   <Container>
     <div class="space-y-10">
-      <h1 class="animate font-semibold">All Tags</h1>
+      <h1 class="animate font-semibold">{pageContent.allTags}</h1>
       <div class="animate flex flex-wrap gap-2">
         {
           tags.map((tag) => (
             <a
-              href={`/tags/${tag}`}
+              href={`/${locale}/tags/${tag}`}
               class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
             >
               {tag}{" "}

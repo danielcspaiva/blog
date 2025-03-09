@@ -28,7 +28,6 @@ export async function getStaticPaths() {
 const { id } = Astro.params;
 const { posts, locale } = Astro.props;
 const lang = locale as keyof typeof ui;
-const t = useTranslations(lang);
 
 // Sort posts by date, most recent first
 const sortedPosts = posts.sort(

@@ -25,7 +25,6 @@ export async function getStaticPaths() {
 
 const { project, locale } = Astro.props;
 const lang = locale as keyof typeof ui;
-const t = useTranslations(lang);
 const { Content, headings } = await render(project);
 
 // Content based on locale

@@ -37,7 +37,6 @@ export async function getStaticPaths() {
 // Access the post directly
 const { post, locale } = Astro.props;
 const lang = locale as keyof typeof ui;
-const t = useTranslations(lang);
 
 // Get all posts for navigation
 const posts = (await getCollection("blog"))

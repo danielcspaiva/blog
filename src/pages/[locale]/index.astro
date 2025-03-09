@@ -18,7 +18,6 @@ export function getStaticPaths() {
 
 const { locale } = Astro.params;
 const lang = locale as keyof typeof ui;
-const t = useTranslations(lang);
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)

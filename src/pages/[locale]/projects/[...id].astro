@@ -7,26 +7,44 @@ import { readingTime } from "@lib/utils";
 import BackToPrevious from "@components/BackToPrevious.astro";
 import Link from "@components/Link.astro";
 import TableOfContents from "@components/TableOfContents.astro";
+import { useTranslations } from "../../../i18n/utils";
+import { languages, ui } from "../../../i18n/ui";
 
 export async function getStaticPaths() {
   const projects = (await getCollection("projects"))
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  return projects.map((project) => ({
-    params: { id: project.id },
-    props: project,
-  }));
+  
+  return Object.keys(languages).flatMap(locale => {
+    return projects.map((project) => ({
+      params: { locale, id: project.id },
+      props: { project, locale },
+    }));
+  });
 }
-type Props = CollectionEntry<"projects">;
 
-const project = Astro.props;
+const { project, locale } = Astro.props;
+const lang = locale as keyof typeof ui;
+const t = useTranslations(lang);
 const { Content, headings } = await render(project);
+
+// Content based on locale
+const content = {
+  en: {
+    backToProjects: "Back to projects"
+  },
+  'pt-br': {
+    backToProjects: "Voltar para projetos"
+  }
+};
+
+const pageContent = content[lang];
 ---
 
 <Layout title={project.data.title} description={project.data.description}>
   <Container>
     <div class="animate">
-      <BackToPrevious href="/projects">Back to projects</BackToPrevious>
+      <BackToPrevious href={`/${locale}/projects`}>{pageContent.backToProjects}</BackToPrevious>
     </div>
     <div class="animate my-10 space-y-1">
       <div class="flex items-center gap-1.5">

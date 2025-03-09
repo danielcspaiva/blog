@@ -1,0 +1,81 @@
+---
+import { languages } from '../i18n/ui';
+
+// Get current URL path - but we'll update this client-side too
+const initialPath = Astro.url.pathname;
+const pathSegments = initialPath.split('/').filter(Boolean);
+
+// Check if the first segment is a language code
+let currentLang = '';
+if (pathSegments.length > 0 && Object.keys(languages).includes(pathSegments[0])) {
+  currentLang = pathSegments[0];
+}
+---
+
+<div class="language-switcher">
+  <ul class="flex gap-2">
+    {Object.entries(languages).map(([lang, label]) => (
+      <li>
+        <a 
+          href="#"
+          data-lang={lang}
+          class={`text-sm ${currentLang === lang ? 'font-bold' : 'opacity-70 hover:opacity-100'}`}
+          onclick="switchLanguage(event, this.getAttribute('data-lang'))"
+        >
+          {lang}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script is:inline>
+  function switchLanguage(event, targetLang) {
+    event.preventDefault();
+    
+    // Get current path - ensures we have the latest URL
+    const currentPath = window.location.pathname;
+    console.log("Current path:", currentPath);
+    
+    // Get available languages from data attributes
+    const availableLangs = [];
+    document.querySelectorAll('.language-switcher a[data-lang]').forEach(el => {
+      availableLangs.push(el.getAttribute('data-lang'));
+    });
+    console.log("Available languages:", availableLangs);
+    
+    // Parse the current path
+    const pathParts = currentPath.split('/').filter(Boolean);
+    console.log("Path parts:", pathParts);
+    
+    // Check if first part is a language code
+    let currentLang = '';
+    if (pathParts.length > 0 && availableLangs.includes(pathParts[0])) {
+      currentLang = pathParts[0];
+    }
+    console.log("Current language:", currentLang);
+    
+    let newUrl = '';
+    
+    // Already on target language - do nothing
+    if (currentLang === targetLang) {
+      return;
+    }
+    
+    // Root language page - just switch language (/en -> /pt-br)
+    if (currentPath === `/${currentLang}`) {
+      newUrl = `/${targetLang}`;
+    } 
+    // Path with language - replace language (/en/blog -> /pt-br/blog)
+    else if (currentLang) {
+      newUrl = `/${targetLang}/${pathParts.slice(1).join('/')}`;
+    } 
+    // No language in path - add language (/blog -> /pt-br/blog)
+    else {
+      newUrl = `/${targetLang}${currentPath}`;
+    }
+    
+    console.log("New URL:", newUrl);
+    window.location.href = newUrl;
+  }
+</script> 

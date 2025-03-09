@@ -1,0 +1,172 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import { SITE, HOME, SOCIALS } from "@consts";
+import ArrowCard from "@components/ArrowCard.astro";
+import Link from "@components/Link.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { ui, languages } from "../../i18n/ui";
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(locale => ({
+    params: { locale },
+    props: { locale }
+  }));
+}
+
+const { locale } = Astro.params;
+const lang = locale as keyof typeof ui;
+const t = useTranslations(lang);
+
+const blog = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
+
+const projects: CollectionEntry<"projects">[] = (
+  await getCollection("projects")
+)
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
+
+// Content based on locale
+const content = {
+  en: {
+    title: "Introducing Astro Micro 🔬",
+    description: "Astro Micro is an accessible theme for Astro. It's a fork of Mark Horn's popular theme Astro Nano. Like Nano, Micro comes with zero frameworks installed.",
+    additionalInfo: "Micro adds features like Pagefind for search, Giscus for comments, and more.",
+    microFeatures: "Micro still comes with everything great about Nano — full type safety, a sitemap, an RSS feed, and Markdown + MDX support. Styled with TailwindCSS and preconfigured with system, light, and dark themes.",
+    getStarted: "Visit Astro Micro on GitHub to fork the repository to get started.",
+    latestPosts: "Latest posts",
+    seeAllPosts: "See all posts",
+    recentProjects: "Recent projects",
+    seeAllProjects: "See all projects",
+    letsConnect: "Let's Connect",
+    contactInfo: "If you want to get in touch with me about something or just to say hi, reach out on social media or send me an email."
+  },
+  'pt-br': {
+    title: "Apresentando Astro Micro 🔬",
+    description: "Astro Micro é um tema acessível para Astro. É um fork do tema popular de Mark Horn chamado Astro Nano. Como o Nano, o Micro vem sem frameworks instalados.",
+    additionalInfo: "O Micro adiciona recursos como Pagefind para busca, Giscus para comentários, e mais.",
+    microFeatures: "O Micro ainda vem com tudo de bom do Nano — segurança de tipos completa, um sitemap, um feed RSS e suporte a Markdown + MDX. Estilizado com TailwindCSS e pré-configurado com temas de sistema, claro e escuro.",
+    getStarted: "Visite Astro Micro no GitHub para fazer um fork do repositório e começar.",
+    latestPosts: "Últimos posts",
+    seeAllPosts: "Ver todos os posts",
+    recentProjects: "Projetos recentes",
+    seeAllProjects: "Ver todos os projetos",
+    letsConnect: "Vamos nos conectar",
+    contactInfo: "Se você quiser entrar em contato comigo sobre algo ou apenas para dizer olá, me encontre nas redes sociais ou envie um email."
+  }
+};
+
+const pageContent = content[lang];
+---
+
+<Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+  <Container>
+    <aside data-pagefind-ignore>
+      <h1 class="font-semibold text-black dark:text-white">
+        {pageContent.title}
+      </h1>
+      <div class="space-y-16">
+        <section>
+          <article class="space-y-4">
+            <span>
+              <p>
+                {pageContent.description} <Link href="https://astro.build/">Astro</Link>.
+                {pageContent.additionalInfo} <Link href="https://pagefind.app/">Pagefind</Link> 
+                <Link href="https://giscus.app">Giscus</Link> 
+                <Link href="/blog/00-micro-changelog">blog post</Link>.
+              </p>
+            </span>
+            <span class="animate">
+              <p>
+                {pageContent.microFeatures}
+              </p>
+              <p>
+                {pageContent.getStarted}
+                <Link href="https://github.com/trevortylerlee/astro-micro">
+                  GitHub
+                </Link>
+              </p>
+            </span>
+          </article>
+        </section>
+
+        <section class="animate space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-y-2">
+            <h2 class="font-semibold text-black dark:text-white">
+              {pageContent.latestPosts}
+            </h2>
+            <Link href="/blog"> {pageContent.seeAllPosts} </Link>
+          </div>
+          <ul class="not-prose flex flex-col gap-4">
+            {
+              blog.map((post) => (
+                <li>
+                  <ArrowCard entry={post} locale={locale} />
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section class="animate space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-y-2">
+            <h2 class="font-semibold text-black dark:text-white">
+              {pageContent.recentProjects}
+            </h2>
+            <Link href="/projects"> {pageContent.seeAllProjects} </Link>
+          </div>
+          <ul class="not-prose flex flex-col gap-4">
+            {
+              projects.map((project) => (
+                <li>
+                  <ArrowCard entry={project} locale={locale} />
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section class="animate space-y-4">
+          <h2 class="font-semibold text-black dark:text-white">
+            {pageContent.letsConnect}
+          </h2>
+          <article>
+            <p>
+              {pageContent.contactInfo}
+            </p>
+          </article>
+          <ul class="not-prose flex flex-wrap gap-2">
+            {
+              SOCIALS.map((SOCIAL) => (
+                <li class="flex gap-x-2 text-nowrap">
+                  <Link
+                    href={SOCIAL.HREF}
+                    external
+                    aria-label={`${SITE.TITLE} ${lang === 'en' ? 'on' : 'no'} ${SOCIAL.NAME}`}
+                  >
+                    {SOCIAL.NAME}
+                  </Link>
+                  {"/"}
+                </li>
+              ))
+            }
+            <li class="line-clamp-1">
+              <Link
+                href={`mailto:${SITE.EMAIL}`}
+                aria-label={`Email ${SITE.TITLE}`}
+              >
+                {SITE.EMAIL}
+              </Link>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </aside>
+  </Container>
+</Layout> 

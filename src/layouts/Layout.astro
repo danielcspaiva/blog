@@ -4,6 +4,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Pagefind from "@components/PageFind.astro";
 import { SITE } from "@consts";
+import { getLangFromUrl } from "../i18n/utils";
 
 type Props = {
   title: string;
@@ -11,10 +12,11 @@ type Props = {
 };
 
 const { title, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <Head title={`${title} | ${SITE.TITLE}`} description={description} />
   </head>

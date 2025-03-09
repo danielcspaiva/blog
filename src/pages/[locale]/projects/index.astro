@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import { useTranslations } from "../../../i18n/utils";
+import { languages, ui } from "../../../i18n/ui";
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(locale => ({
+    params: { locale },
+    props: { locale }
+  }));
+}
+
+const { locale } = Astro.params;
+const lang = locale as keyof typeof ui;
+const t = useTranslations(lang);
+
+const projects = (await getCollection("projects"))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Content based on locale
+const content = {
+  en: {
+    title: "Projects",
+    description: "Check out my latest projects and what I've been working on."
+  },
+  'pt-br': {
+    title: "Projetos",
+    description: "Confira meus projetos mais recentes e no que tenho trabalhado."
+  }
+};
+
+const pageContent = content[lang];
+---
+
+<Layout title={pageContent.title} description={pageContent.description}>
+  <Container>
+    <aside data-pagefind-ignore>
+      <div class="space-y-10">
+        <div class="animate font-semibold text-black dark:text-white">
+          {pageContent.title}
+        </div>
+        <ul class="animate not-prose flex flex-col gap-4">
+          {
+            projects.map((project) => (
+              <li>
+                <ArrowCard entry={project} locale={locale} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </aside>
+  </Container>
+</Layout>

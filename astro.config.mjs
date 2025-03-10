@@ -4,6 +4,8 @@ import mdx from "@astrojs/mdx";
 import pagefind from "astro-pagefind";
 import tailwindcss from "@tailwindcss/vite";
 
+import vercel from "@astrojs/vercel";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://astro-micro.vercel.app",
@@ -12,8 +14,8 @@ export default defineConfig({
     defaultLocale: "en",
     locales: ["en", "pt-br"],
     routing: {
-      prefixDefaultLocale: false
-    }
+      prefixDefaultLocale: false,
+    },
   },
   vite: {
     plugins: [tailwindcss()],
@@ -23,4 +25,13 @@ export default defineConfig({
       theme: "css-variables",
     },
   },
+  output: "static",
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+    imageService: {
+      enabled: true,
+    },
+  }),
 });

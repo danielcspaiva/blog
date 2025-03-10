@@ -76,7 +76,13 @@ export const { getStaticPaths, GET } = OGImageRoute({
   
   // Pass our localized pages
   pages: {
-    // Change the empty string key to "index" for the root path
+    // Use 'root' instead of empty string for the root path
+    "root": {
+      title: getLocalizedMetadata(HOME, defaultLang).TITLE,
+      description: getLocalizedMetadata(HOME, defaultLang).DESCRIPTION,
+      locale: defaultLang
+    },
+    // Keep the "index" key for compatibility
     "index": {
       title: getLocalizedMetadata(HOME, defaultLang).TITLE,
       description: getLocalizedMetadata(HOME, defaultLang).DESCRIPTION,

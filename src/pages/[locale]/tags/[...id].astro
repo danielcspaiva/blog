@@ -55,7 +55,7 @@ const pageContent = content[lang];
 
 <Layout title={pageContent.title} description={pageContent.description}>
   <Container>
-    <div class="space-y-10" data-pagefind-ignore>
+    <div class="space-y-10">
       <BackToPrevious href={`/${locale}/tags`}> {pageContent.allTags} </BackToPrevious>
       <h1 class="animate font-semibold text-black dark:text-white">
         {pageContent.postsTaggedWith}

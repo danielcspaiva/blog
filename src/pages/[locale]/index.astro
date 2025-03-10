@@ -10,9 +10,9 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { ui, languages } from "../../i18n/ui";
 
 export function getStaticPaths() {
-  return Object.keys(languages).map(locale => ({
+  return Object.keys(languages).map((locale) => ({
     params: { locale },
-    props: { locale }
+    props: { locale },
   }));
 }
 
@@ -35,33 +35,43 @@ const projects: CollectionEntry<"projects">[] = (
 // Content based on locale
 const content = {
   en: {
-    title: "Introducing Astro Micro 🔬",
-    description: "Astro Micro is an accessible theme for Astro. It's a fork of Mark Horn's popular theme Astro Nano. Like Nano, Micro comes with zero frameworks installed.",
-    additionalInfo: "Micro adds features like Pagefind for search, Giscus for comments, and more.",
-    microFeatures: "Micro still comes with everything great about Nano — full type safety, a sitemap, an RSS feed, and Markdown + MDX support. Styled with TailwindCSS and preconfigured with system, light, and dark themes.",
-    getStarted: "Visit Astro Micro on GitHub to fork the repository to get started.",
+    title: "Hi, I'm Daniel 👋",
+    description:
+      "I work as CTO at <a href='https://quartoavista.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Quarto à Vista</a>, where we manage over 500 vacation rental properties across three Brazilian states. I enjoy building tools that help our team work more efficiently and create better experiences for our guests and landlords.",
+    professionalSummary:
+      "Previously at <a href='https://tc.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>TC</a>, I worked as a Mobile Lead and Tech Lead, focusing on app performance, user experience, and leading development teams. <a href='/experience' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Learn more about my experience</a>.",
+    education:
+      "My background is in Civil Engineering (<a href='https://www.ufrn.br/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>UFRN</a>), with an exchange program at <a href='https://illinois.edu/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>UIUC</a>. I later transitioned to software development through <a href='https://www.ironhack.com/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Ironhack's</a> Full Stack bootcamp, which opened up a whole new world of possibilities.",
+    personalNote:
+      "I'm particularly interested in the TypeScript ecosystem and enjoy working with React, Next.js, and Node.js. When I'm not coding, I'm usually learning about new technologies, reading, practicing Brazilian Jiu-Jitsu, or playing piano and guitar.",
     latestPosts: "Latest posts",
     seeAllPosts: "See all posts",
     recentProjects: "Recent projects",
     seeAllProjects: "See all projects",
     letsConnect: "Let's Connect",
-    contactInfo: "If you want to get in touch with me about something or just to say hi, reach out on social media or send me an email.",
-    scheduleMeeting: "Schedule a Meeting"
+    contactInfo:
+      "Feel free to reach out if you want to chat about tech, share ideas, or just say hello.",
+    scheduleMeeting: "Schedule a Meeting",
   },
-  'pt-br': {
-    title: "Apresentando Astro Micro 🔬",
-    description: "Astro Micro é um tema acessível para Astro. É um fork do tema popular de Mark Horn chamado Astro Nano. Como o Nano, o Micro vem sem frameworks instalados.",
-    additionalInfo: "O Micro adiciona recursos como Pagefind para busca, Giscus para comentários, e mais.",
-    microFeatures: "O Micro ainda vem com tudo de bom do Nano — segurança de tipos completa, um sitemap, um feed RSS e suporte a Markdown + MDX. Estilizado com TailwindCSS e pré-configurado com temas de sistema, claro e escuro.",
-    getStarted: "Visite Astro Micro no GitHub para fazer um fork do repositório e começar.",
+  "pt-br": {
+    title: "Olá, sou Daniel 👋",
+    description:
+      "Sou CTO na <a href='https://quartoavista.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Quarto à Vista</a>, onde gerenciamos mais de 500 propriedades de aluguel por temporada em três estados brasileiros. Gosto de construir ferramentas que ajudam nossa equipe a trabalhar com mais eficiência e criar melhores experiências para nossos hóspedes e proprietários.",
+    professionalSummary:
+      "Anteriormente na <a href='https://tc.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>TC</a>, trabalhei como Mobile Lead e Tech Lead, focando em performance de aplicativos, experiência do usuário e liderando equipes de desenvolvimento. <a href='/experience' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Saiba mais sobre minha experiência</a>.",
+    education:
+      "Minha formação é em Engenharia Civil (<a href='https://www.ufrn.br/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>UFRN</a>), com um programa de intercâmbio na <a href='https://illinois.edu/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>UIUC</a>. Mais tarde, fiz a transição para o desenvolvimento de software através do bootcamp Full Stack da <a href='https://www.ironhack.com/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Ironhack</a>, o que abriu um mundo novo de possibilidades.",
+    personalNote:
+      "Tenho particular interesse no ecossistema TypeScript e gosto de trabalhar com React, Next.js e Node.js. Quando não estou programando, geralmente estou aprendendo sobre novas tecnologias, lendo, praticando Jiu-Jitsu, ou tocando piano e violão.",
     latestPosts: "Últimos posts",
     seeAllPosts: "Ver todos os posts",
     recentProjects: "Projetos recentes",
     seeAllProjects: "Ver todos os projetos",
     letsConnect: "Vamos nos conectar",
-    contactInfo: "Se você quiser entrar em contato comigo sobre algo ou apenas para dizer olá, me encontre nas redes sociais ou envie um email.",
-    scheduleMeeting: "Agendar uma Reunião"
-  }
+    contactInfo:
+      "Sinta-se à vontade para entrar em contato se quiser conversar sobre tecnologia, compartilhar ideias ou apenas dizer olá.",
+    scheduleMeeting: "Agendar uma Reunião",
+  },
 };
 
 const pageContent = content[lang];
@@ -70,29 +80,30 @@ const pageContent = content[lang];
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
     <aside data-pagefind-ignore>
-      <h1 class="font-semibold text-black dark:text-white">
-        {pageContent.title}
-      </h1>
+      <div class="flex items-center gap-4 text-black dark:text-white">
+        <img
+          src="/me.jpg"
+          alt="Astro Micro Logo"
+          class="h-10 w-10 rounded-full"
+        />
+        <h1 class="text-2xl font-bold">
+          {pageContent.title}
+        </h1>
+      </div>
       <div class="space-y-16">
         <section>
           <article class="space-y-4">
             <span>
-              <p>
-                {pageContent.description} <Link href="https://astro.build/">Astro</Link>.
-                {pageContent.additionalInfo} <Link href="https://pagefind.app/">Pagefind</Link> 
-                <Link href="https://giscus.app">Giscus</Link> 
-                <Link href="/blog/00-micro-changelog">blog post</Link>.
+              <p set:html={pageContent.description}>
               </p>
             </span>
             <span class="animate">
-              <p>
-                {pageContent.microFeatures}
+              <p set:html={pageContent.professionalSummary}>
+              </p>
+              <p set:html={pageContent.education}>
               </p>
               <p>
-                {pageContent.getStarted}
-                <Link href="https://github.com/trevortylerlee/astro-micro">
-                  GitHub
-                </Link>
+                {pageContent.personalNote}
               </p>
             </span>
           </article>
@@ -121,7 +132,9 @@ const pageContent = content[lang];
             <h2 class="font-semibold text-black dark:text-white">
               {pageContent.recentProjects}
             </h2>
-            <Link href={`/${locale}/projects`}> {pageContent.seeAllProjects} </Link>
+            <Link href={`/${locale}/projects`}>
+              {pageContent.seeAllProjects}
+            </Link>
           </div>
           <ul class="not-prose flex flex-col gap-4">
             {
@@ -150,7 +163,7 @@ const pageContent = content[lang];
                   href="javascript:void(0)"
                   data-cal-link={`${CAL_BOOKING.USERNAME}/${CAL_BOOKING.MEETING_SLUG}`}
                   data-cal-config='{"theme":"auto"}'
-                  class="inline-block decoration-black/30 dark:decoration-white/30 hover:decoration-black/50 focus-visible:decoration-black/50 dark:hover:decoration-white/50 dark:focus-visible:decoration-white/50 text-current hover:text-black focus-visible:text-black dark:hover:text-white dark:focus-visible:text-white transition-colors duration-300 ease-in-out underline underline-offset-[3px] cursor-pointer"
+                  class="inline-block cursor-pointer text-current underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50"
                 >
                   {pageContent.scheduleMeeting}
                 </a>
@@ -162,7 +175,7 @@ const pageContent = content[lang];
                     <Link
                       href={SOCIAL.HREF}
                       external
-                      aria-label={`${SITE.TITLE} ${lang === 'en' ? 'on' : 'no'} ${SOCIAL.NAME}`}
+                      aria-label={`${SITE.TITLE} ${lang === "en" ? "on" : "no"} ${SOCIAL.NAME}`}
                     >
                       {SOCIAL.NAME}
                     </Link>
@@ -184,4 +197,4 @@ const pageContent = content[lang];
       </div>
     </aside>
   </Container>
-</Layout> 
+</Layout>

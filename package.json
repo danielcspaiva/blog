@@ -19,6 +19,8 @@
     "@fontsource/geist-sans": "^5.2.5",
     "@tailwindcss/vite": "^4.0.12",
     "astro": "^5.4.2",
+    "astro-og-canvas": "^0.7.0",
+    "canvaskit-wasm": "^0.39.1",
     "clsx": "^2.1.1",
     "sharp": "^0.33.5",
     "tailwind-merge": "^3.0.2",

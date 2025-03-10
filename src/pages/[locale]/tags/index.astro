@@ -35,7 +35,11 @@ const content = {
 const pageContent = content[lang];
 ---
 
-<Layout title={pageContent.title} description={pageContent.description}>
+<Layout 
+  title={pageContent.title} 
+  description={pageContent.description}
+  pageType="tags"
+>
   <Container>
     <div class="space-y-10">
       <h1 class="animate font-semibold">{pageContent.allTags}</h1>

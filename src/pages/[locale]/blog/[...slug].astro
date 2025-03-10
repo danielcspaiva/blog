@@ -99,7 +99,7 @@ function getLocalizedTagUrl(tag: string) {
 }
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={post.data.title} description={post.data.description} isBlogPost={true} slug={post.id}>
   <Container>
     <div class="animate">
       <BackToPrevious href={localizedBlogUrl}>

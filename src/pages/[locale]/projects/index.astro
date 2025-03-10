@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
+import { PROJECTS, getLocalizedMetadata } from "@consts";
 import { useTranslations } from "../../../i18n/utils";
 import { languages, ui } from "../../../i18n/ui";
 
@@ -15,6 +16,7 @@ export function getStaticPaths() {
 
 const { locale } = Astro.params;
 const lang = locale as keyof typeof ui;
+const localizedProjects = getLocalizedMetadata(PROJECTS, lang);
 
 const projects = (await getCollection("projects"))
   .filter((project) => !project.data.draft)
@@ -23,19 +25,23 @@ const projects = (await getCollection("projects"))
 // Content based on locale
 const content = {
   en: {
-    title: "Projects",
-    description: "Check out my latest projects and what I've been working on."
+    title: localizedProjects.TITLE,
+    description: localizedProjects.DESCRIPTION
   },
   'pt-br': {
-    title: "Projetos",
-    description: "Confira meus projetos mais recentes e no que tenho trabalhado."
+    title: localizedProjects.TITLE,
+    description: localizedProjects.DESCRIPTION
   }
 };
 
 const pageContent = content[lang];
 ---
 
-<Layout title={pageContent.title} description={pageContent.description}>
+<Layout 
+  title={localizedProjects.TITLE} 
+  description={localizedProjects.DESCRIPTION}
+  pageType="projects"
+>
   <Container>
     <aside>
       <div class="space-y-10">

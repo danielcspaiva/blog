@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import { SITE, HOME, SOCIALS, CAL_BOOKING } from "@consts";
+import { SITE, HOME, SOCIALS, CAL_BOOKING, getLocalizedMetadata } from "@consts";
 import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
@@ -19,6 +19,7 @@ export function getStaticPaths() {
 
 const { locale } = Astro.params;
 const lang = locale as keyof typeof ui;
+const localizedHome = getLocalizedMetadata(HOME, lang);
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -39,7 +40,7 @@ const content = {
     description:
       "I work as CTO at <a href='https://quartoavista.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Quarto à Vista</a>, where we manage over 500 vacation rental properties across three Brazilian states. I enjoy building tools that help our team work more efficiently and create better experiences for our guests and landlords.",
     professionalSummary:
-      "Previously at <a href='https://tc.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>TC</a>, I worked as a Mobile Lead and Tech Lead, focusing on app performance, user experience, and leading development teams. <a href='/experience' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Learn more about my experience</a>.",
+      "Previously at <a href='https://tc.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>TC</a>, I worked as a Mobile Lead and Tech Lead, focusing on app performance, user experience, and leading development teams. <a href='/en/experience' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Learn more about my experience</a>.",
     education:
       "My background is in Civil Engineering (<a href='https://www.ufrn.br/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>UFRN</a>), with an exchange program at <a href='https://illinois.edu/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>UIUC</a>. I later transitioned to software development through <a href='https://www.ironhack.com/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Ironhack's</a> Full Stack bootcamp, which opened up a whole new world of possibilities.",
     personalNote:
@@ -58,7 +59,7 @@ const content = {
     description:
       "Sou CTO na <a href='https://quartoavista.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Quarto à Vista</a>, onde gerenciamos mais de 500 propriedades de aluguel por temporada em três estados brasileiros. Gosto de construir ferramentas que ajudam nossa equipe a trabalhar com mais eficiência e criar melhores experiências para nossos hóspedes e proprietários.",
     professionalSummary:
-      "Anteriormente na <a href='https://tc.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>TC</a>, trabalhei como Mobile Lead e Tech Lead, focando em performance de aplicativos, experiência do usuário e liderando equipes de desenvolvimento. <a href='/experience' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Saiba mais sobre minha experiência</a>.",
+      "Anteriormente na <a href='https://tc.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>TC</a>, trabalhei como Mobile Lead e Tech Lead, focando em performance de aplicativos, experiência do usuário e liderando equipes de desenvolvimento. <a href='/pt-br/experience' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Saiba mais sobre minha experiência</a>.",
     education:
       "Minha formação é em Engenharia Civil (<a href='https://www.ufrn.br/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>UFRN</a>), com um programa de intercâmbio na <a href='https://illinois.edu/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>UIUC</a>. Mais tarde, fiz a transição para o desenvolvimento de software através do bootcamp Full Stack da <a href='https://www.ironhack.com/' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Ironhack</a>, o que abriu um mundo novo de possibilidades.",
     personalNote:
@@ -77,7 +78,11 @@ const content = {
 const pageContent = content[lang];
 ---
 
-<Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+<Layout 
+  title={localizedHome.TITLE} 
+  description={localizedHome.DESCRIPTION}
+  pageType="index"
+>
   <Container>
     <aside>
       <div class="flex items-center gap-4 text-black dark:text-white">
@@ -131,7 +136,8 @@ const pageContent = content[lang];
           </ul>
         </section>
 
-        <section class="animate space-y-6">
+        <!-- TODO: Add projects section -->
+        <!-- <section class="animate space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-y-2">
             <h2 class="font-semibold text-black dark:text-white">
               {pageContent.recentProjects}
@@ -149,7 +155,7 @@ const pageContent = content[lang];
               ))
             }
           </ul>
-        </section>
+        </section> -->
 
         <section class="animate space-y-4">
           <h2 class="font-semibold text-black dark:text-white">

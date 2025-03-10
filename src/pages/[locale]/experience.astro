@@ -85,7 +85,11 @@ const content = {
 const pageContent = content[lang];
 ---
 
-<Layout title={pageContent.title} description={pageContent.description}>
+<Layout 
+  title={content[lang].title} 
+  description={content[lang].description}
+  pageType="experience"
+>
   <Container>
     <div class="space-y-16">
       <section>

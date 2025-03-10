@@ -53,7 +53,12 @@ if (isBlogPost && slug) {
 } 
 // For main routes
 else if (pageType) {
-  ogImageUrl = new URL(`/open-graph/${locale}-${pageType}.png`, Astro.site);
+  // Special case for root path
+  if (Astro.url.pathname === '/') {
+    ogImageUrl = new URL(`/open-graph/`, Astro.site);
+  } else {
+    ogImageUrl = new URL(`/open-graph/${locale}-${pageType}.png`, Astro.site);
+  }
 }
 ---
 

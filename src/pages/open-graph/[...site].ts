@@ -75,7 +75,16 @@ export const { getStaticPaths, GET } = OGImageRoute({
   param: "site",
   
   // Pass our localized pages
-  pages: localizedPages,
+  pages: {
+    // Add an empty string key for the root path
+    "": {
+      title: getLocalizedMetadata(HOME, defaultLang).TITLE,
+      description: getLocalizedMetadata(HOME, defaultLang).DESCRIPTION,
+      locale: defaultLang
+    },
+    // Include all the other localized pages
+    ...localizedPages
+  },
   
   // For each page, customize the OpenGraph image
   getImageOptions: (path, page) => ({

@@ -61,11 +61,14 @@ for (const locale of locales) {
     // For the default locale's index page, also add an entry without the locale prefix
     // This will handle the root path (/) which redirects to the default locale
     if (locale === defaultLang && route === "index") {
-      localizedPages["index"] = {
-        title,
-        description,
-        locale
-      };
+      // Add multiple entries for the root path to ensure compatibility
+      ["index", "root", "homepage", "home", ""].forEach(key => {
+        localizedPages[key] = {
+          title,
+          description,
+          locale
+        };
+      });
     }
   }
 }
@@ -75,22 +78,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
   param: "site",
   
   // Pass our localized pages
-  pages: {
-    // Use 'root' instead of empty string for the root path
-    "root": {
-      title: getLocalizedMetadata(HOME, defaultLang).TITLE,
-      description: getLocalizedMetadata(HOME, defaultLang).DESCRIPTION,
-      locale: defaultLang
-    },
-    // Keep the "index" key for compatibility
-    "index": {
-      title: getLocalizedMetadata(HOME, defaultLang).TITLE,
-      description: getLocalizedMetadata(HOME, defaultLang).DESCRIPTION,
-      locale: defaultLang
-    },
-    // Include all the other localized pages
-    ...localizedPages
-  },
+  pages: localizedPages,
   
   // For each page, customize the OpenGraph image
   getImageOptions: (path, page) => ({

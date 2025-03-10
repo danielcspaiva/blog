@@ -54,9 +54,10 @@ if (isBlogPost && slug) {
 // For main routes
 else if (pageType) {
   // Special case for root path
-  if (Astro.url.pathname === '/' || Astro.url.pathname === `/${locale}/`) {
-    // For the root path, use root.png
-    ogImageUrl = new URL(`/open-graph/root.png`, Astro.site);
+  if (Astro.url.pathname === '/') {
+    // For the root path, use the default language index page OG image
+    // This is the most reliable approach
+    ogImageUrl = new URL(`/open-graph/index.png`, Astro.site);
   } else {
     ogImageUrl = new URL(`/open-graph/${locale}-${pageType}.png`, Astro.site);
   }

@@ -1,6 +1,23 @@
 ---
 // This is a simple redirect that always includes the locale
 import { defaultLang } from '../i18n/ui';
+import { getLocalizedMetadata, HOME } from '../consts';
+import Head from "../components/Head.astro";
+
+const metadata = getLocalizedMetadata(HOME, defaultLang);
 ---
 
-<meta http-equiv="refresh" content={`0;url=/${defaultLang}`} />
+<!DOCTYPE html>
+<html lang={defaultLang}>
+  <head>
+    <Head
+      title={metadata.TITLE}
+      description={metadata.DESCRIPTION}
+      pageType="index"
+    />
+    <meta http-equiv="refresh" content={`0;url=/${defaultLang}`} />
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>

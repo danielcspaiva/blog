@@ -1,0 +1,181 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import { SITE } from "@consts";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { ui, languages } from "../../i18n/ui";
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.params;
+const lang = locale as keyof typeof ui;
+const t = useTranslations(lang);
+
+// Content based on locale
+const content = {
+  en: {
+    title: "Experience",
+    description: "My professional journey and experience",
+    experience: "Professional Experience",
+    quartoAvista: "Quarto à Vista - CTO (July 2021 - Present)",
+    quartoAvistaDesc: "Leading the technology team at a vacation rental management company with over 500 units across three Brazilian states. My role is to develop and implement innovative technological solutions to optimize our operations and customer experience.",
+    tc: "TC",
+    tcMobileLead: "Mobile Lead (May 2022 - May 2023)",
+    tcMobileLeadDesc: "Led initiatives related to performance, observability, new features, bug fixes, code reviews, and launching new versions of the App. Also worked on business squad initiatives, such as developing the new checkout.",
+    tcTechLead: "Tech Lead (August 2021 - May 2022)",
+    tcTechLeadDesc: "Led the team responsible for the Premium user experience, developing consulting scheduling features and report delivery and consumption.",
+    tcFullStackDev: "Full Stack Developer (August 2020 - August 2021)",
+    tcFullStackDevDesc: "Worked on the complete refactoring of the chat and channels module of our App with a new architecture using Typescript. Also worked on the squad responsible for implementing the feed where users can share investment ideas.",
+    tcJuniorDev: "Junior Full Stack Developer (June 2020 - August 2020)",
+    tcJuniorDevDesc: "Worked in the Support squad, fixing bugs in the Web platform in React, App in React Native, and different back-end services in Go.",
+    brotherhoodie: "The Brotherhoodie - Co-founder (September 2015 - January 2020)",
+    brotherhoodieDesc: "Founded a video production company with my college colleague. Some of my responsibilities included: video production for advertising films, events, and weddings; project management (teams, goals, deadlines, and delivery quality); and video capture, editing, and finalization.",
+    education: "Education",
+    ufrn: "Federal University of Rio Grande do Norte (UFRN)",
+    ufrnDesc: "Bachelor's Degree, Civil Engineering (2011 - 2017)",
+    ironhack: "Ironhack",
+    ironhackDesc: "Full Stack Developer, Web Development (2020)",
+    uiuc: "University of Illinois at Urbana-Champaign (UIUC)",
+    uiucDesc: "Exchange program as a CAPES Science Without Borders scholarship recipient, Civil and Environmental Engineering (2013 - 2014)",
+    skills: "Skills & Languages",
+    keySkills: "Key Skills: Next.js, React.js, React Native",
+    languages: "Languages: Portuguese (Native), Spanish (Professional), English (Fluent)",
+    certifications: "Certifications",
+    certScrum: "Scrum: The Basics",
+    certReact: "Learning React.js",
+  },
+  "pt-br": {
+    title: "Experiência",
+    description: "Minha jornada profissional e experiência",
+    experience: "Experiência Profissional",
+    quartoAvista: "Quarto à Vista - CTO (Julho 2021 - Presente)",
+    quartoAvistaDesc: "Lidero o time de tecnologia em uma administradora de aluguel por temporada com mais de 500 unidades em três estados brasileiros. Minha função é desenvolver e implementar soluções tecnológicas inovadoras para otimizar nossas operações e a experiência do cliente.",
+    tc: "TC",
+    tcMobileLead: "Mobile Lead (Maio 2022 - Maio 2023)",
+    tcMobileLeadDesc: "Atuei em iniciativas no App relacionados a performance, observabilidade, novas funcionalidades, correções de bugs, code reviews e lançamento de novas versões do App. Além disso, atuei em iniciativas da squad de negócios, como por exemplo o desenvolvimento do novo checkout.",
+    tcTechLead: "Tech Lead (Agosto 2021 - Maio 2022)",
+    tcTechLeadDesc: "Atuei como Tech Lead na squad responsável pela experiência dos usuários assinantes do produto Premium. Liderando o time no desenvolvimento de funcionalidades de agendamento de consultorias, além de envio e consumo de relatórios.",
+    tcFullStackDev: "Desenvolvedor Full Stack Pleno (Agosto 2020 - Agosto 2021)",
+    tcFullStackDevDesc: "Atuei na refatoração completa do módulo de chat e canais do nosso App com uma nova arquitetura e utilizando Typescript. Além disso atuei na squad responsável pela implementação do feed onde usuários podem compartilhar ideias de investimento.",
+    tcJuniorDev: "Desenvolvedor Full Stack Júnior (Junho 2020 - Agosto 2020)",
+    tcJuniorDevDesc: "Atuei na squad de Sustentação, corrigindo bugs na plataforma Web em React, App em React Native e diferentes serviços de back end em Go.",
+    brotherhoodie: "The Brotherhoodie - Sócio Fundador (Setembro 2015 - Janeiro 2020)",
+    brotherhoodieDesc: "Produtora de vídeo que fundei com meu colega de faculdade. Algumas de minhas atribuições: produção de vídeo para filmes publicitários, eventos e casamentos; gestão de projetos (equipes, metas, prazos e qualidade de entrega); e captação, edição e finalização de vídeos.",
+    education: "Formação Acadêmica",
+    ufrn: "Universidade Federal do Rio Grande do Norte (UFRN)",
+    ufrnDesc: "Graduação, Engenharia Civil (2011 - 2017)",
+    ironhack: "Ironhack",
+    ironhackDesc: "Desenvolvedor Full Stack, Desenvolvimento Web (2020)",
+    uiuc: "University of Illinois at Urbana-Champaign (UIUC)",
+    uiucDesc: "Intercâmbio como bolsista do programa Ciência Sem Fronteiras da CAPES, Engenharia Civil e Ambiental (2013 - 2014)",
+    skills: "Competências e Idiomas",
+    keySkills: "Principais competências: Next.js, React.js, React Native",
+    languages: "Idiomas: Português (Nativo), Espanhol (Profissional), Inglês (Fluente)",
+    certifications: "Certificações",
+    certScrum: "Scrum: The Basics",
+    certReact: "Learning React.js",
+  },
+};
+
+const pageContent = content[lang];
+---
+
+<Layout title={pageContent.title} description={pageContent.description}>
+  <Container>
+    <div class="space-y-16">
+      <section>
+        <h1 class="text-2xl font-bold text-black dark:text-white mb-8">
+          {pageContent.title}
+        </h1>
+        
+        <div class="space-y-12">
+          <section class="animate space-y-4">
+            <h2 class="text-xl font-semibold text-black dark:text-white">
+              {pageContent.experience}
+            </h2>
+            <article class="space-y-8">
+              <div>
+                <h3 class="font-medium">{pageContent.quartoAvista}</h3>
+                <p>{pageContent.quartoAvistaDesc}</p>
+              </div>
+              
+              <div>
+                <h3 class="font-medium">{pageContent.tc}</h3>
+                <div class="ml-4 space-y-6">
+                  <div>
+                    <h4 class="font-medium">{pageContent.tcMobileLead}</h4>
+                    <p>{pageContent.tcMobileLeadDesc}</p>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">{pageContent.tcTechLead}</h4>
+                    <p>{pageContent.tcTechLeadDesc}</p>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">{pageContent.tcFullStackDev}</h4>
+                    <p>{pageContent.tcFullStackDevDesc}</p>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">{pageContent.tcJuniorDev}</h4>
+                    <p>{pageContent.tcJuniorDevDesc}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="font-medium">{pageContent.brotherhoodie}</h3>
+                <p>{pageContent.brotherhoodieDesc}</p>
+              </div>
+            </article>
+          </section>
+
+          <section class="animate space-y-4">
+            <h2 class="text-xl font-semibold text-black dark:text-white">
+              {pageContent.education}
+            </h2>
+            <article class="space-y-6">
+              <div>
+                <h3 class="font-medium">{pageContent.ufrn}</h3>
+                <p>{pageContent.ufrnDesc}</p>
+              </div>
+              <div>
+                <h3 class="font-medium">{pageContent.ironhack}</h3>
+                <p>{pageContent.ironhackDesc}</p>
+              </div>
+              <div>
+                <h3 class="font-medium">{pageContent.uiuc}</h3>
+                <p>{pageContent.uiucDesc}</p>
+              </div>
+            </article>
+          </section>
+
+          <section class="animate space-y-4">
+            <h2 class="text-xl font-semibold text-black dark:text-white">
+              {pageContent.skills}
+            </h2>
+            <article>
+              <p>{pageContent.keySkills}</p>
+              <p>{pageContent.languages}</p>
+            </article>
+          </section>
+
+          <section class="animate space-y-4">
+            <h2 class="text-xl font-semibold text-black dark:text-white">
+              {pageContent.certifications}
+            </h2>
+            <article>
+              <ul class="list-disc ml-5">
+                <li>{pageContent.certScrum}</li>
+                <li>{pageContent.certReact}</li>
+              </ul>
+            </article>
+          </section>
+        </div>
+      </section>
+    </div>
+  </Container>
+</Layout> 

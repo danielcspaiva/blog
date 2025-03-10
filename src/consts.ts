@@ -1,4 +1,5 @@
 import type { Metadata, Site, Socials } from "@types";
+import { ui, defaultLang } from "./i18n/ui";
 
 export const SITE: Site = {
   TITLE: "Daniel Paiva",
@@ -8,20 +9,40 @@ export const SITE: Site = {
   NUM_PROJECTS_ON_HOMEPAGE: 3,
 };
 
-export const HOME: Metadata = {
-  TITLE: "Home",
-  DESCRIPTION: "Astro Micro is an accessible theme for Astro.",
+// Localized metadata
+export const HOME: Record<keyof typeof ui, Metadata> = {
+  en: {
+    TITLE: "Home",
+    DESCRIPTION: "Hi, I'm Daniel 👋",
+  },
+  "pt-br": {
+    TITLE: "Home",
+    DESCRIPTION: "Olá, sou Daniel 👋",
+  },
 };
 
-export const BLOG: Metadata = {
-  TITLE: "Blog",
-  DESCRIPTION: "A collection of articles on topics I am passionate about.",
+export const BLOG: Record<keyof typeof ui, Metadata> = {
+  en: {
+    TITLE: "Blog",
+    DESCRIPTION: "A collection of articles on topics I am passionate about.",
+  },
+  "pt-br": {
+    TITLE: "Blog",
+    DESCRIPTION: "Uma coleção de artigos sobre tópicos que me interessam.",
+  },
 };
 
-export const PROJECTS: Metadata = {
-  TITLE: "Projects",
-  DESCRIPTION:
-    "A collection of my projects with links to repositories and live demos.",
+export const PROJECTS: Record<keyof typeof ui, Metadata> = {
+  en: {
+    TITLE: "Projects",
+    DESCRIPTION:
+      "A collection of my projects with links to repositories and live demos.",
+  },
+  "pt-br": {
+    TITLE: "Projetos",
+    DESCRIPTION:
+      "Uma coleção dos meus projetos com links para repositórios e demonstrações.",
+  },
 };
 
 // Cal.com booking link - replace with your own Cal.com username
@@ -44,3 +65,11 @@ export const SOCIALS: Socials = [
     HREF: "https://quartoavista.com.br",
   },
 ];
+
+// Helper function to get localized metadata
+export function getLocalizedMetadata<T extends Record<keyof typeof ui, Metadata>>(
+  metadata: T,
+  locale: keyof typeof ui
+): Metadata {
+  return metadata[locale] || metadata[defaultLang];
+}

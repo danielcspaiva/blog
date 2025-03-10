@@ -2,7 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
-import { SITE } from "@consts";
+import { SITE, BLOG, getLocalizedMetadata } from "@consts";
 import { getCollection } from "astro:content";
 import { useTranslations } from "../../../i18n/utils";
 import { languages, ui } from "../../../i18n/ui";
@@ -17,6 +17,7 @@ export function getStaticPaths() {
 
 const { locale } = Astro.params;
 const lang = locale as keyof typeof ui;
+const localizedBlog = getLocalizedMetadata(BLOG, lang);
 
 const allPosts = await getCollection("blog");
 const blog = allPosts
@@ -39,19 +40,23 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
 // Content based on locale
 const content = {
   en: {
-    title: "Blog",
-    description: "Read the latest articles and posts about Astro, web development, and more."
+    title: localizedBlog.TITLE,
+    description: localizedBlog.DESCRIPTION
   },
   'pt-br': {
-    title: "Blog",
-    description: "Leia os artigos e posts mais recentes sobre Astro, desenvolvimento web e mais."
+    title: localizedBlog.TITLE,
+    description: localizedBlog.DESCRIPTION
   }
 };
 
 const pageContent = content[lang];
 ---
 
-<Layout title={pageContent.title} description={pageContent.description}>
+<Layout 
+  title={localizedBlog.TITLE} 
+  description={localizedBlog.DESCRIPTION}
+  pageType="blog"
+>
   <Container>
     <aside>
       <div class="space-y-10">

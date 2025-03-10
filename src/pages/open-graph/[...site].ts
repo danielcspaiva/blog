@@ -1,6 +1,6 @@
 import { OGImageRoute } from "astro-og-canvas";
 import { SITE, HOME, BLOG, PROJECTS, getLocalizedMetadata } from "../../consts";
-import { languages, ui } from "../../i18n/ui";
+import { languages, ui, defaultLang } from "../../i18n/ui";
 
 // Define the main routes for which we want to generate OG images
 const routes = ["index", "blog", "experience", "projects", "tags"];
@@ -57,6 +57,16 @@ for (const locale of locales) {
       description,
       locale
     };
+    
+    // For the default locale's index page, also add an entry without the locale prefix
+    // This will handle the root path (/) which redirects to the default locale
+    if (locale === defaultLang && route === "index") {
+      localizedPages["index"] = {
+        title,
+        description,
+        locale
+      };
+    }
   }
 }
 

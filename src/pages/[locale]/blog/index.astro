@@ -22,6 +22,7 @@ const localizedBlog = getLocalizedMetadata(BLOG, lang);
 const allPosts = await getCollection("blog");
 const blog = allPosts
   .filter((post) => !post.data.draft)
+  .filter((post) => !post.data.locale || post.data.locale === locale)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()) as BlogPost[];
 
 // Group posts by year

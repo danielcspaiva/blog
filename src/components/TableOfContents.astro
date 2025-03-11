@@ -14,15 +14,29 @@ export interface Heading {
 function buildToc(headings: Heading[]) {
   const toc: Heading[] = [];
   const parentHeadings = new Map();
+  
   headings.forEach((h) => {
     const heading = { ...h, subheadings: [] };
     parentHeadings.set(heading.depth, heading);
+    
+    // Only add headings with depth 2 directly to TOC
     if (heading.depth === 2) {
       toc.push(heading);
     } else {
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+      // Check if parent heading exists before adding subheading
+      const parent = parentHeadings.get(heading.depth - 1);
+      if (parent) {
+        if (!parent.subheadings) {
+          parent.subheadings = [];
+        }
+        parent.subheadings.push(heading);
+      } else {
+        // If no parent exists at the expected level, add to TOC as a top-level item
+        toc.push(heading);
+      }
     }
   });
+  
   return toc;
 }
 ---

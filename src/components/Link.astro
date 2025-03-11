@@ -23,8 +23,11 @@ const {
 const lang = getLangFromUrl(Astro.url);
 let finalHref = href;
 
-// Only localize internal links that don't start with a locale prefix
-if (localize && !external) {
+// Check if the href is a special URL scheme like mailto:
+const isSpecialUrlScheme = href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('sms:');
+
+// Only localize internal links that don't start with a locale prefix and aren't special URL schemes
+if (localize && !external && !isSpecialUrlScheme) {
   // Check if the href already starts with a locale prefix
   const startsWithLocale = Object.keys(import.meta.glob('/src/i18n/ui.ts')).some(locale => 
     href.startsWith(`/${locale.split('/').pop()?.replace('.ts', '')}/`)

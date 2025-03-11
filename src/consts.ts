@@ -53,6 +53,10 @@ export const CAL_BOOKING = {
 
 export const SOCIALS: Socials = [
   {
+    NAME: "X",
+    HREF: "https://x.com/danielcspaiva",
+  },
+  {
     NAME: "LinkedIn",
     HREF: "https://www.linkedin.com/in/danielcspaiva",
   },

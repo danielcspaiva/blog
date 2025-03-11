@@ -11,26 +11,34 @@ import Link from "@components/Link.astro";
 import { readingTime } from "@lib/utils";
 import { languages, ui } from "../../../i18n/ui";
 import { useTranslations, getLocalizedRoute } from "../../../i18n/utils";
-import { getSlugFromId } from "../../../i18n/blog";
+import { getSlugFromId, getLocalizedPost, type BlogPost } from "../../../i18n/blog";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = await getCollection("blog") as BlogPost[];
   const locales = Object.keys(languages);
   
-  return posts.flatMap(post => {
-    // Get the slug from the id (filename)
-    const slug = getSlugFromId(post.id);
-    
-    return locales.map(locale => ({
-      params: {
-        locale,
-        slug
-      },
-      props: {
-        post,
-        locale
-      }
-    }));
+  // Get unique slugs (post identifiers) to generate paths
+  const slugs = [...new Set(posts.map(post => getSlugFromId(post.id)))];
+  
+  return slugs.flatMap(slug => {
+    return locales.map(locale => {
+      // Find the appropriate post for this locale and slug
+      const post = getLocalizedPost(posts, slug, locale);
+      
+      // If no post is found for this locale, skip it
+      if (!post) return null;
+      
+      return {
+        params: {
+          locale,
+          slug
+        },
+        props: {
+          post,
+          locale
+        }
+      };
+    }).filter(Boolean); // Filter out null entries
   });
 }
 
@@ -38,9 +46,11 @@ export async function getStaticPaths() {
 const { post, locale } = Astro.props;
 const lang = locale as keyof typeof ui;
 
-// Get all posts for navigation
-const posts = (await getCollection("blog"))
+// Get all posts for navigation, filtered by locale
+const allPosts = await getCollection("blog");
+const posts = allPosts
   .filter((p) => !p.data.draft)
+  .filter((p) => !p.data.locale || p.data.locale === locale) // Filter by locale
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 // Find adjacent posts for navigation
@@ -136,7 +146,7 @@ function getLocalizedTagUrl(tag: string) {
         ) : null
       }
     </div>
-    {headings.length > 0 && <TableOfContents headings={headings} />}
+    {headings && headings.length > 0 && <TableOfContents headings={headings} />}
     <article class="animate prose-sm prose max-w-none dark:prose-invert sm:prose-base">
       <Content />
       <div class="mt-24">

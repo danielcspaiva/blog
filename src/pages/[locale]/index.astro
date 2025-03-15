@@ -9,6 +9,7 @@ import { getCollection } from "astro:content";
 import { ui, languages } from "../../i18n/ui";
 import { Image } from "astro:assets";
 import profileImage from "./me.jpg";
+import { createCommonLinks } from "@lib/linkUtils";
 
 export function getStaticPaths() {
   return Object.keys(languages).map((locale) => ({
@@ -34,13 +35,15 @@ const blog = (await getCollection("blog"))
 //   .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
 
 // Content based on locale
+const links = createCommonLinks(locale);
+
 const content = {
   en: {
     title: "Hi, I'm Daniel 👋",
     description:
-      "I work as CTO at <a href='https://quartoavista.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Qavi</a>, managing vacation rentals across Brazil. Previously at <a href='https://tc.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>TC</a>, I worked as a Developer, Mobile Lead and Tech Lead. <a href='/en/experience' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Learn more about my experience</a>.",
+      `I work as CTO at ${links.qavi()}, managing vacation rentals across Brazil. Previously at ${links.tc()}, I worked as a Developer, Mobile Lead and Tech Lead. ${links.experience("Learn more about my experience")}.`,
     education:
-      "My background is in Civil Engineering from <a href='https://www.ufrn.br/'>UFRN</a> (with an exchange at <a href='https://illinois.edu/'>UIUC</a>). I then transitioned to software development via <a href='https://www.ironhack.com/'>Ironhack's</a> bootcamp.",
+      `My background is in Civil Engineering from ${links.ufrn()} (with an exchange at ${links.uiuc()}). I then transitioned to software development via ${links.ironhack()}'s bootcamp.`,
     personalNote:
       "I'm passionate about startups and entrepreneurship. Love building with TypeScript, React, React Native, and Next.js.",
     latestPosts: "Latest posts",
@@ -53,9 +56,9 @@ const content = {
   "pt-br": {
     title: "Olá, sou Daniel 👋",
     description:
-      "Sou CTO na <a href='https://quartoavista.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Quarto à Vista</a>, gerenciando aluguéis por temporada no Brasil. Anteriormente na <a href='https://tc.com.br' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>TC</a>, trabalhei como Mobile Lead e Tech Lead. <a href='/pt-br/experience' class='underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50'>Saiba mais sobre minha experiência</a>.",
+      `Sou CTO na ${links.qavi("Quarto à Vista")}, onde estamos reinventando o turismo através do ecossistema de aluguel por temporada no Brasil. Anteriormente na ${links.tc()}, trabalhei como Desenvolvedor, Tech Lead e Mobile Lead. ${links.experience("Saiba mais sobre minha experiência")}.`,
     education:
-      "Minha formação é em Engenharia Civil pela <a href='https://www.ufrn.br/'>UFRN</a> (com intercâmbio na <a href='https://illinois.edu/'>UIUC</a>). Depois, transitei para o desenvolvimento de software pelo bootcamp da <a href='https://www.ironhack.com/'>Ironhack</a>.",
+      `Minha formação é em Engenharia Civil pela ${links.ufrn()} (com intercâmbio na ${links.uiuc()}). Depois, transitei para o desenvolvimento de software pelo bootcamp da ${links.ironhack()}.`,
     personalNote:
       "Sou apaixonado por startups e empreendedorismo. Adoro construir com TypeScript, React, React Native e Next.js.",
     latestPosts: "Últimos posts",

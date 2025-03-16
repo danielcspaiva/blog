@@ -1,10 +1,10 @@
 import { getCollection } from "astro:content";
 import { OGImageRoute } from "astro-og-canvas";
 import { languages, ui } from "../../../i18n/ui";
-import { getSlugFromId } from "../../../i18n/blog";
+import { getSlugFromId, getLocalizedPost, type BlogPost } from "../../../i18n/blog";
 
 // Get all blog posts
-const blogEntries = await getCollection("blog");
+const blogEntries = await getCollection("blog") as BlogPost[];
 
 // Get all locales
 const locales = Object.keys(languages) as Array<keyof typeof ui>;
@@ -18,12 +18,18 @@ for (const entry of blogEntries) {
   
   // Create an entry for each locale
   for (const locale of locales) {
+    // Get the properly localized post for this slug and locale
+    const localizedPost = getLocalizedPost(blogEntries, slug, locale);
+    
+    // Skip if no localized post is found
+    if (!localizedPost) continue;
+    
     // Create a localized key for this blog post and locale
     const localizedKey = `${String(locale)}-${slug}`;
     
-    // Store the blog post data with the localized key
+    // Store the localized post data with the localized key
     localizedPages[localizedKey] = {
-      ...entry.data,
+      ...localizedPost.data,
       locale
     };
   }

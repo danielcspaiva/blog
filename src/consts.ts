@@ -13,11 +13,11 @@ export const SITE: Site = {
 export const HOME: Record<keyof typeof ui, Metadata> = {
   en: {
     TITLE: "Home",
-    DESCRIPTION: "Hi, I'm Daniel 👋",
+    DESCRIPTION: "Personal site and blog.",
   },
   "pt-br": {
     TITLE: "Home",
-    DESCRIPTION: "Olá, sou Daniel 👋",
+    DESCRIPTION: "Site pessoal e blog.",
   },
 };
 

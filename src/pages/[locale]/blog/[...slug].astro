@@ -45,6 +45,8 @@ export async function getStaticPaths() {
 
 // Access the post directly
 const { post, locale } = Astro.props;
+const { slug } = Astro.params;
+
 const lang = locale as keyof typeof ui;
 
 // Get all posts for navigation, filtered by locale
@@ -132,7 +134,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
           </div>
         )}
         &bull;
-        <PageViews url={pageUrl} />        
+        <PageViews slug={slug} />        
       </div>
       <h1 class="animate text-3xl py-4 font-semibold text-black dark:text-white">
         {post.data.title}

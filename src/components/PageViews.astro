@@ -1,11 +1,11 @@
 ---
 export interface Props {
-  url: string;
+  slug: string;
 }
 
-const { url = "" } = Astro.props;
+const { slug = "" } = Astro.props;
 
-const encodedUrl = encodeURIComponent(url);
+const encodedUrl = encodeURIComponent(slug);
 const counterUrl = `https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=${encodedUrl}&count_bg=%234E763000&title_bg=%237A464600&icon=&icon_color=%23E7E7E7&title=Reads+%28Today+%2F+All+Time%29+%3A&edge_flat=true`;
 ---
 

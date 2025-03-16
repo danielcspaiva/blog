@@ -11,6 +11,7 @@ export interface BlogPost extends CollectionEntry<"blog"> {
     readingTime?: string;
     minutesRead?: string;
     locale?: string;
+    hideTableOfContents?: boolean;
   };
   render: () => Promise<{ Content: any; headings: any; remarkPluginFrontmatter: any }>;
 }

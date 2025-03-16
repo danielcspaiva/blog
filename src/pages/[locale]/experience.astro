@@ -4,6 +4,7 @@ import Container from "@components/Container.astro";
 import { SITE } from "@consts";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { ui, languages } from "../../i18n/ui";
+import { createCommonLinks } from "@lib/linkUtils";
 
 export function getStaticPaths() {
   return Object.keys(languages).map((locale) => ({
@@ -15,38 +16,67 @@ export function getStaticPaths() {
 const { locale } = Astro.params;
 const lang = locale as keyof typeof ui;
 const t = useTranslations(lang);
+const links = createCommonLinks(locale);
 
 // Content based on locale
 const content = {
   en: {
-    title: "Experience",
+    title: "Work experience",
     description: "My professional journey and experience",
-    quartoAvista: "Quarto à Vista",
-    quartoAvistaCTO: "CTO (July 2021 - Present)",
-    quartoAvistaDesc:
-      "Leading the technology team at a vacation rental management company with over 500 units across three Brazilian states. My role is to develop and implement innovative technological solutions to optimize our operations and customer experience.",
-    tc: "TC",
-    tcDuration: "June 2020 - May 2023",
-    tcSummary: "Started as a Junior Full Stack Developer fixing bugs across React, React Native, and Go services. Promoted to Full Stack Developer, I refactored the chat module and implemented the investment ideas feed. As Tech Lead, I led the Premium user experience team, developing consulting features and report delivery. Finally, as Mobile Lead, I drove initiatives for performance, observability, new features, and business developments like the new checkout.",
-    brotherhoodie: "The Brotherhoodie",
-    brotherhoodieFounder: "Founder (September 2015 - January 2020)",
-    brotherhoodieDesc:
-      "Founded a video production company with my college colleague. Some of my responsibilities included: video production for advertising films, events, and weddings; project management (teams, goals, deadlines, and delivery quality); and video capture, editing, and finalization.",
+    jobs: [
+      {
+        company: "Quarto à Vista",
+        companyLink: links.qavi(),
+        position: "CTO",
+        duration: "Jul 2021 - Present",
+        description:
+          "Leading the technology team at a vacation rental management company with over 500 units across three Brazilian states. My role is to develop and implement innovative technological solutions to optimize our operations and customer experience.",
+      },
+      {
+        company: "TC",
+        companyLink: links.tc(),
+        position: "Developer, Tech Lead and Mobile Lead",
+        duration: "Jun 2020 - May 2023",
+        description:
+          "Started as a Junior Full Stack Developer fixing bugs across React, React Native, and Go services. Promoted to Full Stack Developer, I refactored the chat module and implemented the investment ideas feed. As Tech Lead, I led the Premium user experience team, developing consulting features and report delivery. Finally, as Mobile Lead, I drove initiatives for performance, observability, new features, and business developments like the new checkout.",
+      },
+      {
+        company: "The Brotherhoodie",
+        position: "Founder",
+        duration: "Sep 2015 - Jan 2020",
+        description:
+          "Founded a video production company with my college colleague. Some of my responsibilities included: video production for advertising films, events, and weddings; project management (teams, goals, deadlines, and delivery quality); and video capture, editing, and finalization.",
+      },
+    ],
   },
   "pt-br": {
     title: "Experiência",
     description: "Minha jornada profissional e experiência",
-    quartoAvista: "Quarto à Vista",
-    quartoAvistaCTO: "CTO (Julho 2021 - Presente)",
-    quartoAvistaDesc:
-      "Lidero o time de tecnologia em uma administradora de aluguel por temporada com mais de 500 unidades em três estados brasileiros. Minha função é desenvolver e implementar soluções tecnológicas inovadoras para otimizar nossas operações e a experiência do cliente.",
-    tc: "TC",
-    tcDuration: "Junho 2020 - Maio 2023",
-    tcSummary: "Iniciei como Desenvolvedor Full Stack Júnior corrigindo bugs em React, React Native e serviços Go. Promovido a Desenvolvedor Full Stack Pleno, refatorei o módulo de chat e implementei o feed de ideias de investimento. Como Tech Lead, liderei a equipe de experiência do usuário Premium, desenvolvendo funcionalidades de consultoria e entrega de relatórios. Por fim, como Mobile Lead, conduzi iniciativas de performance, observabilidade, novas funcionalidades e desenvolvimentos de negócios como o novo checkout.",
-    brotherhoodie: "The Brotherhoodie",
-    brotherhoodieFounder: "Fundador (Setembro 2015 - Janeiro 2020)",
-    brotherhoodieDesc:
-      "Produtora de vídeo que fundei com meu colega de faculdade. Algumas de minhas atribuições: produção de vídeo para filmes publicitários, eventos e casamentos; gestão de projetos (equipes, metas, prazos e qualidade de entrega); e captação, edição e finalização de vídeos.",
+    jobs: [
+      {
+        company: "Quarto à Vista",
+        companyLink: links.qavi("Quarto à Vista"),
+        position: "CTO",
+        duration: "Jul 2021 - Presente",
+        description:
+          "Lidero o time de tecnologia em uma administradora de aluguel por temporada com mais de 500 unidades em três estados brasileiros. Minha função é desenvolver e implementar soluções tecnológicas inovadoras para otimizar nossas operações e a experiência do cliente.",
+      },
+      {
+        company: "TC",
+        companyLink: links.tc(),
+        position: "Desenvolvedor, Tech Lead e Mobile Lead",
+        duration: "Jun 2020 - Mai 2023",
+        description:
+          "Iniciei como Desenvolvedor Full Stack Júnior corrigindo bugs em React, React Native e serviços Go. Promovido a Desenvolvedor Full Stack Pleno, refatorei o módulo de chat e implementei o feed de ideias de investimento. Como Tech Lead, liderei a equipe de experiência do usuário Premium, desenvolvendo funcionalidades de consultoria e entrega de relatórios. Por fim, como Mobile Lead, conduzi iniciativas de performance, observabilidade, novas funcionalidades e desenvolvimentos de negócios como o novo checkout.",
+      },
+      {
+        company: "The Brotherhoodie",
+        position: "Fundador",
+        duration: "Set 2015 - Jan 2020",
+        description:
+          "Produtora de vídeo que fundei com meu colega de faculdade. Algumas de minhas atribuições: produção de vídeo para filmes publicitários, eventos e casamentos; gestão de projetos (equipes, metas, prazos e qualidade de entrega); e captação, edição e finalização de vídeos.",
+      },
+    ],
   },
 };
 
@@ -54,45 +84,42 @@ const pageContent = content[lang];
 ---
 
 <Layout
-  title={content[lang].title}
-  description={content[lang].description}
+  title={pageContent.title}
+  description={pageContent.description}
   pageType="experience"
 >
   <Container>
     <aside>
-      <div class="space-y-16">
+      <div class="space-y-8 sm:space-y-16">
         <section>
           <h1 class="font-semibold text-black dark:text-white">
             {pageContent.title}
           </h1>
 
-          <div class="space-y-16">
-            <section class="animate space-y-6">
-              <article class="space-y-8">
-                <div>
-                  <h3 class="font-medium">{pageContent.quartoAvista}</h3>
-                  <h4 class="font-medium">{pageContent.quartoAvistaCTO}</h4>
-                  <p>{pageContent.quartoAvistaDesc}</p>
-                </div>
-
-                <div>
-                  <h3 class="font-medium">{pageContent.tc}</h3>
-                  <h4 class="font-medium">{pageContent.tcDuration}</h4>
-                  <p>
-                    {pageContent.tcSummary}
-                  </p>
-                </div>
-
-                <div>
-                  <h3 class="font-medium">{pageContent.brotherhoodie}</h3>
-                  <h4 class="font-medium">
-                    {pageContent.brotherhoodieFounder}
-                  </h4>
-                  <p>{pageContent.brotherhoodieDesc}</p>
-                </div>
-              </article>
-            </section>
-          </div>
+          <section class="animate space-y-6 mt-4">
+            <article class="space-y-8 sm:space-y-16">
+              {
+                pageContent.jobs.map((job) => (
+                  <div class="mb-0 mt-2 py-2">
+                    <div class="my-0 flex items-center justify-between py-0">
+                      <p class="text-lg my-0 font-medium">
+                        {job.companyLink ? (
+                          <span set:html={job.companyLink} />
+                        ) : (
+                          job.company
+                        )}
+                      </p>
+                      <span class="text-sm text-gray-600 dark:text-gray-400">
+                        {job.duration}
+                      </span>
+                    </div>
+                    <p class="font-medium text-sm ">{job.position}</p>
+                    <p>{job.description}</p>
+                  </div>
+                ))
+              }
+            </article>
+          </section>
         </section>
       </div>
     </aside>

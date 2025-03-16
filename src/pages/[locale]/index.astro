@@ -80,7 +80,7 @@ const pageContent = content[lang];
 >
   <Container>
     <aside>
-      <div class="flex items-center gap-4 text-black dark:text-white">
+      <div class="flex items-center gap-4">
         <Image
           src={profileImage}
           alt="Daniel Paiva profile picture"
@@ -90,11 +90,11 @@ const pageContent = content[lang];
           format="webp"
           loading="eager"
         />
-        <h1 class="text-2xl font-bold">
+        <h1 class="text-2xl font-bold text-black dark:text-white">
           {pageContent.title}
         </h1>
       </div>
-      <div class="space-y-16">
+      <div class="space-y-8 sm:space-y-16">
         <section>
           <article class="space-y-4">
             <span>
@@ -170,11 +170,11 @@ const pageContent = content[lang];
                 >
                   {pageContent.scheduleMeeting}
                 </a>
-                {"/"}
               </li>
               {
                 SOCIALS.map((SOCIAL) => (
                   <li class="flex gap-x-2 text-nowrap">
+                    {"/"}
                     <Link
                       href={SOCIAL.HREF}
                       external
@@ -182,18 +182,9 @@ const pageContent = content[lang];
                     >
                       {SOCIAL.NAME}
                     </Link>
-                    {"/"}
                   </li>
                 ))
               }
-              <li class="line-clamp-1">
-                <Link
-                  href={`mailto:${SITE.EMAIL}`}
-                  aria-label={`Email ${SITE.TITLE}`}
-                >
-                  {SITE.EMAIL}
-                </Link>
-              </li>
             </ul>
           </div>
         </section>

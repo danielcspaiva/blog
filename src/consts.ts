@@ -65,8 +65,8 @@ export const SOCIALS: Socials = [
     HREF: "https://github.com/danielcspaiva",
   },
   {
-    NAME: "Quarto à Vista",
-    HREF: "https://quartoavista.com.br",
+    NAME: "Email",
+    HREF: "mailto:danielcspaiva@gmail.com",
   },
 ];
 

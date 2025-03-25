@@ -23,8 +23,13 @@ export async function getStaticPaths() {
   
   return slugs.flatMap(slug => {
     return locales.map(locale => {
+      
       // Find the appropriate post for this locale and slug
       const post = getLocalizedPost(posts, slug, locale);
+
+      console.log('post?.id', post?.id);
+      console.log('slug', slug);
+      console.log('locale', locale);
       
       // If no post is found for this locale, skip it
       if (!post) return null;
@@ -139,6 +144,9 @@ const pageUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
       <h1 class="animate text-3xl py-4 font-semibold text-black dark:text-white">
         {post.data.title}
       </h1>
+      <p class="animate text-gray-500 mb-4">
+        {post.data.description}
+      </p>
       {
         post.data.tags && post.data.tags?.length > 0 ? (
           <div class="animate flex gap-2 pt-1">

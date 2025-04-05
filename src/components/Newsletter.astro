@@ -1,0 +1,62 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+import Container from "@components/Container.astro";
+const lang = getLangFromUrl(Astro.url);
+
+const content = {
+  en: {
+    title: "Subscribe to my newsletter",
+    description:
+      "Get notified when I publish new articles. No spam, unsubscribe anytime.",
+    placeholder: "Enter your email",
+    buttonText: "Subscribe",
+  },
+  "pt-br": {
+    title: "Inscreva-se na minha newsletter",
+    description:
+      "Seja notificado quando eu publicar novos artigos. Sem spam, cancele a inscrição a qualquer momento.",
+    placeholder: "Digite seu email",
+    buttonText: "Inscrever-se",
+  },
+};
+
+const pageContent = content[lang as keyof typeof content];
+---
+
+<Container>
+  <aside class="mt-4">
+    <h2 class="animate font-semibold text-black dark:text-white">
+      {pageContent.title}
+    </h2>
+    <div class="space-y-8">
+      <article class="space-y-4">
+        <p class="animate">
+          {pageContent.description}
+        </p>
+      </article>
+      <form
+        class="animate flex flex-col gap-4 sm:flex-row"
+        action="https://buttondown.com/api/emails/embed-subscribe/danielcspaiva"
+        method="post"
+        target="popupwindow"
+        onsubmit="window.open('https://buttondown.com/danielcspaiva', 'popupwindow')"
+      >
+        <input
+          type="email"
+          name="email"
+          id="bd-email"
+          placeholder={pageContent.placeholder}
+          required
+          class="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors focus:border-gray-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-gray-400"
+        />
+        <button
+          type="submit"
+          class="rounded-lg border border-gray-300 px-6 py-2 text-gray-700 transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-gray-600 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+        >
+          {pageContent.buttonText}
+        </button>
+      </form>
+    </div>
+  </aside>
+</Container>
+

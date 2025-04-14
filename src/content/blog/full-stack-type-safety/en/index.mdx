@@ -1,6 +1,6 @@
 ---
 title: Full-Stack Type Safety
-description: A deep dive into the experience of full-stack type safety and why it's unforgettable
+description: A deep dive into the experience of full-stack type safety and why I can't go back
 date: 2025-04-14
 tags: [tech, typescript, full-stack, type-safety]
 locale: en
@@ -25,7 +25,8 @@ Full-stack type safety connects your database, backend, and frontend into one se
 
 The result? Cleaner, more maintainable code with fewer bugs and better developer experience.
 
-___
+---
+
 ## Introduction
 
 Full-stack development often involves a struggle between mismatched systems. APIs and frontends may speak different languages and be run by different teams, forcing developers to write repetitive defensive code to prevent runtime errors.
@@ -79,7 +80,9 @@ function PostsComponent() {
 
 This approach clutters code with defensive checks to avoid the infamous:
 
-`TypeError: Cannot read properties of undefined (reading 'title')`
+```
+TypeError: Cannot read properties of undefined (reading 'title')
+```
 
 With these safeguards, your core business logic gets lost amid defensive programming. Without them, your application breaks at runtime.
 
@@ -162,11 +165,13 @@ The benefits include:
 - Types that reflect actual data structures
 - The compiler guiding you through needed updates when refactoring
 
+---
+
 ## End-to-End Type Safety
 
 True end-to-end type safety connects your database, backend, and frontend into one seamless type system where types flow automatically through each layer.
 
-### Meet tRPC
+### tRPC
 
 [tRPC](https://trpc.io/) (TypeScript Remote Procedure Call) is a framework that enables you to build fully type-safe APIs with TypeScript. It works by:
 
@@ -195,7 +200,7 @@ On the left side we have the server code, and on the right side we have the clie
 
 When you change the return type of the server, tRPC automatically infers the new type and provides it to the client. This means your IDE will show you exactly what properties are available and what types they have, all in real-time.
 
-### Building with tRPC and Database ORMs
+### Building with tRPC and Typescript ORMs
 
 Here's how to implement end-to-end type safety:
 
@@ -321,9 +326,72 @@ trpc.posts.create.mutate({
 });
 ```
 
+---
+
 ## Alternative Approaches
 
 While [tRPC](https://trpc.io/) with [Prisma](https://www.prisma.io/) or [Drizzle](https://orm.drizzle.team/) offer elegant solutions, alternatives exist:
+
+### Server Components and Server Actions
+
+React and Next.js introduced [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) and [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), allowing you to execute server-side code within React components. This approach offers a new way to achieve type safety, combining the best of both worlds: TypeScript's type safety with server performance.
+
+With Server Components, you can directly access your database and get automatic types from Prisma, eliminating the need for fetch code in the frontend. This results in better initial performance and less boilerplate code. Here's a practical example:
+
+```typescript
+// app/components/PostsList.tsx
+import { prisma } from '@/lib/prisma';
+
+export default async function PostsList() {
+  const posts = await prisma.post.findMany({
+    orderBy: { createdAt: 'desc' },
+    take: 10
+  });
+
+  return (
+    <div>
+      <h1>Recent Posts</h1>
+      {posts.map((post) => (
+        <article key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+          <time dateTime={post.createdAt.toISOString()}>
+            {post.createdAt.toLocaleDateString('en-US')}
+          </time>
+        </article>
+      ))}
+    </div>
+  );
+}
+```
+
+For mutations, Server Actions pair perfectly with Zod for runtime validation:
+
+```typescript
+// app/actions/posts.ts
+'use server';
+
+import { prisma } from '@/lib/prisma';
+import { z } from 'zod';
+
+const createPostSchema = z.object({
+  title: z.string().min(1).max(100),
+  content: z.string().min(10)
+});
+
+export async function createPost(data: z.infer<typeof createPostSchema>) {
+  const validatedData = createPostSchema.parse(data);
+  return await prisma.post.create({ data: validatedData });
+}
+```
+
+However, this approach comes with some important trade-offs. Server Components cannot use hooks like `useState` or `useEffect`, which means state must be managed through Server Actions or client components. This can make the architecture more complex for applications with high interactivity.
+
+Performance also requires special attention. Server Components can block rendering if the operation is slow, requiring strategies like streaming, Suspense boundaries, and data caching. Additionally, the separation between Server and Client Components can be confusing initially, and the technology is still relatively new, with documentation and best practices evolving.
+
+Server Components are ideal for static or semi-static content, applications with many database operations, and cases where SEO is critical. Server Actions shine in forms, operations requiring server-side validation, and situations where you want to avoid traditional REST APIs.
+
+For applications that need more interactivity, a hybrid approach might be more suitable, combining Server Components with other solutions like tRPC. This combination allows you to maintain type safety while offering more flexibility for interactivity.
 
 ### GraphQL with Code Generation
 Strong typing through schema definition, but requires:
@@ -343,7 +411,9 @@ tRPC offers advantages through:
 - Direct backend-to-frontend connection
 - A more natural function-call API style
 
-## The Transformation
+---
+
+## Conclusion
 
 End-to-end type safety transforms development by providing:
 
@@ -361,5 +431,14 @@ After experiencing full-stack type safety, returning to untyped systems feels li
 
 This article wouldn't have been possible without the incredible work and knowledge shared by these amazing developers:
 
-- [Theo](https://www.youtube.com/@t3dotgg) - For his exceptional content on tRPC and type safety, which helped me understand the importance and power of end-to-end type safety in modern web development.
-- [Alex](https://x.com/alexdotjs) - For creating tRPC and pushing the boundaries of type-safe web development, making our lives as developers much easier and more enjoyable.
+[Theo](https://www.youtube.com/@t3dotgg) - For his exceptional content on tRPC and type safety, which helped me understand the importance and power of end-to-end type safety in modern web development.
+
+[Alex](https://x.com/alexdotjs) - For creating tRPC and pushing the boundaries of type-safe web development, making our lives as developers much easier and more enjoyable.
+
+[Colin McDonnell](https://github.com/colinhacks) - For creating Zod, the powerful TypeScript-first schema validation library that has become an essential tool for type-safe development.
+
+[Tanner Linsley](https://twitter.com/tannerlinsley) - For creating TanStack Query (formerly React Query), which revolutionized data fetching in React applications and provides the foundation for tRPC's client-side experience.
+
+[TkDodo](https://twitter.com/tkdodo) - For his invaluable contributions to the TanStack Query ecosystem and his exceptional educational content that has helped countless developers master data fetching and state management.
+
+[Julius](https://github.com/juliusmarminge) - For his significant contributions to tRPC, including the development of the tRPC Next.js adapter and his work on improving the developer experience of the tRPC ecosystem.

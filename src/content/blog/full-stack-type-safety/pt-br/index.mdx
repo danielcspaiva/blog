@@ -1,6 +1,6 @@
 ---
-title: Full-Stack Type Safety
-description: Como é a experiência de ter segurança de tipos full-stack e por que ela é inegociável
+title: Full Stack Type Safety
+description: Como é a experiência Full Stack Type Safety e por que não consigo voltar atrás
 date: 2025-04-14
 tags: [tech, typescript, full-stack, type-safety]
 locale: pt-br
@@ -30,7 +30,7 @@ ___
 
 O desenvolvimento full-stack frequentemente envolve uma luta entre Frontend e Backend. Muitas vezes eles estão em repositórios diferentes, ou até mesmo em linguagens diferentes, sendo de responsabilidade de equipes diferentes. Isso faz com que a integração entre eles envolva alguns desafios.
 
-Considere este exemplo comum:
+Considere este exemplo comum que ilustra o problema:
 
 ```javascript
 import React, { useState, useEffect } from 'react';
@@ -162,11 +162,13 @@ Os benefícios incluem:
 - Tipos que refletem as estruturas de dados reais
 - O compilador guiando você através das atualizações necessárias durante a refatoração
 
+---
+
 ## Full Stack Type Safety
 
 A verdadeira segurança de tipos de ponta a ponta conecta seu banco de dados, backend e frontend em um sistema de tipos unificado onde os tipos fluem automaticamente através de cada camada.
 
-### Conheça o tRPC
+### tRPC
 
 [tRPC](https://trpc.io/) (TypeScript Remote Procedure Call) é um framework que permite construir APIs totalmente seguras em termos de tipos com TypeScript. Ele funciona:
 
@@ -320,9 +322,74 @@ trpc.posts.create.mutate({
 });
 ```
 
+---
+
 ## Abordagens Alternativas
 
-Enquanto [tRPC](https://trpc.io/) com [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/) oferecem soluções elegantes, existem alternativas:
+Enquanto [tRPC](https://trpc.io/) com [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/) oferecem soluções elegantes, existem outras alternativas de obter resultados parecidos:
+
+### Server Components e Server Actions
+
+O React e Next.js introduziram [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) e [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), permitindo executar código no servidor dentro de componentes React. Esta abordagem oferece uma nova maneira de alcançar type safety, combinando o melhor dos dois mundos: a segurança de tipos do TypeScript com a performance do servidor.
+
+Com Server Components, você pode acessar diretamente o banco de dados e obter tipos automáticos do Prisma, eliminando a necessidade de código de fetch no frontend. Isso resulta em melhor performance inicial e menos código boilerplate. Veja um exemplo prático:
+
+```typescript
+// app/components/PostsList.tsx
+import { prisma } from '@/lib/prisma';
+
+export default async function PostsList() {
+  const posts = await prisma.post.findMany({
+    orderBy: { createdAt: 'desc' },
+    take: 10
+  });
+
+  return (
+    <div>
+      <h1>Posts Recentes</h1>
+      {posts.map((post) => (
+        <article key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+          <time dateTime={post.createdAt.toISOString()}>
+            {post.createdAt.toLocaleDateString('pt-BR')}
+          </time>
+        </article>
+      ))}
+    </div>
+  );
+}
+```
+
+Para mutações, Server Actions combinam perfeitamente com Zod para validação em tempo de execução:
+
+```typescript
+// app/actions/posts.ts
+'use server';
+
+import { prisma } from '@/lib/prisma';
+import { z } from 'zod';
+
+const createPostSchema = z.object({
+  title: z.string().min(1).max(100),
+  content: z.string().min(10)
+});
+
+export async function createPost(data: z.infer<typeof createPostSchema>) {
+  const validatedData = createPostSchema.parse(data);
+  return await prisma.post.create({ data: validatedData });
+}
+```
+
+No entanto, esta abordagem vem com alguns trade-offs importantes. Server Components não podem usar hooks como `useState` ou `useEffect`, o que significa que o estado deve ser gerenciado através de Server Actions ou client components. Isso pode tornar a arquitetura mais complexa para aplicações com muita interatividade.
+
+A performance também requer atenção especial. Server Components podem bloquear a renderização se a operação for lenta, exigindo estratégias como streaming, Suspense boundaries e cache de dados. Além disso, a separação entre Server and Client Components pode ser confusa inicialmente, e a tecnologia ainda é relativamente nova, com documentação e melhores práticas em evolução.
+
+Server Components são ideais para conteúdo estático ou semi-estático, aplicações com muitas operações de banco de dados e casos onde SEO é crítico. Já Server Actions brilham em formulários, operações que requerem validação no servidor e situações onde você quer evitar APIs REST tradicionais.
+
+Para aplicações que precisam de mais interatividade, uma abordagem híbrida pode ser mais adequada, combinando Server Components com outras soluções como tRPC. Esta combinação permite manter a type safety enquanto oferece mais flexibilidade para interatividade.
+
+---
 
 ### GraphQL com CodeGen
 Tipagem forte através da definição de esquema, mas requer:
@@ -336,13 +403,15 @@ APIs REST com tipos gerados, mas requer:
 - Desconexão entre implementação e especificação
 - Complexidade adicional de build
 
-O tRPC oferece vantagens através de:
+Comparado às soluções alternativas, tRPC oferece as seguintes vantagens:
 - Zero manutenção de esquema
 - Integração nativa com TypeScript
 - Conexão direta entre backend e frontend
 - Um estilo de API mais natural baseado em chamadas de função
 
-## A Transformação
+---
+
+## Conclusão
 
 A segurança de tipos de ponta a ponta transforma o processo de desenvolvimento fornecendo:
 
@@ -360,5 +429,14 @@ Depois de experimentar a Full Stack Type Safety, voltar para sistemas não tipad
 
 Este artigo não seria possível sem o trabalho incrível e o conhecimento compartilhado por estes desenvolvedores incríveis:
 
-- [Theo](https://www.youtube.com/@t3dotgg) - Por seu conteúdo excepcional sobre tRPC e segurança de tipos, que me ajudou a entender a importância e o poder da segurança de tipos de ponta a ponta no desenvolvimento web moderno.
-- [Alex](https://x.com/alexdotjs) - Por criar o tRPC e empurrar os limites do desenvolvimento web seguro em termos de tipos, tornando nossas vidas como desenvolvedores muito mais fáceis e agradáveis.
+[Theo](https://www.youtube.com/@t3dotgg) - Por seu conteúdo excepcional sobre tRPC e segurança de tipos, que me ajudou a entender a importância e o poder da segurança de tipos de ponta a ponta no desenvolvimento web moderno.
+
+[Alex](https://x.com/alexdotjs) - Por criar o tRPC e empurrar os limites do desenvolvimento web seguro em termos de tipos, tornando nossas vidas como desenvolvedores muito mais fáceis e agradáveis.
+
+[Colin McDonnell](https://github.com/colinhacks) - Por criar o Zod, a poderosa biblioteca de validação de esquemas com foco em TypeScript que se tornou uma ferramenta essencial para o desenvolvimento seguro em termos de tipos.
+
+[Tanner Linsley](https://twitter.com/tannerlinsley) - Por criar o TanStack Query (anteriormente React Query), que revolucionou o fetching de dados em aplicações React e fornece a base para a experiência do lado do cliente do tRPC.
+
+[TkDodo](https://twitter.com/tkdodo) - Por suas valiosas contribuições para o ecossistema TanStack Query e seu conteúdo educacional excepcional que ajudou inúmeros desenvolvedores a dominar o fetching de dados e o gerenciamento de estado.
+
+[Julius](https://github.com/juliusmarminge) - Por suas contribuições significativas ao tRPC, incluindo o desenvolvimento do adaptador tRPC para Next.js e seu trabalho na melhoria da experiência do desenvolvedor no ecossistema tRPC.

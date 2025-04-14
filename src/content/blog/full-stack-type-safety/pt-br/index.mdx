@@ -1,6 +1,6 @@
 ---
 title: Full Stack Type Safety
-description: Como é a experiência Full Stack Type Safety e por que não consigo voltar atrás
+description: Como é a experiência de ter segurança de tipos de ponta a ponta e por que não consigo voltar atrás
 date: 2025-04-14
 tags: [tech, typescript, full-stack, type-safety]
 locale: pt-br
@@ -14,11 +14,11 @@ import video from './../v10-dark-landscape.mp4';
 
 ## TL;DR
 
-Full stack type safety conecta seu banco de dados, backend e frontend em um sistema de tipos unificado. Usando ferramentas como [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/) para operações de banco de dados e [tRPC](https://trpc.io/) para comunicação de API, você pode:
+Segurança de tipos de ponta a ponta (end-to-end type safety) conecta seu banco de dados, backend e frontend em um sistema de tipos unificado. Usando ferramentas como [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/) para operações de banco de dados e [tRPC](https://trpc.io/) para comunicação de API, você pode:
 
 - Eliminar erros de tipo em tempo de execução
 - Inferir automaticamente tipos a partir do esquema do banco de dados e retornos de API
-- Ter segurança de tipos de ponta a ponta em toda a sua stack
+- Ter type safety de ponta a ponta em toda a sua stack
 - Reduzir programação defensiva no seu código
 - Refatorar com segurança e confiança
 
@@ -164,9 +164,13 @@ Os benefícios incluem:
 
 ---
 
-## Full Stack Type Safety
+## End to End Type Safety
 
-A verdadeira segurança de tipos de ponta a ponta conecta seu banco de dados, backend e frontend em um sistema de tipos unificado onde os tipos fluem automaticamente através de cada camada.
+Segurança de tipos de ponta a ponta conecta seu banco de dados, backend e frontend em um sistema de tipos unificado onde os tipos fluem automaticamente através de cada camada, como mostra o diagrama abaixo.
+
+![End-to-End Type Safety](./../fullstack-type-safety.png)
+
+Vamos ver como isso funciona na prática.
 
 ### tRPC
 

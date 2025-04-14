@@ -169,7 +169,11 @@ The benefits include:
 
 ## End-to-End Type Safety
 
-True end-to-end type safety connects your database, backend, and frontend into one seamless type system where types flow automatically through each layer.
+True end-to-end type safety connects your database, backend, and frontend into one seamless type system where types flow automatically through each layer, as shown in the diagram below.
+
+![End-to-End Type Safety](./../fullstack-type-safety.png)
+
+Let's see how this works in practice.
 
 ### tRPC
 
@@ -280,7 +284,7 @@ The type flow creates a continuous chain:
 
 When you make changes, such as adding a `published` field to your `Post` model:
 1. Prisma updates TypeScript types after regeneration
-2. TypeScript immediately flags backend code that needs updates
+2. TypeScript immediately flags code that needs to be updated
 3. The frontend also shows where you need to adapt to the schema change
 
 ### Runtime Validation with Zod
@@ -405,7 +409,7 @@ REST APIs with generated types, but requires:
 - Disconnect between implementation and specification
 - Additional build complexity
 
-tRPC offers advantages through:
+tRPC offers advantages such as:
 - Zero schema maintenance
 - Native TypeScript integration
 - Direct backend-to-frontend connection

@@ -1,0 +1,365 @@
+---
+title: Full-Stack Type Safety
+description: A deep dive into the experience of full-stack type safety and why it's unforgettable
+date: 2025-04-14
+tags: [tech, typescript, full-stack, type-safety]
+locale: en
+hideTableOfContents: false
+
+---
+
+import video from './../v10-dark-landscape.mp4';
+
+---
+
+## TL;DR
+
+Full-stack type safety connects your database, backend, and frontend into one seamless type system. Using tools like [Prisma](https://www.prisma.io/) or [Drizzle](https://orm.drizzle.team/) for database operations and [tRPC](https://trpc.io/) for API communication, you can:
+
+- Eliminate runtime type errors
+- Get automatic type inference from your database schema
+- Enjoy end-to-end type safety across your entire stack
+- Reduce defensive programming and boilerplate code
+- Make refactoring safer and more confident
+- Focus more on business logic and less on type management
+
+The result? Cleaner, more maintainable code with fewer bugs and better developer experience.
+
+___
+## Introduction
+
+Full-stack development often involves a struggle between mismatched systems. APIs and frontends may speak different languages and be run by different teams, forcing developers to write repetitive defensive code to prevent runtime errors.
+
+Consider this common example:
+
+```javascript
+import React, { useState, useEffect } from 'react';
+
+function PostsComponent() {
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('https://api.example.com/posts');
+        const data = await response.json();
+        // We can't be sure of data's structure
+        setPosts(data);
+      } catch (error) {
+        setError(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <h1>Posts</h1>
+      {/* We can't be sure of posts' structure */}
+      {posts && posts.length > 0 ? (
+        posts.map((post, index) =>
+          post && post.title && post.content ? (
+            <div key={index}>
+              <h2>{post.title}</h2>
+              <p>{post.content}</p>
+            </div>
+          ) : (
+            <div key={index}><p>Unexpected post format</p></div>
+          )
+        )
+      ) : (
+        <p>No posts available</p>
+      )}
+    </div>
+  );
+}
+```
+
+This approach clutters code with defensive checks to avoid the infamous:
+
+`TypeError: Cannot read properties of undefined (reading 'title')`
+
+With these safeguards, your core business logic gets lost amid defensive programming. Without them, your application breaks at runtime.
+
+### Manual Type Definitions: An Incomplete Solution
+
+Manually defining types for API responses seems like a solution:
+
+```typescript
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+}
+
+interface PostsResponse {
+  posts: Post[];
+  totalCount: number;
+}
+
+function PostsComponent() {
+  const [postsData, setPostsData] = useState<PostsResponse | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('https://api.example.com/posts');
+        const data = await response.json() as PostsResponse; // Type assertion, not validation!
+        setPostsData(data);
+      } catch (error) {
+        setError(error as Error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (!postsData) {
+    return <p>Loading posts...</p>;
+  }
+
+  return (
+    <div>
+      <h1>Posts ({postsData.totalCount || 0})</h1>
+      {postsData.posts.map(post => (
+        <div key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+This approach has significant limitations:
+- **Silent failures when APIs change**: If the backend changes (like renaming `totalCount` to `count`), TypeScript won't catch it because of the type assertion
+- **No runtime validation**: TypeScript types disappear at runtime
+- **Duplication of knowledge**: Types must be manually maintained in sync with the backend
+- **API schema changes become breaking changes**: Backend changes can silently break the frontend
+
+### Type Inference vs Manual Annotation
+
+As we've seen above, manually defining types for API responses has limitations. As an alternative, we have another option: type inference. Type inference derives types directly from the source:
+
+```typescript
+// Types inferred from database schema via Prisma
+const user = await prisma.user.findUnique({ where: { id: 1 } });
+// user is fully typed based on your database schema
+
+// Or with Drizzle
+const user = await db.query.users.findFirst({ where: eq(users.id, 1) });
+// user is also fully typed based on your database schema
+```
+
+The benefits include:
+- A single source of truth
+- Automatic updates when schemas change
+- Types that reflect actual data structures
+- The compiler guiding you through needed updates when refactoring
+
+## End-to-End Type Safety
+
+True end-to-end type safety connects your database, backend, and frontend into one seamless type system where types flow automatically through each layer.
+
+### Meet tRPC
+
+[tRPC](https://trpc.io/) (TypeScript Remote Procedure Call) is a framework that enables you to build fully type-safe APIs with TypeScript. It works by:
+
+- Creating a single source of truth for your API types
+- Automatically inferring types from your backend code
+- Providing type-safe client-side API calls (built on top of [Tanstack Query](https://tanstack.com/query/latest))
+- Eliminating the need for code generation or manual type definitions
+- Supporting real-time subscriptions and streaming
+
+The key advantage of tRPC is that it allows you to call your backend procedures directly from your frontend code, with full type safety and autocompletion. This means you get the same developer experience as calling a local function, but with the benefits of a remote API call.
+
+Let's see this in action. In the video below, you can see how tRPC maintains type safety across your entire stack:
+
+<video
+  src={video}
+  autoPlay
+  loop
+  muted
+  playsInline
+  className="rounded-lg shadow-lg"
+/>
+
+<small className="text-gray-500 block text-center mb-4">Video credit: [tRPC website](https://trpc.io/)</small>
+
+On the left side we have the server code, and on the right side we have the client code. As soon as you make a change to the server code, tRPC gives you immediate feedback on the client side. If there's a type mismatch, you'll see type errors on the client, letting you know exactly what needs to be updated.
+
+When you change the return type of the server, tRPC automatically infers the new type and provides it to the client. This means your IDE will show you exactly what properties are available and what types they have, all in real-time.
+
+### Building with tRPC and Database ORMs
+
+Here's how to implement end-to-end type safety:
+
+1. **Database Schema** with [Prisma](https://www.prisma.io/) or [Drizzle](https://orm.drizzle.team/):
+```prisma
+// schema.prisma (Prisma)
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+}
+```
+
+```typescript
+// schema.ts (Drizzle)
+import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+
+export const posts = pgTable('posts', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+```
+
+2. **Backend API** with [tRPC](https://trpc.io/):
+```typescript
+// server/router.ts
+export const appRouter = router({
+  posts: router({
+    getAll: publicProcedure.query(async () => {
+      // With Prisma
+      return await prisma.post.findMany();
+      
+      // Or with Drizzle
+      return await db.query.posts.findMany();
+    })
+  })
+});
+
+// Export type definition of API
+export type AppRouter = typeof appRouter;
+```
+
+3. **Frontend Integration**:
+```typescript
+// client/components/PostList.tsx
+function PostsComponent() {
+  // posts is automatically typed as Post[] from your database schema!
+  const { data: posts, error, isLoading } = trpc.posts.getAll.useQuery();
+
+  if (isLoading) return <p>Loading posts...</p>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!posts?.length) return <p>No posts available</p>;
+
+  return (
+    <div>
+      <h1>Posts</h1>
+      {posts.map((post) => (
+        <div key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+          <em>Created: {post.createdAt.toLocaleDateString()}</em>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+The type flow creates a continuous chain:
+1. Database schema defines the structure
+2. Prisma generates TypeScript types
+3. tRPC infers return types from Prisma
+4. React components receive fully typed data
+
+When you make changes, such as adding a `published` field to your `Post` model:
+1. Prisma updates TypeScript types after regeneration
+2. TypeScript immediately flags backend code that needs updates
+3. The frontend also shows where you need to adapt to the schema change
+
+### Runtime Validation with Zod
+
+TypeScript provides compile-time safety, but runtime validation is still needed. Zod fills this gap:
+
+```typescript
+import { z } from 'zod';
+
+// Define a schema that validates at runtime
+const PostSchema = z.object({
+  title: z.string().min(1).max(100),
+  content: z.string().min(10)
+});
+
+// tRPC integration
+export const appRouter = router({
+  posts: router({
+    create: publicProcedure
+      .input(PostSchema)
+      .mutation(async ({ input }) => {
+        // Input is validated before this code runs
+        return await prisma.post.create({ data: input });
+      })
+  })
+});
+```
+
+This combination provides:
+- Runtime validation before data reaches business logic
+- Self-documenting APIs with explicit input requirements
+- Automatic error messages with detailed validation failures
+- A single source of truth for both types and validation rules
+
+For example, a client request with invalid data:
+
+```typescript
+trpc.posts.create.mutate({
+  title: "", // Too short!
+  content: "This is a test"
+}).catch(error => {
+  // ZodError with detailed information about the validation failure
+});
+```
+
+## Alternative Approaches
+
+While [tRPC](https://trpc.io/) with [Prisma](https://www.prisma.io/) or [Drizzle](https://orm.drizzle.team/) offer elegant solutions, alternatives exist:
+
+### GraphQL with Code Generation
+Strong typing through schema definition, but requires:
+- Learning a separate query language
+- Extra tooling for caching and state management
+- Schema and resolver maintenance
+
+### OpenAPI/Swagger
+REST APIs with generated types, but requires:
+- Manual maintenance of specifications
+- Disconnect between implementation and specification
+- Additional build complexity
+
+tRPC offers advantages through:
+- Zero schema maintenance
+- Native TypeScript integration
+- Direct backend-to-frontend connection
+- A more natural function-call API style
+
+## The Transformation
+
+End-to-end type safety transforms development by providing:
+
+- **A single source of truth**: Types flow from one definition
+- **Reduced defensive programming**: Less need for runtime checks
+- **Confident refactoring**: TypeScript guides you through changes
+- **Focus on business logic**: Less time spent on type management
+- **Faster feature development**: Fewer integration bugs
+
+After experiencing full-stack type safety, returning to untyped systems feels like working in the dark. Your code becomes cleaner, more maintainable, and significantly more reliable, with your editor providing rich autocompletion and documentation to guide development.
+
+---
+
+## Acknowledgements
+
+This article wouldn't have been possible without the incredible work and knowledge shared by these amazing developers:
+
+- [Theo](https://www.youtube.com/@t3dotgg) - For his exceptional content on tRPC and type safety, which helped me understand the importance and power of end-to-end type safety in modern web development.
+- [Alex](https://x.com/alexdotjs) - For creating tRPC and pushing the boundaries of type-safe web development, making our lives as developers much easier and more enjoyable.

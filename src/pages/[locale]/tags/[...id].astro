@@ -18,7 +18,7 @@ export async function getStaticPaths() {
     return tags.map((tag) => ({
       params: { locale, id: tag },
       props: {
-        posts: posts.filter((post) => post.data.tags?.includes(tag)),
+        posts: posts.filter((post) => post.data.tags?.includes(tag) && post.data.locale === locale),
         locale,
       },
     }));

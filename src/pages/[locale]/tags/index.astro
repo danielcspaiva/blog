@@ -15,7 +15,7 @@ export function getStaticPaths() {
 const { locale } = Astro.params;
 const lang = locale as keyof typeof ui;
 
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = await getCollection("blog", ({ data }) => !data.draft && data.locale === locale);
 const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))].sort();
 
 // Content based on locale

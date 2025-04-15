@@ -10,8 +10,6 @@ hideTableOfContents: false
 
 import video from './../v10-dark-landscape.mp4';
 
----
-
 ## TL;DR
 
 Segurança de tipos de ponta a ponta (end-to-end type safety) conecta seu banco de dados, backend e frontend em um sistema de tipos unificado. Usando ferramentas como [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/) para operações de banco de dados e [tRPC](https://trpc.io/) para comunicação de API, você pode:
@@ -202,7 +200,7 @@ No vídeo, o lado esquerdo mostra o código do servidor e o direito o código do
 
 A inferência automática de tipos do tRPC garante que sua IDE sempre mostre as propriedades disponíveis com seus tipos corretos em tempo real, mantendo todo o sistema sincronizado sem esforço adicional.
 
-### Construindo com tRPC e ORMs de Banco de Dados
+### Construindo com tRPC e ORMs
 
 Aqui está como implementar segurança de tipos de ponta a ponta:
 
@@ -285,7 +283,7 @@ Quando você faz alterações, como adicionar um campo `published` ao seu modelo
 2. O tRPC infere automaticamente os novos tipos de retorno
 3. O novo campo `published` é imediatamente disponível no frontend
 
-### Validação em Tempo de Execução com Zod
+### Validações com Zod
 
 O TypeScript fornece segurança em tempo de compilação, mas a validação em tempo de execução ainda é necessária. O Zod preenche essa lacuna:
 
@@ -334,7 +332,7 @@ trpc.posts.create.mutate({
 
 Enquanto [tRPC](https://trpc.io/) com [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/) oferecem soluções simples e efetivas, existem outras alternativas de obter resultados parecidos:
 
-### Server Components e Server Actions
+### Server Components e Actions
 
 O React e Next.js introduziram [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) e [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), permitindo executar código no servidor dentro de componentes React.
 

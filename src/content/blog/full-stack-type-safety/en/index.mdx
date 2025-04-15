@@ -10,8 +10,6 @@ hideTableOfContents: false
 
 import video from './../v10-dark-landscape.mp4';
 
----
-
 ## TL;DR
 
 Full-stack type safety connects your database, backend, and frontend into one seamless type system. Using tools like [Prisma](https://www.prisma.io/) or [Drizzle](https://orm.drizzle.team/) for database operations and [tRPC](https://trpc.io/) for API communication, you can:
@@ -204,7 +202,7 @@ In the video, the left side shows the server code and the right side shows the c
 
 tRPC's automatic type inference ensures that your IDE always shows the available properties with their correct types in real-time, keeping the entire system synchronized without additional effort.
 
-### Building with tRPC and Typescript ORMs
+### Building with tRPC and ORMs
 
 Here's how to implement end-to-end type safety:
 
@@ -336,7 +334,7 @@ trpc.posts.create.mutate({
 
 While [tRPC](https://trpc.io/) with [Prisma](https://www.prisma.io/) or [Drizzle](https://orm.drizzle.team/) offer elegant solutions, alternatives exist:
 
-### Server Components and Server Actions
+### Server Components and Actions
 
 React and Next.js introduced [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) and [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), allowing you to execute server-side code within React components.
 

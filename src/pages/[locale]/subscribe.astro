@@ -1,0 +1,30 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import { languages } from "../../i18n/ui";
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.params;
+const content = {
+  en: {
+    title: "Subscribe to my newsletter",
+    description: "Get notified when I publish new articles. No spam, unsubscribe anytime.",
+  },
+  "pt-br": {
+    title: "Inscreva-se na minha newsletter",
+    description: "Seja notificado quando eu publicar novos artigos. Sem spam, cancele a inscrição a qualquer momento.",
+  },
+};
+const pageContent = content[locale as 'en' | 'pt-br'];
+---
+
+<Layout title={pageContent.title} description={pageContent.description} pageType="subscribe">
+  <Container>
+  </Container>
+</Layout> 

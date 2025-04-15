@@ -1,6 +1,6 @@
 ---
 title: Full Stack Type Safety
-description: Como é a experiência de ter segurança de tipos de ponta a ponta e por que não consigo voltar atrás
+description: Como é a experiência de ter segurança de tipos de ponta a ponta e por que isso é tão importante
 date: 2025-04-14
 tags: [tech, typescript, full-stack, type-safety]
 locale: pt-br
@@ -22,7 +22,7 @@ Segurança de tipos de ponta a ponta (end-to-end type safety) conecta seu banco 
 - Reduzir programação defensiva no seu código
 - Refatorar com segurança e confiança
 
-O resultado? Código mais limpo, mais fácil de manter, com menos bugs e melhor DX para o seu time.
+O resultado? Código mais limpo, mais fácil de manter, com menos bugs e melhor experiência de desenvolvimento para o seu time.
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 O desenvolvimento full-stack frequentemente envolve uma luta entre Frontend e Backend. Muitas vezes eles estão em repositórios diferentes, ou até mesmo em linguagens diferentes, sendo de responsabilidade de equipes diferentes. Isso faz com que a integração entre eles envolva alguns desafios.
 
-Considere este exemplo comum que ilustra o problema:
+Considere este exemplo:
 
 ```javascript
 import React, { useState, useEffect } from 'react';
@@ -79,11 +79,13 @@ function PostsComponent() {
 
 Nesta abordagem temos que fazer várias validações para evitar o erro clássico:
 
-`TypeError: Cannot read properties of undefined (reading 'title')`
+```
+TypeError: Cannot read properties of undefined (reading 'title')
+```
 
 Existem algumas abordagens para resolver isso, como vamos ver ao longo do artigo.
 
-### Definições de Tipos Manuais: Uma Solução Incompleta
+### Definições de Tipos Manuais
 
 Definir tipos manualmente para respostas de API parece ser uma boa solução:
 
@@ -142,7 +144,7 @@ Esta abordagem tem limitações significativas:
 - **Duplicação de conhecimento**: Os tipos devem ser mantidos manualmente em sincronia com o backend (e se o backend mudar, temos que atualizar os tipos manualmente)
 - **Mudanças no esquema da API se tornam breaking changes**: Alterações no backend podem quebrar silenciosamente o frontend
 
-### Inferência de Tipos vs Anotação Manual
+### Inferência de Tipos
 
 Como vimos acima, a definição manual de tipos para respostas de API tem limitações. Como contrapartida temos a inferência de tipos, que deriva tipos diretamente da fonte:
 
@@ -177,7 +179,7 @@ Vamos ver como isso funciona na prática.
 [tRPC](https://trpc.io/) (TypeScript Remote Procedure Call) é um framework que permite construir APIs totalmente seguras em termos de tipos com TypeScript. Ele funciona:
 
 - Criando uma única fonte de verdade para os tipos da sua API
-- Inferindo automaticamente tipos do seu código backend
+- Inferindo automaticamente tipos do retorno de suas funções backend
 - Fornecendo chamadas de API do lado do cliente seguras em termos de tipos (construído em cima do [Tanstack Query](https://tanstack.com/query/latest))
 - Eliminando a necessidade de geração de código ou definições de tipo manuais
 
@@ -196,9 +198,9 @@ Vamos ver isso em ação. No vídeo abaixo, você pode ver como o tRPC mantém a
 
 <small className="text-gray-500 block text-center mb-4">Crédito do vídeo: [tRPC website](https://trpc.io/)</small>
 
-No lado esquerdo temos o código do servidor, e no lado direito temos o código do cliente. Assim que você faz uma alteração no código do servidor, o tRPC fornece feedback imediato no lado do cliente. Se houver uma incompatibilidade de tipos, você verá erros de tipo no cliente, informando exatamente o que precisa ser atualizado.
+No vídeo, o lado esquerdo mostra o código do servidor e o direito o código do cliente. O tRPC proporciona feedback instantâneo entre ambos - quando você modifica o código do servidor, o cliente é imediatamente atualizado. Erros de tipo aparecem automaticamente no cliente quando há incompatibilidades, indicando precisamente o que precisa ser corrigido.
 
-Quando você altera o tipo de retorno do servidor, o tRPC infere automaticamente o novo tipo e o fornece ao cliente. Isso significa que sua IDE mostrará exatamente quais propriedades estão disponíveis e quais tipos elas têm, tudo em tempo real.
+A inferência automática de tipos do tRPC garante que sua IDE sempre mostre as propriedades disponíveis com seus tipos corretos em tempo real, mantendo todo o sistema sincronizado sem esforço adicional.
 
 ### Construindo com tRPC e ORMs de Banco de Dados
 
@@ -272,16 +274,16 @@ function PostsComponent() {
 }
 ```
 
-O fluxo de tipos cria uma cadeia contínua:
-1. O esquema do banco de dados define a estrutura
-2. O Prisma gera tipos TypeScript
-3. O tRPC infere tipos de retorno do Prisma
+Os tipos fluem automaticamente através de cada camada:
+1. O schema do banco de dados define a estrutura
+2. O Prisma/Drizzle gera tipos TypeScript a partir do schema
+3. O tRPC infere tipos de retorno do Prisma/Drizzle
 4. Componentes React recebem dados totalmente tipados
 
 Quando você faz alterações, como adicionar um campo `published` ao seu modelo `Post`:
-1. O Prisma atualiza os tipos TypeScript após a regeneração
-2. O TypeScript sinaliza imediatamente o código backend que precisa de atualizações
-3. O frontend também mostra onde você precisa se adaptar à mudança de esquema
+1. O Prisma/Drizzle atualiza os tipos TypeScript após a regeneração
+2. O tRPC infere automaticamente os novos tipos de retorno
+3. O novo campo `published` é imediatamente disponível no frontend
 
 ### Validação em Tempo de Execução com Zod
 
@@ -310,8 +312,8 @@ export const appRouter = router({
 ```
 
 Esta combinação fornece:
-- Validação em tempo de execução antes que os dados cheguem à lógica de negócios
-- APIs auto-documentadas com requisitos de entrada explícitos
+- Validação em tempo de execução para garantir que os dados enviados para o backend tenham o formato esperado
+- APIs auto-documentadas com requisitos de input explícitos
 - Mensagens de erro automáticas com falhas de validação detalhadas
 - Uma única fonte de verdade para tipos e regras de validação
 
@@ -330,13 +332,13 @@ trpc.posts.create.mutate({
 
 ## Abordagens Alternativas
 
-Enquanto [tRPC](https://trpc.io/) com [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/) oferecem soluções elegantes, existem outras alternativas de obter resultados parecidos:
+Enquanto [tRPC](https://trpc.io/) com [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/) oferecem soluções simples e efetivas, existem outras alternativas de obter resultados parecidos:
 
 ### Server Components e Server Actions
 
-O React e Next.js introduziram [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) e [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), permitindo executar código no servidor dentro de componentes React. Esta abordagem oferece uma nova maneira de alcançar type safety, combinando o melhor dos dois mundos: a segurança de tipos do TypeScript com a performance do servidor.
+O React e Next.js introduziram [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) e [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), permitindo executar código no servidor dentro de componentes React.
 
-Com Server Components, você pode acessar diretamente o banco de dados e obter tipos automáticos do Prisma, eliminando a necessidade de código de fetch no frontend. Isso resulta em melhor performance inicial e menos código boilerplate. Veja um exemplo prático:
+Com Server Components, você pode acessar diretamente o banco de dados e obter tipos automáticos do Prisma, eliminando a necessidade de código de fetch no front end. Vamos ver um exemplo prático:
 
 ```typescript
 // app/components/PostsList.tsx
@@ -365,7 +367,7 @@ export default async function PostsList() {
 }
 ```
 
-Para mutações, Server Actions combinam perfeitamente com Zod para validação em tempo de execução:
+Para mutações, Server Actions podem ser combinados perfeitamente com Zod para validação em tempo de execução:
 
 ```typescript
 // app/actions/posts.ts
@@ -387,11 +389,9 @@ export async function createPost(data: z.infer<typeof createPostSchema>) {
 
 No entanto, esta abordagem vem com alguns trade-offs importantes. Server Components não podem usar hooks como `useState` ou `useEffect`, o que significa que o estado deve ser gerenciado através de Server Actions ou client components. Isso pode tornar a arquitetura mais complexa para aplicações com muita interatividade.
 
-A performance também requer atenção especial. Server Components podem bloquear a renderização se a operação for lenta, exigindo estratégias como streaming, Suspense boundaries e cache de dados. Além disso, a separação entre Server and Client Components pode ser confusa inicialmente, e a tecnologia ainda é relativamente nova, com documentação e melhores práticas em evolução.
+A performance também requer atenção especial. Server Components podem bloquear a renderização se a operação for lenta, exigindo estratégias como streaming, Suspense boundaries e cache de dados.
 
-Server Components são ideais para conteúdo estático ou semi-estático, aplicações com muitas operações de banco de dados e casos onde SEO é crítico. Já Server Actions brilham em formulários, operações que requerem validação no servidor e situações onde você quer evitar APIs REST tradicionais.
-
-Para aplicações que precisam de mais interatividade, uma abordagem híbrida pode ser mais adequada, combinando Server Components com outras soluções como tRPC. Esta combinação permite manter a type safety enquanto oferece mais flexibilidade para interatividade.
+Além disso, a separação entre Server and Client Components pode ser confusa inicialmente, e a tecnologia ainda é relativamente nova, com documentação e melhores práticas em evolução.
 
 ---
 
@@ -417,7 +417,7 @@ Comparado às soluções alternativas, tRPC oferece as seguintes vantagens:
 
 ## Conclusão
 
-A segurança de tipos de ponta a ponta transforma o processo de desenvolvimento fornecendo:
+A segurança de tipos de ponta a ponta transforma completamente o processo de desenvolvimento full-stack, fornecendo:
 
 - **Uma única fonte de verdade**: Os tipos fluem de uma definição
 - **Programação defensiva reduzida**: Menos necessidade de verificações em tempo de execução

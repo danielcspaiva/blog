@@ -86,7 +86,7 @@ TypeError: Cannot read properties of undefined (reading 'title')
 
 With these safeguards, your core business logic gets lost amid defensive programming. Without them, your application breaks at runtime.
 
-### Manual Type Definitions: An Incomplete Solution
+### Manual Type Definitions
 
 Manually defining types for API responses seems like a solution:
 
@@ -145,7 +145,7 @@ This approach has significant limitations:
 - **Duplication of knowledge**: Types must be manually maintained in sync with the backend
 - **API schema changes become breaking changes**: Backend changes can silently break the frontend
 
-### Type Inference vs Manual Annotation
+### Type Inference
 
 As we've seen above, manually defining types for API responses has limitations. As an alternative, we have another option: type inference. Type inference derives types directly from the source:
 
@@ -200,9 +200,9 @@ Let's see this in action. In the video below, you can see how tRPC maintains typ
 
 <small className="text-gray-500 block text-center mb-4">Video credit: [tRPC website](https://trpc.io/)</small>
 
-On the left side we have the server code, and on the right side we have the client code. As soon as you make a change to the server code, tRPC gives you immediate feedback on the client side. If there's a type mismatch, you'll see type errors on the client, letting you know exactly what needs to be updated.
+In the video, the left side shows the server code and the right side shows the client code. tRPC provides instant feedback between both - when you modify the server code, the client is immediately updated. Type errors automatically appear in the client when there are incompatibilities, precisely indicating what needs to be fixed.
 
-When you change the return type of the server, tRPC automatically infers the new type and provides it to the client. This means your IDE will show you exactly what properties are available and what types they have, all in real-time.
+tRPC's automatic type inference ensures that your IDE always shows the available properties with their correct types in real-time, keeping the entire system synchronized without additional effort.
 
 ### Building with tRPC and Typescript ORMs
 
@@ -276,7 +276,7 @@ function PostsComponent() {
 }
 ```
 
-The type flow creates a continuous chain:
+The types flow automatically through each layer:
 1. Database schema defines the structure
 2. Prisma generates TypeScript types
 3. tRPC infers return types from Prisma
@@ -284,8 +284,8 @@ The type flow creates a continuous chain:
 
 When you make changes, such as adding a `published` field to your `Post` model:
 1. Prisma updates TypeScript types after regeneration
-2. TypeScript immediately flags code that needs to be updated
-3. The frontend also shows where you need to adapt to the schema change
+2. tRPC infers the new return types
+3. The new field is immediately available in the frontend
 
 ### Runtime Validation with Zod
 
@@ -314,7 +314,7 @@ export const appRouter = router({
 ```
 
 This combination provides:
-- Runtime validation before data reaches business logic
+- Runtime validation to guarantee that the data sent to the backend has the expected format
 - Self-documenting APIs with explicit input requirements
 - Automatic error messages with detailed validation failures
 - A single source of truth for both types and validation rules
@@ -338,9 +338,9 @@ While [tRPC](https://trpc.io/) with [Prisma](https://www.prisma.io/) or [Drizzle
 
 ### Server Components and Server Actions
 
-React and Next.js introduced [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) and [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), allowing you to execute server-side code within React components. This approach offers a new way to achieve type safety, combining the best of both worlds: TypeScript's type safety with server performance.
+React and Next.js introduced [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) and [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), allowing you to execute server-side code within React components.
 
-With Server Components, you can directly access your database and get automatic types from Prisma, eliminating the need for fetch code in the frontend. This results in better initial performance and less boilerplate code. Here's a practical example:
+With Server Components, you can directly access your database and get automatic types from Prisma, eliminating the need for fetch code in the frontend. Here's a practical example:
 
 ```typescript
 // app/components/PostsList.tsx
@@ -391,11 +391,9 @@ export async function createPost(data: z.infer<typeof createPostSchema>) {
 
 However, this approach comes with some important trade-offs. Server Components cannot use hooks like `useState` or `useEffect`, which means state must be managed through Server Actions or client components. This can make the architecture more complex for applications with high interactivity.
 
-Performance also requires special attention. Server Components can block rendering if the operation is slow, requiring strategies like streaming, Suspense boundaries, and data caching. Additionally, the separation between Server and Client Components can be confusing initially, and the technology is still relatively new, with documentation and best practices evolving.
+Performance also requires special attention. Server Components can block rendering if the operation is slow, requiring strategies like streaming, Suspense boundaries, and data caching.
 
-Server Components are ideal for static or semi-static content, applications with many database operations, and cases where SEO is critical. Server Actions shine in forms, operations requiring server-side validation, and situations where you want to avoid traditional REST APIs.
-
-For applications that need more interactivity, a hybrid approach might be more suitable, combining Server Components with other solutions like tRPC. This combination allows you to maintain type safety while offering more flexibility for interactivity.
+Additionally, the separation between Server and Client Components can be confusing initially, and the technology is still relatively new, with documentation and best practices evolving.
 
 ### GraphQL with Code Generation
 Strong typing through schema definition, but requires:
@@ -419,7 +417,7 @@ tRPC offers advantages such as:
 
 ## Conclusion
 
-End-to-end type safety transforms development by providing:
+End-to-end type safety transforms full-stack development by providing:
 
 - **A single source of truth**: Types flow from one definition
 - **Reduced defensive programming**: Less need for runtime checks

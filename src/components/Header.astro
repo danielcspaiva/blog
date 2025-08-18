@@ -12,11 +12,16 @@ const t = useTranslations(lang);
 <header transition:persist>
   <Container>
     <div class="flex flex-wrap justify-between gap-y-2">
-      <Link href="/" underline={false}>
-        <div class="font-semibold">
-          {SITE.TITLE}&nbsp;
-        </div>
-      </Link>
+      <div class="overflow-x-auto translate-y-1">
+        <Link href="/" underline={false}>
+          <div class="font-mono text-[2.5px] sm:text-[3px] md:text-[3.5px] leading-tight text-black dark:text-white select-none whitespace-pre">██████╗  ██████╗███████╗██████╗ 
+██╔══██╗██╔════╝██╔════╝██╔══██╗
+██║  ██║██║     ███████╗██████╔╝
+██║  ██║██║     ╚════██║██╔═══╝ 
+██████╔╝╚██████╗███████║██║     
+╚═════╝  ╚═════╝╚══════╝╚═╝</div>
+        </Link>
+      </div>
       <nav class="flex items-center gap-1 text-sm">
         <span class="mr-2">
           <LanguageSwitcher />

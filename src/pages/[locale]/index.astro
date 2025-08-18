@@ -80,19 +80,33 @@ const pageContent = content[lang];
 >
   <Container>
     <aside>
-      <div class="animate flex items-center gap-4">
+      <!-- Option 4: Layered Visual Hierarchy -->
+      <div class="animate space-y-6 text-center">
+        <!-- Larger profile image as focal point -->
         <Image
           src={profileImage}
           alt="Daniel Paiva profile picture"
-          width={40}
-          height={40}
-          class="h-10 w-10 rounded-full object-cover"
+          width={100}
+          height={100}
+          class="h-25 w-25 rounded-full object-cover mx-auto"
           format="webp"
           loading="eager"
         />
-        <h1 class="text-2xl font-bold text-black dark:text-white">
+        
+        <!-- Primary greeting -->
+        <!-- <h1 class="text-3xl font-bold text-black dark:text-white">
           {pageContent.title}
-        </h1>
+        </h1> -->
+        
+        <!-- ASCII art as signature/brand mark -->
+        <div class="relative group overflow-x-auto mb-8">
+          <div class="font-mono text-[6px] xs:text-[7px] sm:text-[8px] md:text-xxs leading-tight select-all whitespace-pre min-w-fit">██████╗  █████╗ ███╗   ██╗██╗███████╗██╗         ██████╗  █████╗ ██╗██╗   ██╗ █████╗ 
+██╔══██╗██╔══██╗████╗  ██║██║██╔════╝██║         ██╔══██╗██╔══██╗██║██║   ██║██╔══██╗
+██║  ██║███████║██╔██╗ ██║██║█████╗  ██║         ██████╔╝███████║██║██║   ██║███████║
+██║  ██║██╔══██║██║╚██╗██║██║██╔══╝  ██║         ██╔═══╝ ██╔══██║██║╚██╗ ██╔╝██╔══██║
+██████╔╝██║  ██║██║ ╚████║██║███████╗███████╗    ██║     ██║  ██║██║ ╚████╔╝ ██║  ██║
+╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚══════╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝  ╚═╝  ╚═╝</div>
+        </div>
       </div>
       <div class="space-y-8 sm:space-y-16">
         <section>

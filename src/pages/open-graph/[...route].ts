@@ -40,9 +40,9 @@ export const { getStaticPaths, GET } = OGImageRoute({
   getImageOptions: (path, page) => ({
     title: page.title,
     description: page.description,
-    // Use our custom template
-    templatePath: "./src/components/og/default-template.ts",
-    // Set background color to white
+    // Use our custom template with ASCII art
+    templatePath: "./src/components/og/blog-template.ts",
+    // Set background to white
     bgGradient: [[255, 255, 255]],
     // Add profile picture as logo with custom options
     logo: {
@@ -52,23 +52,23 @@ export const { getStaticPaths, GET } = OGImageRoute({
       // Make the logo circular by adding a mask
       mask: "circle"
     },
-    // Add a subtle border
+    // Add darker navy border
     border: {
-      color: [230, 230, 230],
+      color: [15, 23, 42], // navy-900 (darker)
       width: 4,
       side: "block-start",
     },
     // Increase padding to give more space around content
     padding: 80,
-    // Font configuration
+    // Font configuration with dark colors for light background
     font: {
       title: {
-        color: [9, 9, 11], // Dark text color
+        color: [2, 6, 23], // navy-950 (darkest navy)
         size: 64,
         weight: "Bold",
       },
       description: {
-        color: [100, 100, 100], // Lighter gray for description
+        color: [15, 23, 42], // navy-900 (very dark for description)
         size: 32,
         weight: "Normal",
       },

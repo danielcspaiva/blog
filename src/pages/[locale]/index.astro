@@ -8,7 +8,6 @@ import { getCollection } from "astro:content";
 // import type { CollectionEntry } from "astro:content";
 import { ui, languages } from "../../i18n/ui";
 import { Image } from "astro:assets";
-import profileImage from "./me.jpg";
 import { createCommonLinks } from "@lib/linkUtils";
 
 export function getStaticPaths() {
@@ -84,7 +83,7 @@ const pageContent = content[lang];
       <div class="animate space-y-6 text-center">
         <!-- Larger profile image as focal point -->
         <Image
-          src={profileImage}
+          src="/me.jpg"
           alt="Daniel Paiva profile picture"
           width={100}
           height={100}

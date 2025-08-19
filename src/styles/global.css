@@ -90,7 +90,7 @@
   }
 
   header {
-    @apply fixed left-0 right-0 top-0 z-50 py-3;
+    @apply fixed left-0 right-0 top-0 z-50 py-4;
     @apply bg-white/80 dark:bg-navy-950/80;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);

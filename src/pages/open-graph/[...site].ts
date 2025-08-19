@@ -96,9 +96,9 @@ export const { getStaticPaths, GET } = OGImageRoute({
       // Make the logo circular by adding a mask
       mask: "circle"
     },
-    // Add navy border
+    // Add darker navy border
     border: {
-      color: [30, 41, 59], // navy-800
+      color: [15, 23, 42], // navy-900 (darker)
       width: 4,
       side: "block-start",
     },
@@ -107,12 +107,12 @@ export const { getStaticPaths, GET } = OGImageRoute({
     // Font configuration with dark colors for light background
     font: {
       title: {
-        color: [15, 23, 42], // navy-900 (dark text on light bg)
+        color: [2, 6, 23], // navy-950 (darkest navy)
         size: 64,
         weight: "Bold",
       },
       description: {
-        color: [51, 65, 85], // navy-700 (darker gray for description)
+        color: [15, 23, 42], // navy-900 (very dark for description)
         size: 32,
         weight: "Normal",
       },

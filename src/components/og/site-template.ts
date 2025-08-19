@@ -39,14 +39,14 @@ export default {
       },
       {
         text: description,
-        color: [51, 65, 85], // navy-700 for description
+        color: [15, 23, 42], // navy-900 for description (darker)
         size: 32,
         weight: "Normal",
         fontFamily: "Geist",
       },
       {
         text: `By ${author}`,
-        color: [100, 116, 139], // neutral-500 for author
+        color: [51, 65, 85], // navy-700 for author (darker)
         size: 28,
         weight: "Normal",
         fontFamily: "Geist",

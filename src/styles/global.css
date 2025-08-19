@@ -85,13 +85,13 @@
   body {
     @apply font-sans antialiased;
     @apply flex flex-col;
-    @apply bg-white dark:bg-navy-900;
+    @apply bg-white dark:bg-navy-950;
     @apply text-navy-800 dark:text-neutral-100;
   }
 
   header {
-    @apply fixed left-0 right-0 top-0 z-50 py-6;
-    @apply bg-white/80 dark:bg-navy-900/80;
+    @apply fixed left-0 right-0 top-0 z-50 py-3;
+    @apply bg-white/80 dark:bg-navy-950/80;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }

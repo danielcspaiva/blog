@@ -46,17 +46,13 @@ export const { getStaticPaths, GET } = OGImageRoute({
     bgGradient: [[255, 255, 255]],
     // Add profile picture as logo with custom options
     logo: {
-      path: "./public/profile.png",
+      path: "./public/dcsp-pp-3.png",
       // Resize the logo to a reasonable size
-      size: [250],
-      // Make the logo circular by adding a mask
-      mask: "circle"
+      size: [650],
     },
-    // Add darker navy border
     border: {
       color: [15, 23, 42], // navy-900 (darker)
-      width: 4,
-      side: "block-start",
+      width: 40,
     },
     // Increase padding to give more space around content
     padding: 80,

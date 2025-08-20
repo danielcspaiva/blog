@@ -1,0 +1,102 @@
+---
+title: Communication in the AI era
+description: Context Engineering Is Just Good Communication.
+date: 2025-08-19
+tags: [blog, ai, communication, tech]
+locale: en
+hideTableOfContents: true
+---
+
+---
+
+## TL;DR
+
+Clear, contextual communication is the multiplier for both humans and AIs. Include **goal**, **success criteria**, **steps tried**, **environment/constraints**, **artifacts/links**, and a **specific ask**. **Why this matters:** it reduces back and forth, cuts rework, and makes outputs more reliable.
+
+## Introduction
+
+I've [previously argued that English is the ultimate skill](/en/blog/english-is-the-ultimate-skill/). I still believe English is incredibly important, but it’s ultimately a tool for something broader I underplayed last time: **communication**.
+
+If you work with teammates or AI models, this applies to you.
+
+Today, I’m sharing how AI fits into that equation, and why effective communication becomes even more critical in the AI era.
+
+## The human-to-human problem
+
+We’ve all been there: you hit a problem you can’t solve and ask for help. A friend, colleague, forum, chat, or search engine comes back with follow-up questions like, “What version are you on?”, “Have you read the docs?”, “What did you try?”
+
+That’s **context**, and most of the time it’s impossible to help without it.
+
+In my day-to-day, I often get messages like “that thing didn’t work” or “there was a problem.” To actually help, I ask several follow-up questions, and it can take a while for the full picture to emerge.
+
+**All those follow-up questions are the tax we pay for weak context.**
+
+Why this happens:
+
+- We don’t yet fully understand the situation.
+- We underestimate how essential those “minor” details are to the person (or system) trying to help.
+- We’re just lazy sometimes (myself included 😅).
+
+## The human-to-AI problem
+
+Many people still approach LLMs like Google with a chat interface. They aren't: LLMs are **probabilistic assistants** that generate answers from patterns, not a live, omniscient database.
+
+I recently saw this tweet from Thorsten Ball that summarized it well:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">One thing that feels wrong to me about the current LLM hype is that a lot of people seem to think that LLMs work like search engines, but with a chat interface.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+In practice:
+- LLM outputs are **nondeterministic**: the same question can return different answers, since models work on probabilities rather than fixed rules.
+- Models have **knowledge cutoffs**: they only know about facts, events, and technologies up to the date they were trained. They cannot access real-time information or recent developments.
+- They can **hallucinate**: generating responses that don’t correspond to reality.
+
+Tools and MCPs can extend their capabilities, but we need to point the model to the right tools and explain why.
+
+Because of this, vague prompts underperform. Treat the model like a collaborator: state your goal, success criteria, relevant context (environment, constraints), what you've tried, and link to artifacts. Do this and quality and reliability go up quickly.
+
+Understanding these basic LLM behaviors changes how you interact with them. You become more careful about providing context, checking outputs, and structuring your prompts better. This makes all the difference in response quality and your overall AI experience.
+
+## A concrete before → after
+
+**Before (poor context):**  
+> “Vercel deploy failed. Help!”
+
+**After (good context, short):**  
+> **Goal:** Get production build passing again.  
+> **Symptom:** Deploys fail on Vercel since commit `b7c9d1e`, error: `Module not found: '@/components/Button'`.  
+> **Env:** Next.js 14, Node 20, Vercel build image `2025.07`.  
+> **Tried:** Cleared `.next` + `.vercel`, redeployed twice, confirmed local build works.  
+> **Links:** Failing build log [link], commit `b7c9d1e`.  
+> **Ask:** Identify cause (path alias vs case-sensitive import?) and suggest fix or rollback.
+
+Notice how the improved version defines a clear goal, names the exact error, shows what was tried, and links evidence. That context makes the issue solvable without extra back and forth.
+
+### Quick comparison
+
+| Aspect          | Weak prompt                     | Context-rich prompt                                         |
+|-----------------|---------------------------------|-------------------------------------------------------------|
+| Clarity         | “Deploy failed”                 | Explicit error + failing commit                             |
+| Evidence        | None                            | Build log + steps tried                                     |
+| Likely outcome  | More follow-ups, wasted cycles  | Targeted diagnosis, actionable next step                    |
+
+## Context engineering is just good communication
+
+Clarity and detail consistently produce better results. When you describe exactly what you’re trying to do, what happened, and what you’ve already attempted, both humans and AI can help you far more effectively than if you only say something went wrong.
+
+Tobi Lütke puts it well:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">I really like the term "context engineering" over prompt engineering. <br /><br />It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM.</p>&mdash; tobi lutke (@tobi) <a href="https://twitter.com/tobi/status/1935533422589399127?ref_src=twsrc%5Etfw">June 19, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+In practice, “context engineering” is just excellent communication applied to AI: **give the model everything a competent teammate would need to succeed.**
+
+## Conclusion
+
+Communication has always powered collaboration and problem-solving. In the AI era, it matters even more. Our ability to communicate context clearly often determines how effectively we can harness these tools.
+
+As Guillermo Rauch put it, AI makes success hinge on the quality of your thoughts. That’s why communication is no longer optional, it’s the multiplier:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Invest in communication, whether with humans or AI, and you’ll compound the returns as these systems become even more woven into everyday work.
+
+**Clear context is leverage.**

@@ -1,0 +1,100 @@
+---
+title: Comunicação na era da IA
+description: Context Engineering é apenas boa comunicação.
+date: 2025-08-19
+tags: [blog, ai, communication, tech]
+locale: pt-br
+hideTableOfContents: true
+---
+
+---
+
+## Resumo
+
+Comunicação clara e contextual é o catalisador tanto para humanos quanto para sistemas de IA. Inclua **objetivo**, **critérios de sucesso**, **passos já tentados**, **ambiente/restrições**, **artefatos/links** e um **pedido específico**. **Por que isso importa:** reduz idas e voltas, diminui retrabalho e torna os resultados mais confiáveis.
+
+## Introdução
+
+Já [argumentei antes que o inglês é a habilidade definitiva](/en/blog/english-is-the-ultimate-skill/). Ainda acredito que o inglês é incrivelmente importante, mas no fim das contas ele é apenas uma ferramenta para algo mais amplo que eu subestimei na época: **comunicação**.
+
+Se você trabalha com colegas de equipe ou com modelos de IA, isso se aplica a você.
+
+Hoje quero mostrar como a IA entra nessa equação, e por que a comunicação eficaz se torna ainda mais crítica na era da IA.
+
+## O problema humano-humano
+
+Todos nós já passamos por isso: você enfrenta um problema que não consegue resolver e pede ajuda. Um amigo, colega, fórum, chat ou outro sistema responde com perguntas de de follow up como: “Qual versão você está usando?”, “Você leu a documentação?”, “Você tentou isso?”.
+
+Isso é **contexto**, e na maioria das vezes é impossível ajudar sem ele.
+
+No meu dia a dia, recebo mensagens como “Aquela coisa não funcionou” ou “Houve um problema”. Para realmente ajudar, preciso fazer algumas perguntas pra entender o real contexto, e muitas vezes isso leva um tempo.
+
+Todas essas perguntas extras são o imposto que pagamos por **falta de contexto**.
+
+Por que isso acontece:
+
+- Nem sempre temos o entendimento completo da situação.  
+- Subestimamos a importância de expor os detalhes para quem está tentando nos ajudar.  
+- Às vezes é só preguiça mesmo (eu incluso 😅).
+
+## O problema humano-IA
+
+Muita gente ainda trata LLMs como um Google em forma de chat. Eles não são: LLMs são **assistentes probabilísticos** que geram respostas a partir de padrões, não um banco de dados onisciente e em tempo real.
+
+Esses dias vi esse tweet do Thorsten Ball e achei que resumia bem:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">One thing that feels wrong to me about the current LLM hype is that a lot of people seem to think that LLMs work like search engines, but with a chat interface.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">15 de agosto de 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Na prática:
+- As respostas dos LLMs são **não determinísticas**: ou seja, para a mesma pergunta, eles podem gerar respostas diferentes a cada vez, pois funcionam com base em probabilidades e não em regras fixas.
+- Modelos têm um **limite de conhecimento**: eles só sabem sobre fatos, eventos e tecnologias até a data em que foram treinados, e não têm acesso a informações em tempo real ou acontecimentos recentes.  
+- Eles podem **alucinar**: gerar respostas que não correspondem à realidade.
+
+Tools e MCPs podem expandir suas capacidades, mas precisamos apontar o modelo para as ferramentas certas e explicar por que.
+
+Por isso, prompts vagos, no estilo de busca, têm desempenho ruim. Trate o modelo como um colaborador: declare seu objetivo, critérios de sucesso, contexto relevante (ambiente, restrições), o que você já tentou e links para artefatos. Faça isso e a qualidade e confiabilidade sobem, e rápido.
+
+Saber desses comportamentos básicos das LLMs muda completamente a forma como você interage com elas: você passa a ser mais cuidadoso ao fornecer contexto, checar os outputs e estruturar melhor seus prompts. Isso faz toda a diferença na qualidade das respostas e na sua experiência com IA.
+
+## Um exemplo prático: antes → depois
+
+**Antes (pouco contexto):**  
+> “Deploy no Vercel falhou. Ajuda!”
+
+**Depois (bom contexto, resumido):**  
+> **Objetivo:** Fazer o build de produção passar novamente.  
+> **Sintoma:** Deploys falham no Vercel desde o commit `b7c9d1e`, erro: `Module not found: '@/components/Button'`.  
+> **Ambiente:** Next.js 14, Node 20, imagem de build do Vercel `2025.07`.  
+> **O que já tentei:** Limpei `.next` + `.vercel`, reimplantei duas vezes, build local funciona.  
+> **Links:** Log de build com falha [link], commit `b7c9d1e`.  
+> **Pedido:** Identificar a causa (alias de path vs importação case-sensitive?) e sugerir correção ou rollback.  
+
+Perceba como a versão melhorada define um objetivo claro, nomeia o erro exato, mostra o que já foi tentado e traz evidências — tornando o problema solucionável sem idas e voltas desnecessárias.
+
+### Comparação rápida
+
+| Aspecto         | Prompt fraco                 | Prompt com contexto                                    |
+|-----------------|------------------------------|--------------------------------------------------------|
+| Clareza         | “Deploy falhou”              | Erro explícito + commit com falha                      |
+| Evidência       | Nenhuma                      | Log do build + passos tentados                         |
+| Resultado provável | Mais perguntas, perda de tempo | Diagnóstico direcionado, próximo passo acionável       |
+
+## Context Engineering é apenas boa comunicação
+
+Clareza e detalhe produzem resultados melhores. Quando você descreve exatamente o que está tentando fazer, o que aconteceu e o que já tentou, tanto humanos quanto IA conseguem ajudar muito mais do que se você apenas disser que algo deu errado.
+
+Tobi Lütke resume bem:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">I really like the term "context engineering" over prompt engineering. <br /><br />It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM.</p>&mdash; tobi lutke (@tobi) <a href="https://twitter.com/tobi/status/1935533422589399127?ref_src=twsrc%5Etfw">19 de junho de 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Na prática, “Context Engineering” nada mais é do que comunicação excelente aplicada à IA: **dê ao modelo tudo o que um colega competente (ou você mesmo) precisaria para ter sucesso.**
+
+## Conclusão
+
+A comunicação sempre foi o motor da colaboração e da solução de problemas. Na era da IA, isso importa ainda mais: nossa capacidade de transmitir contexto com clareza muitas vezes determina quão bem conseguimos usar essas ferramentas.
+
+Como Guillermo Rauch colocou, a IA faz o sucesso depender diretamente da qualidade dos seus pensamentos. Por isso, boa comunicação deixou de ser opcional, e se tornou a chave:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">15 de agosto de 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Invista em comunicação, seja com humanos ou com IA, e você colherá retornos cada vez maiores à medida que essas tecnologias se tornem ainda mais presentes no nosso trabalho diário.

@@ -35,13 +35,14 @@ export default function HumanVsAIRadarChart() {
             <PolarGrid className="stroke-gray-300" />
             <PolarAngleAxis 
               dataKey="dimension"
-              className="text-sm fill-gray-700"
-              tick={{ fontSize: 12, fill: '#374151' }}
+              className="text-sm fill-navy-50 dark:fill-navy-900"
+              tick={{ fontSize: 12, fill: 'currentColor' }}
             />
             <PolarRadiusAxis 
               angle={90}
               domain={[0, 1]}
-              className="text-xs fill-gray-500"
+              className="text-xs"
+              tick={{ fontSize: 10, fill: 'currentColor' }}
             />
             <Radar
               name="Human"

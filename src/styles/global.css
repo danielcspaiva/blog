@@ -46,6 +46,21 @@
   --color-neutral-700: #334155;
   --color-neutral-800: #1e293b;
   --color-neutral-900: #0f172a;
+
+  /* Additional accents used for term highlighting */
+  --color-yellow-100: #fef9c3;
+  --color-yellow-800: #92400e;
+  --color-red-200: #fecaca;
+  --color-red-800: #991b1b;
+  --color-green-200: #bbf7d0;
+  --color-green-800: #166534;
+  /* Lighter/darker shades for weight variants */
+  --color-yellow-200: #fef08a;
+  --color-yellow-600: #ca8a04;
+  --color-red-300: #fca5a5;
+  --color-red-600: #dc2626;
+  --color-green-300: #86efac;
+  --color-green-600: #16a34a;
 }
 
 /*
@@ -202,4 +217,57 @@ pre {
 .twitter-tweet {
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+@layer utilities {
+  /* Themed term colors for Knowledge, Context, Tools */
+  .term-knowledge {
+    color: var(--color-yellow-900);
+  }
+  .dark .term-knowledge {
+    color: var(--color-yellow-300);
+  }
+
+  .term-context {
+    color: var(--color-red-900);
+  }
+  .dark .term-context {
+    color: var(--color-red-300);
+  }
+
+  .term-tools {
+    color: var(--color-green-900);
+  }
+  .dark .term-tools {
+    color: var(--color-green-300);
+  }
+
+  .term-baseline {
+    color: var(--color-blue-900);
+  }
+  .dark .term-baseline {
+    color: var(--color-blue-300);
+  }
+
+  /* Weight-specific shades */
+  .term-knowledge-weight {
+    color: var(--color-yellow-800);
+  }
+  .dark .term-knowledge-weight {
+    color: var(--color-yellow-300);
+  }
+
+  .term-context-weight {
+    color: var(--color-red-800);
+  }
+  .dark .term-context-weight {
+    color: var(--color-red-300);
+  }
+
+  .term-tools-weight {
+    color: var(--color-green-800);
+  }
+  .dark .term-tools-weight {
+    color: var(--color-green-300);
+  }
 }

@@ -1,0 +1,170 @@
+---
+title: The Task-Solving Equation
+description: Why knowledge, context, and tools multiply—not add—in determining success.
+date: 2025-08-20
+tags: [blog, ai, communication, tech, problem-solving]
+locale: en
+hideTableOfContents: true
+---
+
+import Callout from "@/components/Callout.astro";
+import HumanVsAIRadarChart from "@/components/HumanVsAIRadarChart.astro";
+
+---
+
+## TL;DR
+
+The probability of solving any task can be modeled as a function of knowledge, context and tools.
+
+<Callout>
+> p(task solved) = α·knowledge × β·context × γ·tools + δ
+</Callout>
+
+Each factor ranges from 0 to 1. If any one of them is missing, the probability collapses to zero. For humans, context often comes “for free.” For AIs, context is scarce and must be carefully provided. In the AI era, context is the bottleneck—and the multiplier.
+
+---
+
+## What is the probability of solving a given task?
+
+Imagine someone gives you a task. Whether you succeed depends on three fundamental factors:
+
+1. **Knowledge** — what you already know. This includes your domain expertise, learned skills, past experiences, and accumulated wisdom.  
+2. **Context** — information about this specific task. The who, what, when, where, and why that makes a generic request actionable.  
+3. **Tools** — what you can use to get it done. Physical instruments, software, processes, other people, or even your ability to create new solutions.
+
+Put together:
+
+<Callout>
+ p(task solved) = α·knowledge × β·context × γ·tools + δ
+</Callout>
+
+### Breaking Down the Equation
+
+Each component serves a specific purpose:
+
+- **α (knowledge weight)**: How much your existing knowledge matters for this type of task. Higher for specialized domains (α = 0.9 for surgery), lower for routine tasks (α = 0.3 for data entry).
+
+- **β (context weight)**: How critical specific context is. Extremely high for debugging (β = 0.95), moderate for creative tasks (β = 0.6).
+
+- **γ (tools weight)**: How much the right tools amplify your capability. High for technical work (γ = 0.8), lower for pure reasoning (γ = 0.4).
+
+- **δ (baseline probability)**: The small chance of success through pure luck or serendipity. Usually very small (δ = 0.05) but never quite zero.
+
+This remains a **multiplicative** relationship in its core. If knowledge, context, or tools approach zero, the multiplication collapses the probability dramatically, leaving only the small baseline δ. You can't substitute missing context with more knowledge, or compensate for poor tools with better information. Each factor amplifies the others—or nullifies them entirely.
+
+*Note: Tools can sometimes help gather missing context (like reading files or checking logs), but this requires knowing what context to look for and having the right tools available. The initial context still matters.*
+
+## Why Multiplication Matters
+
+The multiplicative nature of this equation has profound implications. Addition would suggest you could compensate for poor context with more knowledge or better tools. But that's not how problem-solving works in practice.
+
+Consider a skilled surgeon with years of training and access to the latest medical equipment. If they walk into an operating room with zero information about the patient—no medical history, no diagnosis, no understanding of what procedure is needed—their expertise becomes useless. The multiplication collapses to zero.
+
+The same principle applies to AI interactions. When you ask:
+> "Deploy failed. Help!"
+
+The AI has vast knowledge about deployment issues and access to debugging tools, but without context about your specific environment, error messages, or recent changes, the probability of meaningful help approaches zero. All that knowledge and capability gets multiplied by near-zero context.
+
+*The tools could potentially help gather context—checking logs, reading configuration files, or examining recent commits—but only if the AI knows which tools to use and what to look for. This is where the interplay between factors becomes crucial: some baseline context is needed to effectively use tools to gather more context.*
+
+
+## Humans × AI
+
+{/* this is a radar chart comparing humans vs ai in terms of knowledge, context and tools */}
+<HumanVsAIRadarChart />
+
+The equation reveals striking differences in how each factor manifests:
+
+| Factor | **Humans** | **AIs** |
+|---------|---------|---------|
+| **Knowledge** | Personal experience, formal learning, soft and hard skills. Limited but deep in specific domains. We learn through practice, make connections between concepts, and build intuition over time. | Massive, baked in through pretraining across the internet and specialized fine-tunes. Broad but shallow—vast factual recall without lived experience or intuitive understanding. |
+| **Context** | Inferred automatically through years of social conditioning. You hear a request in your native language, recognize tone of voice, recall shared history, read between the lines, and instantly fill gaps with reasonable assumptions. | Near zero unless explicitly provided. Models can't "infer" what you mean the way humans can—every relevant piece of information must be explicitly included in the input. No shared cultural context or implicit understanding. |
+| **Tools** | Practically unlimited—from computers to hammers to conversations to inventing entirely new tools. We adapt existing tools, combine them creatively, and build new ones as needed. | Limited to what's explicitly wired in—APIs, browsers, code execution, or model extensions like MCPs. Cannot improvise or create new tools on the fly. However, tools can help *gather* missing context (reading files, checking logs, browsing docs), partially compensating for initial context gaps. |
+
+**The result:** Humans usually struggle with *knowledge*—that's why we spend years in school and training. AIs struggle with *context*—that's why prompt engineering became a field.
+
+---
+
+## Before → After Example
+
+Here's how context transforms an impossible request into a solvable problem:
+
+**Before (poor context):**  
+> "Vercel deploy failed. Help!"
+
+This gives the AI almost nothing to work with. Which deploy? What error? What changed? What environment? The equation becomes: `α·(0.9) × β·(0.1) × γ·(0.7) + δ ≈ 0.11` (assuming α=0.7, β=0.9, γ=0.8, δ=0.05 for debugging tasks).
+
+**After (good context, structured):**  
+> **Goal:** Get production build passing again.  
+> **Symptom:** Deploys fail on Vercel since commit `b7c9d1e`, error: `Module not found: '@/components/Button'`.  
+> **Env:** Next.js 14, Node 20, Vercel build image `2025.07`.  
+> **Tried:** Cleared `.next` and `.vercel`, redeployed twice, confirmed local build works.  
+> **Links:** Failing build log [link], commit `b7c9d1e`.  
+> **Ask:** Identify cause (path alias vs case-sensitive import?) and suggest fix or rollback.
+
+Now the equation becomes: `α·(0.9) × β·(0.9) × γ·(0.7) + δ ≈ 0.52`. The improved version doesn't just add information—it transforms the probability of success from ~11% to ~52%.
+
+---
+
+## Why We Neglect Context
+
+If context is so critical, why do we consistently undervalue it? The answer lies in how differently humans and AIs process information.
+
+**The human-to-human problem:** We've all experienced this cycle. You ask for help and immediately get peppered with follow-up questions:
+
+> What version are you on?  
+> Have you read the docs?  
+> What did you try?  
+> What's your environment?
+
+Those questions feel tedious, but they're essential. In my day-to-day, I constantly receive messages like "that thing didn't work" or "there was a problem." To actually help, I need to extract the missing context through multiple rounds of back-and-forth.
+
+**All those follow-up questions are the tax we pay for weak context.**
+
+Why this pattern persists:
+
+- **Incomplete understanding:** We don't yet fully grasp our own situation when we first ask for help.
+- **Assumption bias:** We underestimate how essential those "minor" details are to the person trying to help us.
+- **Cognitive shortcuts:** We're often just being lazy, assuming others share our mental model.
+
+**The human-to-AI amplification:** These human tendencies get amplified when working with AIs. Many people approach LLMs like Google with a chat interface—throw in a quick question and expect a perfect answer. But LLMs are probabilistic pattern-matchers, not omniscient databases.
+
+As Thorsten Ball observed:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">What I find endlessly fascinating:<br /><br />Some engineers really can&#39;t seem to grasp that LLMs are non-deterministic and how to build software taking that into account.<br /><br />For others it immediately clicked, but for some it seems like there&#39;s a real mental barrier to accept it.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">August 14, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Unlike humans, AIs can't ask clarifying questions about your mental model or make reasonable inferences about your situation. They can't read your tone, access your files, or remember yesterday's conversation. Every relevant detail must be explicitly provided, or the context factor in our equation approaches zero.
+
+Understanding this difference transforms how you communicate with AI systems—and the quality of help you receive.
+
+---
+
+## Context as Leverage
+
+This shift in perspective matters. In the pre-AI era, the bottleneck was usually knowledge or tools. You needed to learn more, get better equipment, or gain access to resources. But AI changes the game.
+
+Tobi Lütke captured this transformation perfectly:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">I really like the term "context engineering" over prompt engineering. <br /><br />It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM.</p>&mdash; tobi lutke (@tobi) <a href="https://twitter.com/tobi/status/1935533422589399127?ref_src=twsrc%5Etfw">June 19, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+"Context engineering" isn't just a catchier term—it identifies the new constraint. When knowledge is abundant and tools are powerful, context becomes the scarce resource that determines success.
+
+In other words: good communication is not decoration, it's fuel. Context transforms knowledge and tools from potential into outcomes.
+
+---
+
+## Conclusion
+
+The **task-solving equation** reveals something fundamental about the AI era: the rules of productivity have changed.
+
+For decades, success meant accumulating knowledge and acquiring better tools. Education, training, and technology investment were the primary levers. But AI democratizes both knowledge and tool access. What becomes scarce—and therefore valuable—is the ability to provide rich, clear context.
+
+Humans thrive despite limited knowledge because we're naturally rich in context and adaptable with tools. We share cultural understanding, read between the lines, and fill in gaps automatically. AIs have vast knowledge but starve without explicit context. Every assumption, every piece of relevant background, every nuance must be carefully provided.
+
+This is why communication—clear, complete, context-rich communication—isn't just helpful anymore. It's the multiplier that unlocks AI's potential. As Guillermo Rauch observed:
+
+<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+The quality of your thoughts, expressed through clear context, becomes the primary determinant of success. In this new paradigm:
+
+**Clear context is leverage.**

@@ -254,20 +254,20 @@ pre {
     color: var(--color-yellow-800);
   }
   .dark .term-knowledge-weight {
-    color: var(--color-yellow-300);
+    color: var(--color-yellow-200);
   }
 
   .term-context-weight {
     color: var(--color-red-800);
   }
   .dark .term-context-weight {
-    color: var(--color-red-300);
+    color: var(--color-red-200);
   }
 
   .term-tools-weight {
     color: var(--color-green-800);
   }
   .dark .term-tools-weight {
-    color: var(--color-green-300);
+    color: var(--color-green-200);
   }
 }

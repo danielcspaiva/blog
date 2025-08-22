@@ -12,11 +12,11 @@ import HumanVsAIRadarChart from "@/components/HumanVsAIRadarChart.astro";
 
 ## TL;DR
 
-Task success depends on three factors: <span class="term-knowledge">knowledge</span>, <span class="term-context">context</span>, and <span class="term-tools">tools</span>. They multiply, not add, so if any one is missing, the probability of success collapses.
-- Humans: Usually limited in <span class="term-knowledge">knowledge</span>, but rich in <span class="term-context">context</span> (through shared understanding) and with practically unlimited access to <span class="term-tools">tools</span>.
-- AIs: Vast in <span class="term-knowledge">knowledge</span>, but depend on <span class="term-tools">tool</span> access and explicit <span class="term-context">context</span> to perform.
+Task success depends on three factors: knowledge, context, and tools. They multiply, not add, so if any one is missing, the probability of success collapses.
+- Humans: Usually limited in knowledge, but rich in context (through shared understanding) and with practically unlimited access to tools.
+- AIs: Vast in knowledge, but depend on tool access and explicit context to perform.
 
-That's why in the AI era, <span class="term-context">context</span> is the bottleneck. Clear, structured <span class="term-context">context</span> is the leverage that turns AI from unreliable guesswork into a reliable collaborator.
+That's why in the AI era, context is the bottleneck. Clear, structured context is the leverage that turns AI from unreliable guesswork into a reliable collaborator.
 
 ---
 
@@ -57,11 +57,11 @@ Multiplication matters. You can't compensate for missing context with more knowl
 
 ## Humans × AI
 
-The same three factors (<span class="term-knowledge">knowledge</span>, <span class="term-context">context</span>, and <span class="term-tools">tools</span>) apply to both humans and AIs, but they manifest in very different ways.
+The same three factors (knowledge, context, and tools) apply to both humans and AIs, but they manifest in very different ways.
 
 <HumanVsAIRadarChart />
 
-Human experts still outperform AIs when you consider <span class="term-knowledge">knowledge</span>, <span class="term-context">context</span>, and <span class="term-tools">tools</span> together. At the same time, AIs already surpass the average human on raw <span class="term-knowledge">knowledge</span>. As models improve, success will hinge less on adding <span class="term-knowledge">knowledge</span> and more on supplying precise <span class="term-context">context</span> and access to the right <span class="term-tools">tools</span>.
+Human experts still outperform AIs when you consider knowledge, context, and tools together. At the same time, AIs already surpass the average human on raw knowledge. As models improve, success will hinge less on adding knowledge and more on supplying precise context and access to the right tools.
 
 | Factor | **Humans** | **AIs** |
 |--------|------------|---------|
@@ -69,7 +69,7 @@ Human experts still outperform AIs when you consider <span class="term-knowledge
 | **Context** | Inferred almost automatically: native language, tone of voice, shared history, assumptions, cultural priors. | Minimal unless explicitly provided. Models lack your personal history, environment, or shared assumptions. Every relevant detail must be stated. |
 | **Tools** | Practically unlimited. We adapt, combine, or invent tools on demand. | Limited to what’s wired in (APIs, code exec, browsers, MCPs). Cannot create new tools, but can use existing ones to gather missing context when guided. |
 
-**The result:** Humans usually struggle with *<span class="term-knowledge">knowledge</span>*, which is why education takes years. AIs struggle with *<span class="term-context">context</span>*, which is why prompt (or <span class="term-context">context</span>) engineering exists.
+**The result:** Humans usually struggle with *knowledge*, which is why education takes years. AIs struggle with *context*, which is why prompt (or context) engineering exists.
 
 ---
 
@@ -90,7 +90,7 @@ Almost no information: which deploy? what error? what environment?
 > **Links:** Failing build log [link], commit `b7c9d1e`.  
 > **Ask:** Identify cause (path alias vs case-sensitive import?) and suggest fix or rollback.  
 
-**Good <span class="term-context">context</span> tripled the odds of success—from 12% to 38%.** The same expert, same <span class="term-tools">tools</span>, but clear <span class="term-context">context</span> transforms a likely failure into a reasonable chance of success. (See mathematical breakdown below.)
+**Good context tripled the odds of success—from 12% to 38%.** The same expert, same tools, but clear context transforms a likely failure into a reasonable chance of success. (See mathematical breakdown below.)
 
 <details>
 <summary>Mathematical breakdown</summary>
@@ -142,7 +142,7 @@ All three quirks share the same fix: clear, structured context turns uncertain g
 
 ## The rise of context engineering
 
-AI has fundamentally shifted what skills matter. In the pre-AI era, success required accumulating <span class="term-knowledge">knowledge</span> and acquiring better <span class="term-tools">tools</span>. Now, with models that already possess vast <span class="term-knowledge">knowledge</span> and expanding <span class="term-tools">tool</span> access, **<span class="term-context">context</span> engineering** has emerged as the critical skill.
+AI has fundamentally shifted what skills matter. In the pre-AI era, success required accumulating knowledge and acquiring better tools. Now, with models that already possess vast knowledge and expanding tool access, **context engineering** has emerged as the critical skill.
 
 Tobi Lütke captured this shift perfectly:
 
@@ -155,19 +155,19 @@ Context engineering is becoming as fundamental as programming was in the softwar
 - **Design context frameworks** that scale across different tasks and domains
 - **Debug context gaps** when AI outputs fall short
 
-The professionals who master <span class="term-context">context</span> engineering will have the same advantage early programmers had: they'll be able to reliably harness the most powerful <span class="term-tools">tools</span> of their era while others struggle with inconsistent results.
+The professionals who master context engineering will have the same advantage early programmers had: they'll be able to reliably harness the most powerful tools of their era while others struggle with inconsistent results.
 
 ---
 
 ## Practical guide
 
-<span class="term-context">Context</span> engineering is about providing all the <span class="term-context">context</span> needed to make a task plausibly solvable by the LLM. A well-structured prompt includes:
+Context engineering is about providing all the context needed to make a task plausibly solvable by the LLM. A well-structured prompt includes:
 
 ![Prompt structure diagram showing the 10 essential components for effective AI communication](../media/prompt-engineering.png)
 <p class="text-center text-sm italic">Diagram from <a href="https://www.youtube.com/watch?v=ysPbXH0LpIE">Advanced Prompt Engineering</a> by Anthropic</p>
 
-1. **Task <span class="term-context">context</span>** - The specific situation and background
-2. **Tone <span class="term-context">context</span>** - How the AI should communicate
+1. **Task context** - The specific situation and background
+2. **Tone context** - How the AI should communicate
 3. **Background data, documents, and images** - Relevant information
 4. **Detailed task description & rules** - Clear, specific instructions
 5. **Examples** - Concrete demonstrations of expected output
@@ -177,23 +177,23 @@ The professionals who master <span class="term-context">context</span> engineeri
 9. **Output formatting** - How results should be structured
 10. **Prefilled response (if any)** - Starting the AI's response pattern
 
-Notice how some of these components make no sense for us humans, they sound completely obvious or even redundant. You wouldn't tell a colleague "you are a career coach named Joe" or "you should respond in a friendly customer service tone" because humans infer <span class="term-context">context</span> naturally.
+Notice how some of these components make no sense for us humans, they sound completely obvious or even redundant. You wouldn't tell a colleague "you are a career coach named Joe" or "you should respond in a friendly customer service tone" because humans infer context naturally.
 
-This kind of <span class="term-context">context</span> is precisely where AI shines: when given these explicit details that humans take for granted, AI can process vast amounts of structured <span class="term-context">context</span> and maintain perfect attention to every specified requirement.
+This kind of context is precisely where AI shines: when given these explicit details that humans take for granted, AI can process vast amounts of structured context and maintain perfect attention to every specified requirement.
 
 ---
 
 ## Conclusion
 
-The **task-solving equation** highlights the shift of the AI era. Success no longer hinges on accumulating more <span class="term-knowledge">knowledge</span> or better <span class="term-tools">tools</span>. Those are increasingly commoditized. What's scarce is the ability to provide rich, explicit <span class="term-context">context</span>.
+The **task-solving equation** highlights the shift of the AI era. Success no longer hinges on accumulating more knowledge or better tools. Those are increasingly commoditized. What's scarce is the ability to provide rich, explicit context.
 
-Humans succeed despite limited <span class="term-knowledge">knowledge</span> because we're rich in <span class="term-context">context</span> and adaptable with <span class="term-tools">tools</span>. AIs succeed only when we deliberately supply the missing <span class="term-context">context</span>. Every assumption, every nuance, every artifact matters.
+Humans succeed despite limited knowledge because we're rich in context and adaptable with tools. AIs succeed only when we deliberately supply the missing context. Every assumption, every nuance, every artifact matters.
 
 As Guillermo Rauch observed:
 
 <blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-The quality of your thoughts (expressed through clear <span class="term-context">context</span>) now determines success.  
+The quality of your thoughts (expressed through clear context) now determines success.  
 
 Next time you give a task to an AI (or a teammate), ask yourself: Did I give enough <span class="term-knowledge">knowledge</span>, <span class="term-context">context</span>, and <span class="term-tools">tools</span>?

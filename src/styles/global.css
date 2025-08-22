@@ -222,7 +222,7 @@ pre {
 @layer utilities {
   /* Themed term colors for Knowledge, Context, Tools */
   .term-knowledge {
-    color: var(--color-yellow-900);
+    color: var(--color-yellow-600);
     font-weight: 600;
   }
   .dark .term-knowledge {
@@ -230,15 +230,15 @@ pre {
   }
 
   .term-context {
-    color: var(--color-red-900);
+    color: var(--color-red-600);
     font-weight: 600;
   }
   .dark .term-context {
-    color: var(--color-red-300);
+    color: var(--color-red-400);
   }
 
   .term-tools {
-    color: var(--color-green-900);
+    color: var(--color-green-600);
     font-weight: 600;
   }
   .dark .term-tools {
@@ -255,14 +255,14 @@ pre {
 
   /* Weight-specific shades */
   .term-knowledge-weight {
-    color: var(--color-yellow-800);
+    color: var(--color-yellow-400);
   }
   .dark .term-knowledge-weight {
     color: var(--color-yellow-200);
   }
 
   .term-context-weight {
-    color: var(--color-red-800);
+    color: var(--color-red-400);
   }
   .dark .term-context-weight {
     color: var(--color-red-200);

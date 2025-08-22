@@ -223,6 +223,7 @@ pre {
   /* Themed term colors for Knowledge, Context, Tools */
   .term-knowledge {
     color: var(--color-yellow-900);
+    font-weight: 600;
   }
   .dark .term-knowledge {
     color: var(--color-yellow-300);
@@ -230,6 +231,7 @@ pre {
 
   .term-context {
     color: var(--color-red-900);
+    font-weight: 600;
   }
   .dark .term-context {
     color: var(--color-red-300);
@@ -237,6 +239,7 @@ pre {
 
   .term-tools {
     color: var(--color-green-900);
+    font-weight: 600;
   }
   .dark .term-tools {
     color: var(--color-green-300);
@@ -244,6 +247,7 @@ pre {
 
   .term-baseline {
     color: var(--color-blue-900);
+    font-weight: 600;
   }
   .dark .term-baseline {
     color: var(--color-blue-300);

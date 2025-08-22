@@ -7,26 +7,36 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
+import { useTranslations } from '../i18n/utils';
+import type { ui } from '../i18n/ui';
 
-const data = [
-  {
-    dimension: 'Knowledge',
-    human: 0.7,
-    ai: 0.9,
-  },
-  {
-    dimension: 'Context',
-    human: 0.9,
-    ai: 0.3,
-  },
-  {
-    dimension: 'Tools',
-    human: 0.8,
-    ai: 0.6,
-  },
-];
+interface Props {
+  lang: keyof typeof ui;
+}
 
-export default function HumanVsAIRadarChart() {
+export default function HumanVsAIRadarChart({ lang }: Props) {
+  const t = useTranslations(lang);
+  
+  const data = [
+    {
+      dimension: t('chart.knowledge'),
+      averageHuman: 0.7,
+      expert: 0.95,
+      ai: 0.9,
+    },
+    {
+      dimension: t('chart.context'),
+      averageHuman: 0.9,
+      expert: 0.98,
+      ai: 0.3,
+    },
+    {
+      dimension: t('chart.tools'),
+      averageHuman: 0.8,
+      expert: 0.92,
+      ai: 0.6,
+    },
+  ];
   return (
     <div className="w-full max-w-2xl mx-auto p-6">
       <div className="h-96">
@@ -45,19 +55,27 @@ export default function HumanVsAIRadarChart() {
               tick={{ fontSize: 10, fill: 'currentColor' }}
             />
             <Radar
-              name="Human"
-              dataKey="human"
-              stroke="#3b82f6"
-              fill="#3b82f6"
-              fillOpacity={0.3}
+              name={t('chart.humanExpert')}
+              dataKey="expert"
+              stroke="#10b981"
+              fill="#10b981"
+              fillOpacity={0.25}
               strokeWidth={2}
             />
             <Radar
-              name="AI"
+              name={t('chart.averageHuman')}
+              dataKey="averageHuman"
+              stroke="#3b82f6"
+              fill="#3b82f6"
+              fillOpacity={0.55}
+              strokeWidth={2}
+            />
+            <Radar
+              name={t('chart.ai')}
               dataKey="ai"
               stroke="#ef4444"
               fill="#ef4444"
-              fillOpacity={0.3}
+              fillOpacity={0.35}
               strokeWidth={2}
             />
             <Legend wrapperStyle={{ paddingTop: '20px' }} />

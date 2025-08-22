@@ -1,8 +1,8 @@
 ---
-title: "The Task-Solving Equation: Why Context Is the Bottleneck"
-description: Knowledge, context, and tools multiply—not add—in determining success. In the AI era, context is the scarce multiplier.
+title: "The Task-Solving Equation"
+description: In the AI era, knowledge, context, and tools multiply to determine the probability of success.
 date: 2025-08-20
-tags: [blog, ai, communication, tech, problem-solving]
+tags: [blog, ai, communication, tech]
 locale: en
 hideTableOfContents: false
 ---
@@ -12,7 +12,7 @@ import HumanVsAIRadarChart from "@/components/HumanVsAIRadarChart.astro";
 
 ## TL;DR
 
-Task success depends on three factors: knowledge (K), context (C), and tools (T). They multiply—not add—so if any one is missing, the probability of success collapses.
+Task success depends on three factors: knowledge, context, and tools. They multiply, not add, so if any one is missing, the probability of success collapses.
 - Humans: Usually limited in knowledge, but rich in context (through shared understanding) and with practically unlimited access to tools.
 - AIs: Vast in knowledge, but starve without explicit context and have narrow, wired-in tool access.
 
@@ -20,17 +20,17 @@ That’s why in the AI era, context is the bottleneck. Clear, structured context
 
 ---
 
-## What is the probability of solving a task?
+## The equation
 
-Imagine someone gives you a task. What determines whether you succeed? Three factors:
+Imagine someone gives you a task. What determines whether you succeed? We can break it down into three main factors:
 
-1. **<span class="term-knowledge">Knowledge (K)</span>** — what you already know. This includes domain expertise, learned skills, past experiences, and accumulated wisdom.  
-2. **<span class="term-context">Context (C)</span>** — information about this specific task. The who, what, when, where, and why that turns a generic request into an actionable one.  
-3. **<span class="term-tools">Tools (T)</span>** — what you can use to get it done. Instruments, software, processes, collaborators, or your ability to invent new solutions.
+1. **<span class="term-knowledge">Knowledge (K)</span>**: what you already know. This includes domain expertise, learned skills, past experiences, and accumulated wisdom.  
+2. **<span class="term-context">Context (C)</span>**: information about this specific task. The who, what, when, where, and why that turns a generic request into an actionable one.  
+3. **<span class="term-tools">Tools (T)</span>**: what you can use to get it done. Instruments, software, processes, collaborators, or your ability to invent new solutions.
 
-I would like to propose the following equation:
+After thinking about how this factors interact with each other, I would like to propose the following equation:
 
-<p class="text-center text-xl font-semibold rounded-lg p-8">p(task) = <span class="term-knowledge-weight">α</span>·<span class="term-knowledge">K</span> × <span class="term-context-weight">β</span>·<span class="term-context">C</span> × <span class="term-tools-weight">γ</span>·<span class="term-tools">T</span> + <span class="term-baseline">δ</span></p>
+<p class="text-xl font-semibold rounded-lg p-2">p(task) = <span class="term-knowledge-weight">α</span>·<span class="term-knowledge">K</span> × <span class="term-context-weight">β</span>·<span class="term-context">C</span> × <span class="term-tools-weight">γ</span>·<span class="term-tools">T</span> + <span class="term-baseline">δ</span></p>
 
 Each term matters differently depending on the situation:
 
@@ -39,30 +39,21 @@ Each term matters differently depending on the situation:
 - **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> weight):** Strong in technical work (γ≈0.8), lower in pure reasoning (γ≈0.4).  
 - **<span class="term-baseline">δ (baseline)</span>:** The small chance of success through luck or brute force. Usually tiny (δ≈0.05) but never zero.  
 
-This is a **multiplicative** relationship: if <span class="term-knowledge">K</span>, <span class="term-context">C</span>, or <span class="term-tools">T</span> approach zero, the probability collapses toward δ. You can’t swap missing <span class="term-context">context</span> with more <span class="term-knowledge">knowledge</span> or better <span class="term-tools">tools</span>—each factor depends on the others.
+This is a **multiplicative** relationship: if <span class="term-knowledge">K</span>, <span class="term-context">C</span>, or <span class="term-tools">T</span> approach zero, the probability collapses toward δ. You can't swap missing <span class="term-context">context</span> with more <span class="term-knowledge">knowledge</span> or better <span class="term-tools">tools</span>, to successfully solve the task you need all three.
 
----
+### Why multiplication matters
 
-## Why Multiplication Matters
-
-Addition would imply you could “make up” for poor context with more knowledge or better tools. But real problem-solving doesn’t work that way.
-
-Consider a surgeon with years of training and the best equipment. If they enter an operating room with no patient history, no diagnosis, no idea what procedure is needed—their expertise collapses to uselessness. Multiplication drives the probability toward zero.
-
-The same applies to AI. When you say:  
-> “Deploy failed. Help!”
-
-The AI may have vast knowledge of deployments and access to debugging tools, but without context—your environment, logs, recent changes—success probability collapses.  
-
-*Yes, tools can help collect missing context (reading logs, inspecting commits), but only if the model is directed toward them. Baseline context is still essential.*
+You can't compensate for missing context with more knowledge or better tools. A surgeon with perfect training and equipment still fails without knowing what procedure to perform. Similarly, AI with vast knowledge fails on vague prompts like "Deploy failed. Fix it!" without environment details, logs, or recent changes.
 
 ---
 
 ## Humans × AI
 
-The same three factors—knowledge, context, and tools—apply to both humans and AIs, but they manifest in very different ways.
+The same three factors (knowledge, context, and tools) apply to both humans and AIs, but they manifest in very different ways.
 
 <HumanVsAIRadarChart />
+
+Human experts still outperform AIs when you consider knowledge, context, and tools together. At the same time, AIs already surpass the average human on raw knowledge. As models improve, success will hinge less on adding knowledge and more on supplying precise context and access to the right tools.
 
 | Factor | **Humans** | **AIs** |
 |--------|------------|---------|
@@ -70,19 +61,29 @@ The same three factors—knowledge, context, and tools—apply to both humans an
 | **Context** | Inferred almost automatically: native language, tone of voice, shared history, assumptions, cultural priors. | Minimal unless explicitly provided. Models lack your personal history, environment, or shared assumptions. Every relevant detail must be stated. |
 | **Tools** | Practically unlimited. We adapt, combine, or invent tools on demand. | Limited to what’s wired in (APIs, code exec, browsers, MCPs). Cannot create new tools, but can use existing ones to gather missing context when guided. |
 
-**The result:** Humans usually struggle with *knowledge*—that’s why education takes years. AIs struggle with *context*—that’s why prompt (or context) engineering exists.
+**The result:** Humans usually struggle with *knowledge*, which is why education takes years. AIs struggle with *context*, which is why prompt (or context) engineering exists.
 
 ---
 
-## Before → After Example
+## Applying the equation
 
-Here’s how context transforms an unsolvable request into a tractable one:
+Let's see the equation in action with a debugging scenario. Debugging tasks have high context dependency, so I'll use these weights:
+
+- **<span class="term-knowledge-weight">α</span>** = 0.7 (<span class="term-knowledge">knowledge</span> weight): Moderate, since debugging requires domain knowledge but isn't highly specialized
+- **<span class="term-context-weight">β</span>** = 0.9 (<span class="term-context">context</span> weight): Very high, debugging is nearly impossible without specifics
+- **<span class="term-tools-weight">γ</span>** = 0.8 (<span class="term-tools">tools</span> weight): High, debugging benefits greatly from logs, version control, etc.
+- **<span class="term-baseline">δ</span>** = 0.05 (baseline): Small chance of luck or brute force success
+
+Now let's compare two requests:
 
 **Before (poor context):**  
-> “Vercel deploy failed. Help!”
+> "Vercel deploy failed. Help!"
 
-Almost no information: which deploy? what error? what environment? Plugging in rough weights for debugging tasks (α≈0.7, β≈0.9, γ≈0.8, δ≈0.05):  
-`p ≈ 0.11`
+Almost no information: which deploy? what error? what environment?
+
+With minimal <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.2), decent <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and good <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.2</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.12</p>
+<p class="text-xl font-semibold rounded-lg p-2">Success probability = 12%</p>
 
 **After (good context, structured):**  
 > **Goal:** Get production build passing again.  
@@ -92,58 +93,57 @@ Almost no information: which deploy? what error? what environment? Plugging in r
 > **Links:** Failing build log [link], commit `b7c9d1e`.  
 > **Ask:** Identify cause (path alias vs case-sensitive import?) and suggest fix or rollback.  
 
-Now:  
-`p ≈ 0.52`
+Now with rich <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.9), same <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and same <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.9</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.38</p>
+<p class="text-xl font-semibold rounded-lg p-2">Success probability = 38%</p>
 
-The difference isn’t incremental—it’s transformative. Context multiplies the odds.
+**Context tripled the odds of success.** The same expert, same tools, but clear context transforms a likely failure into a reasonable chance of success.
 
 ---
 
-## Why We Neglect Context
+## If context is so critical, why do we neglect it?
 
-If context is so critical, why do we undervalue it?
+We neglect context because we carry it invisibly. Our assumptions, mental models, and shared history feel so obvious that we forget others (or AIs) don’t share them.
 
-**Human-to-human problem:** We’ve all asked for help and been met with tedious follow-ups:  
-> What version? What did you try? What’s your environment?  
+On top of that, context feels like overhead. Typing “Deploy failed. Fix it!” feels efficient, even though it guarantees multiple back-and-forths later.
 
-Those clarifications are the tax we pay for weak context. We neglect context because:  
-- We don’t fully grasp our own situation.  
-- We assume others share our mental model.  
-- We take shortcuts.  
+These shortcuts work (somewhat) in human-to-human interaction, because we’re good at inferring context from tone, body language, and shared experience. But with AI, the problem gets amplified.
 
-**Human-to-AI amplification:** With AIs, the problem worsens. Many treat LLMs like search engines: fire off a vague prompt, expect a precise answer. But LLMs aren’t deterministic databases.  
-
-As Thorsten Ball noted:
+Another reason is our fundamental misunderstanding of how models work:
 
 <blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">What I find endlessly fascinating:<br /><br />Some engineers really can&#39;t seem to grasp that LLMs are non-deterministic and how to build software taking that into account.<br /><br />For others it immediately clicked, but for some it seems like there&#39;s a real mental barrier to accept it.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">August 14, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+LLMs have quirks that make context essential:
+- **Nondeterminism:** The same prompt can yield different outputs. Good context narrows the range of possible answers, reducing randomness.
+- **Knowledge cutoffs:** Models don't know anything past their training date. Explicit context about versions, updates, or recent changes patches that gap.
+- **Hallucinations:** When missing details, models make things up with confidence. Rich context grounds them, leaving less room to fabricate.
 
-This is the heart of why AI requires explicit context. Models have quirks we can’t ignore:
-
-- **Nondeterminism:** The same input may yield different outputs—probabilistic, not fixed.  
-- **Knowledge cutoffs:** They only know up to their training date, and need tools for real-time data.  
-- **Hallucinations:** With weak context, they confidently invent plausible but false answers.  
-
-Without grasping these limits, people assume “the model should just know.” In reality, rich context and the right tools are the only levers to counter nondeterminism, cutoffs, and hallucinations.  
+All three quirks share the same fix: clear, structured context turns uncertain guesses into reliable solutions.
 
 ---
 
-## Context as Leverage
+## The Rise of Context Engineering
 
-In the pre-AI era, the bottleneck was usually knowledge or tools. You had to learn more, buy better equipment, or gain access to new resources. AI flips the script. Models already come with vast general knowledge, and we can give them tools—but those tools only matter if paired with the right context. 
+AI has fundamentally shifted what skills matter. In the pre-AI era, success required accumulating knowledge and acquiring better tools. Now, with models that already possess vast knowledge and expanding tool access, **context engineering** has emerged as the critical skill.
 
-Tobi Lütke captured it well:
+Tobi Lütke captured this shift perfectly:
 
 <blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">I really like the term "context engineering" over prompt engineering. <br /><br />It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM.</p>&mdash; tobi lutke (@tobi) <a href="https://twitter.com/tobi/status/1935533422589399127?ref_src=twsrc%5Etfw">June 19, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+Context engineering is becoming as fundamental as programming was in the software era. Just as developers learned to structure code, debug systems, and design architectures, we now need to learn how to:
 
-“Context engineering” isn’t a catchphrase—it names the new constraint. Knowledge is abundant, and tools can be wired in, but without clear, explicit context, both remain dormant. Context is the multiplier that activates them and turns potential into outcomes.
+- **Structure information** for AI consumption
+- **Anticipate missing context** that humans take for granted  
+- **Design context frameworks** that scale across different tasks and domains
+- **Debug context gaps** when AI outputs fall short
+
+The professionals who master context engineering will have the same advantage early programmers had: they'll be able to reliably harness the most powerful tools of their era while others struggle with inconsistent results.
 
 ---
 
 ## Conclusion
 
-The **task-solving equation** highlights the shift of the AI era. Success no longer hinges on accumulating more knowledge or better tools—those are increasingly commoditized. What’s scarce is the ability to provide rich, explicit context.
+The **task-solving equation** highlights the shift of the AI era. Success no longer hinges on accumulating more knowledge or better tools. Those are increasingly commoditized. What’s scarce is the ability to provide rich, explicit context.
 
 Humans succeed despite limited knowledge because we’re rich in context and adaptable with tools. AIs succeed only when we deliberately supply the missing context. Every assumption, every nuance, every artifact matters.
 
@@ -152,6 +152,6 @@ As Guillermo Rauch observed:
 <blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-The quality of your thoughts—expressed through clear context—now determines success.  
+The quality of your thoughts (expressed through clear context) now determines success.  
 
 **Clear context is leverage. In a world where knowledge is cheap and tools are abundant, context is the multiplier that decides outcomes.**

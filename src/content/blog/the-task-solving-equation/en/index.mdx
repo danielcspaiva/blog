@@ -14,7 +14,7 @@ import HumanVsAIRadarChart from "@/components/HumanVsAIRadarChart.astro";
 
 Task success depends on three factors: knowledge, context, and tools. They multiply, not add, so if any one is missing, the probability of success collapses.
 - Humans: Usually limited in knowledge, but rich in context (through shared understanding) and with practically unlimited access to tools.
-- AIs: Vast in knowledge, but starve without explicit context and have narrow, wired-in tool access.
+- AIs: Vast in knowledge, but depend on tool access and explicit context to perform.
 
 That’s why in the AI era, context is the bottleneck. Clear, structured context is the leverage that turns AI from unreliable guesswork into a reliable collaborator.
 
@@ -28,22 +28,32 @@ Imagine someone gives you a task. What determines whether you succeed? We can br
 2. **<span class="term-context">Context (C)</span>**: information about this specific task. The who, what, when, where, and why that turns a generic request into an actionable one.  
 3. **<span class="term-tools">Tools (T)</span>**: what you can use to get it done. Instruments, software, processes, collaborators, or your ability to invent new solutions.
 
-After thinking about how this factors interact with each other, I would like to propose the following equation:
+After thinking about how these factors interact with each other, I would say that the probability is a product among them:
 
-<p class="text-xl font-semibold rounded-lg p-2">p(task) = <span class="term-knowledge-weight">α</span>·<span class="term-knowledge">K</span> × <span class="term-context-weight">β</span>·<span class="term-context">C</span> × <span class="term-tools-weight">γ</span>·<span class="term-tools">T</span> + <span class="term-baseline">δ</span></p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
+
+Different types of tasks require different balances of these factors. It's unlikely that an <span class="term-knowledge">experienced</span> plumber could fix a leak without the <span class="term-tools">right tools</span>, while a lawyer would hardly solve a case without <span class="term-knowledge">legal knowledge</span> and diving into the <span class="term-context">case context</span>. This leads to the complete equation:
+
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">α</span>·<span class="term-knowledge">K</span> × <span class="term-context-weight">β</span>·<span class="term-context">C</span> × <span class="term-tools-weight">γ</span>·<span class="term-tools">T</span> + <span class="term-baseline">δ</span></p>
+
+The weights are used to adjust the importance of each factor for each type of task.
+
+<details>
+<summary>Understanding the weights</summary>
 
 Each term matters differently depending on the situation:
 
 - **<span class="term-knowledge-weight">α</span> (<span class="term-knowledge">knowledge</span> weight):** Higher for specialized domains (e.g. surgery α≈0.9), lower for routine tasks (data entry α≈0.3).  
 - **<span class="term-context-weight">β</span> (<span class="term-context">context</span> weight):** Extremely high for debugging (β≈0.95), moderate for creative tasks (β≈0.6).  
 - **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> weight):** Strong in technical work (γ≈0.8), lower in pure reasoning (γ≈0.4).  
-- **<span class="term-baseline">δ (baseline)</span>:** The small chance of success through luck or brute force. Usually tiny (δ≈0.05) but never zero.  
+- **<span class="term-baseline">δ (baseline)</span>:** The small chance of success through luck or brute force. Usually tiny (δ≈0.05) but never zero.
 
-This is a **multiplicative** relationship: if <span class="term-knowledge">K</span>, <span class="term-context">C</span>, or <span class="term-tools">T</span> approach zero, the probability collapses toward δ. You can't swap missing <span class="term-context">context</span> with more <span class="term-knowledge">knowledge</span> or better <span class="term-tools">tools</span>, to successfully solve the task you need all three.
+</details>
+
 
 ### Why multiplication matters
 
-You can't compensate for missing context with more knowledge or better tools. A surgeon with perfect training and equipment still fails without knowing what procedure to perform. Similarly, AI with vast knowledge fails on vague prompts like "Deploy failed. Fix it!" without environment details, logs, or recent changes.
+You can't compensate for missing context with more knowledge or better tools. A surgeon with perfect training and vast experience still fails if they don't know which procedure to perform or have access to patient information. Similarly, AI with vast knowledge fails on vague prompts like "Deploy failed. Fix it!" without environment details, logs, or recent changes.
 
 ---
 
@@ -57,7 +67,7 @@ Human experts still outperform AIs when you consider knowledge, context, and too
 
 | Factor | **Humans** | **AIs** |
 |--------|------------|---------|
-| **Knowledge** | Limited but deep. Built through practice, learning, and lived experience. Intuitive connections over time. | Vast but shallow. Pretrained across the internet, with broad recall but no lived experience or intuition. |
+| **Knowledge** | Limited but deep. Built through practice, learning, and lived experience. Intuitive connections over time. | Vast and increasingly deep. Acquired in model pre-training on top of a vast database, practically everything available online. |
 | **Context** | Inferred almost automatically: native language, tone of voice, shared history, assumptions, cultural priors. | Minimal unless explicitly provided. Models lack your personal history, environment, or shared assumptions. Every relevant detail must be stated. |
 | **Tools** | Practically unlimited. We adapt, combine, or invent tools on demand. | Limited to what’s wired in (APIs, code exec, browsers, MCPs). Cannot create new tools, but can use existing ones to gather missing context when guided. |
 
@@ -67,23 +77,12 @@ Human experts still outperform AIs when you consider knowledge, context, and too
 
 ## Applying the equation
 
-Let's see the equation in action with a debugging scenario. Debugging tasks have high context dependency, so I'll use these weights:
-
-- **<span class="term-knowledge-weight">α</span>** = 0.7 (<span class="term-knowledge">knowledge</span> weight): Moderate, since debugging requires domain knowledge but isn't highly specialized
-- **<span class="term-context-weight">β</span>** = 0.9 (<span class="term-context">context</span> weight): Very high, debugging is nearly impossible without specifics
-- **<span class="term-tools-weight">γ</span>** = 0.8 (<span class="term-tools">tools</span> weight): High, debugging benefits greatly from logs, version control, etc.
-- **<span class="term-baseline">δ</span>** = 0.05 (baseline): Small chance of luck or brute force success
-
-Now let's compare two requests:
+Let's see the equation in action with a debugging scenario:
 
 **Before (poor context):**  
 > "Vercel deploy failed. Help!"
 
 Almost no information: which deploy? what error? what environment?
-
-With minimal <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.2), decent <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and good <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.2</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.12</p>
-<p class="text-xl font-semibold rounded-lg p-2">Success probability = 12%</p>
 
 **After (good context, structured):**  
 > **Goal:** Get production build passing again.  
@@ -93,11 +92,25 @@ With minimal <span class="term-context">context</span> (**<span class="term-cont
 > **Links:** Failing build log [link], commit `b7c9d1e`.  
 > **Ask:** Identify cause (path alias vs case-sensitive import?) and suggest fix or rollback.  
 
-Now with rich <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.9), same <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and same <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.9</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.38</p>
-<p class="text-xl font-semibold rounded-lg p-2">Success probability = 38%</p>
+**Good context tripled the odds of success—from 12% to 38%.** The same expert, same tools, but clear context transforms a likely failure into a reasonable chance of success. (See mathematical breakdown below.)
 
-**Context tripled the odds of success.** The same expert, same tools, but clear context transforms a likely failure into a reasonable chance of success.
+<details>
+<summary>Mathematical breakdown</summary>
+
+Debugging tasks have high context dependency, so I used these weights:
+
+- **<span class="term-knowledge-weight">α</span>** = 0.7 (<span class="term-knowledge">knowledge</span> weight): Moderate, since debugging requires domain knowledge but isn't highly specialized
+- **<span class="term-context-weight">β</span>** = 0.9 (<span class="term-context">context</span> weight): Very high, debugging is nearly impossible without specifics
+- **<span class="term-tools-weight">γ</span>** = 0.8 (<span class="term-tools">tools</span> weight): High, debugging benefits greatly from logs, version control, etc.
+- **<span class="term-baseline">δ</span>** = 0.05 (baseline): Small chance of luck or brute force success
+
+With minimal <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.2), decent <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and good <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.2</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.12 or 12%</p>
+
+With rich <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.9), same <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and same <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.9</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.38 or 38%</p>
+
+</details>
 
 ---
 
@@ -141,6 +154,30 @@ The professionals who master context engineering will have the same advantage ea
 
 ---
 
+## Practical Guide
+
+Context engineering is about providing all the context needed to make a task plausibly solvable by the LLM. A well-structured prompt includes:
+
+![Prompt structure diagram showing the 10 essential components for effective AI communication](../media/prompt-engineering.png)
+*Diagram from [Advanced Prompt Engineering](https://www.youtube.com/watch?v=ysPbXH0LpIE) by Anthropic*
+
+1. **Task context** - The specific situation and background
+2. **Tone context** - How the AI should communicate
+3. **Background data, documents, and images** - Relevant information
+4. **Detailed task description & rules** - Clear, specific instructions
+5. **Examples** - Concrete demonstrations of expected output
+6. **Conversation history** - Previous relevant interactions
+7. **Immediate task description or request** - The current specific request
+8. **Thinking step by step / take a deep breath** - Breaking down complex problems
+9. **Output formatting** - How results should be structured
+10. **Prefilled response (if any)** - Starting the AI's response pattern
+
+Notice how some of these components make no sense for us humans, they sound completely obvious or even redundant. You wouldn't tell a colleague "you are a career coach named Joe" or "you should respond in a friendly customer service tone" because humans infer context naturally.
+
+This kind of context is precisely where AI shines: when given these explicit details that humans take for granted, AI can process vast amounts of structured context and maintain perfect attention to every specified requirement.
+
+---
+
 ## Conclusion
 
 The **task-solving equation** highlights the shift of the AI era. Success no longer hinges on accumulating more knowledge or better tools. Those are increasingly commoditized. What’s scarce is the ability to provide rich, explicit context.
@@ -154,4 +191,4 @@ As Guillermo Rauch observed:
 
 The quality of your thoughts (expressed through clear context) now determines success.  
 
-**Clear context is leverage. In a world where knowledge is cheap and tools are abundant, context is the multiplier that decides outcomes.**
+Next time you give a task to an AI (or a teammate), ask yourself: Did I give enough <span class="term-knowledge">knowledge</span>, <span class="term-context">context</span>, and <span class="term-tools">tools</span>?

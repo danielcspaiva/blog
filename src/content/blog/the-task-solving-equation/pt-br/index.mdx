@@ -1,6 +1,6 @@
 ---
 title: "A Equação da Resolução de Tarefas"
-description: Na era da IA, conhecimento, contexto e ferramentas se multiplicam para determinar a probabilidade de sucesso.
+description: Como conhecimento, contexto e ferramentas se multiplicam para determinar a probabilidade de sucesso na era da IA.
 date: 2025-08-20
 tags: [blog, ai, communication, tech]
 locale: pt-br
@@ -12,38 +12,48 @@ import HumanVsAIRadarChart from "@/components/HumanVsAIRadarChart.astro";
 
 ## TL;DR
 
-O sucesso em uma tarefa depende de três fatores: conhecimento, contexto e ferramentas. Eles se multiplicam, não se somam, então se qualquer um faltar, a probabilidade de sucesso colapsa.
-- Humanos: Normalmente limitados em conhecimento, mas ricos em contexto (por entendimento compartilhado) e com acesso praticamente ilimitado a ferramentas.
-- IAs: Vastas em conhecimento, mas passam fome sem contexto explícito e têm acesso a ferramentas estreito e conectado de forma rígida.
+O sucesso de uma tarefa depende de três fatores: conhecimento, contexto e ferramentas. Eles se multiplicam, não se somam, então se qualquer um estiver ausente, a probabilidade de sucesso desaba.
+- Humanos: Geralmente limitados em conhecimento, mas ricos em contexto (através de entendimento compartilhado) e com acesso praticamente ilimitado a ferramentas.
+- IAs: Vastas em conhecimento, mas dependem de acesso a ferramentas e contexto explícito para performar.
 
-É por isso que, na era da IA, o contexto é o gargalo. Contexto claro e estruturado é a alavanca que transforma a IA de palpiteiro pouco confiável em colaborador confiável.
+É por isso que na era da IA, o contexto é o gargalo. Contexto claro e estruturado é a alavanca que mais potencializa os resultados.
 
 ---
 
 ## A equação
 
-Imagine que alguém lhe dá uma tarefa. O que determina se você vai ter sucesso? Podemos dividir em três fatores principais:
+Imagine que alguém te dá uma tarefa. O que determina se você terá sucesso? Podemos dividir isso em três fatores principais:
 
-1. **<span class="term-knowledge">Conhecimento (K)</span>**: o que você já sabe. Inclui expertise de domínio, habilidades aprendidas, experiências passadas e sabedoria acumulada.  
-2. **<span class="term-context">Contexto (C)</span>**: informações sobre esta tarefa específica. O quem, o que, quando, onde e por quê que transforma um pedido genérico em algo acionável.  
-3. **<span class="term-tools">Ferramentas (T)</span>**: o que você pode usar para executar. Instrumentos, software, processos, colaboradores ou sua capacidade de inventar novas soluções.
+1. **<span class="term-knowledge">Conhecimento (K)</span>**: o que você já sabe. Isso inclui sua expertise, hard skills aprendidas, experiências passadas e sabedoria acumulada.  
+2. **<span class="term-context">Contexto (C)</span>**: informações sobre esta tarefa específica. Quem, o quê, quando, onde e por quê que transforma uma solicitação genérica em uma tarefa realizável.  
+3. **<span class="term-tools">Ferramentas (T)</span>**: o que você pode usar para executar a tarefa. Instrumentos, software, processos, colaboradores, ou sua habilidade de inventar novas soluções.
 
-Depois de pensar sobre como esses fatores interagem entre si, gostaria de propor a seguinte equação:
+Depois de pensar sobre como esses fatores interagem entre si, eu diria que a probabilidade é um produto dentre eles:
 
-<p class="text-xl font-semibold rounded-lg p-2">p(tarefa) = <span class="term-knowledge-weight">α</span>·<span class="term-knowledge">K</span> × <span class="term-context-weight">β</span>·<span class="term-context">C</span> × <span class="term-tools-weight">γ</span>·<span class="term-tools">T</span> + <span class="term-baseline">δ</span></p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
 
-Cada termo importa de maneira diferente dependendo da situação:
+Diferentes tipos de tarefas requerem diferentes equilíbrios desses fatores. É improvável que um encanador <span class="term-knowledge">experiente</span> consiga resolver um vazamento sem as <span class="term-tools">ferramentas certas</span>, já um advogado dificilmente conseguiria resolver um caso sem <span class="term-knowledge">conhecimento jurídico</span> e se debruçar no <span class="term-context">contexto do caso</span>. Isso leva à equação completa:
 
-- **<span class="term-knowledge-weight">α</span> (peso do <span class="term-knowledge">conhecimento</span>):** Mais alto para domínios especializados (ex: cirurgia α≈0,9), menor para tarefas rotineiras (digitação de dados α≈0,3).  
-- **<span class="term-context-weight">β</span> (peso do <span class="term-context">contexto</span>):** Extremamente alto para debugging (β≈0,95), moderado para tarefas criativas (β≈0,6).  
-- **<span class="term-tools-weight">γ</span> (peso das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (γ≈0,8), menor em raciocínio puro (γ≈0,4).  
-- **<span class="term-baseline">δ (baseline)</span>:** A pequena chance de sucesso por sorte ou força bruta. Geralmente minúscula (δ≈0,05), mas nunca zero.  
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">α</span>·<span class="term-knowledge">K</span> × <span class="term-context-weight">β</span>·<span class="term-context">C</span> × <span class="term-tools-weight">γ</span>·<span class="term-tools">T</span> + <span class="term-baseline">δ</span></p>
 
-Esta é uma relação **multiplicativa**: se <span class="term-knowledge">K</span>, <span class="term-context">C</span> ou <span class="term-tools">T</span> se aproximam de zero, a probabilidade colapsa em direção a δ. Você não consegue trocar falta de <span class="term-context">contexto</span> por mais <span class="term-knowledge">conhecimento</span> ou melhores <span class="term-tools">ferramentas</span>; para resolver a tarefa com sucesso você precisa dos três.
+Os pesos são utilizados para ajustar a importância de cada fator para cada tipo de tarefa.
+
+<details>
+<summary>Entendendo os pesos</summary>
+
+Cada termo importa de forma diferente dependendo da situação:
+
+- **<span class="term-knowledge-weight">α</span> (peso do <span class="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia α≈0.9), menor para tarefas rotineiras (entrada de dados α≈0.3).  
+- **<span class="term-context-weight">β</span> (peso do <span class="term-context">contexto</span>):** Extremamente alto para debugging (β≈0.95), moderado para tarefas criativas (β≈0.6).  
+- **<span class="term-tools-weight">γ</span> (peso das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (γ≈0.8), menor em raciocínio puro (γ≈0.4).  
+- **<span class="term-baseline">δ (linha de base)</span>:** A pequena chance de sucesso através de sorte ou força bruta. Geralmente pequena (δ≈0.05) mas nunca zero.
+
+</details>
+
 
 ### Por que a multiplicação importa
 
-Você não consegue compensar contexto perdido com mais conhecimento ou melhores ferramentas. Um cirurgião com treinamento perfeito e equipamento ainda falha sem saber qual procedimento realizar. Da mesma forma, IA com vasto conhecimento falha em prompts vagos como "Deploy falhou. Conserta!" sem detalhes do ambiente, logs ou mudanças recentes.
+Você não pode compensar contexto ausente com mais conhecimento ou melhores ferramentas. Um cirurgião com treinamento perfeito e vasta experiência ainda falha se não souber qual procedimento realizar ou tiver acesso a informações sobre o paciente. De forma similar, uma IA com vasto conhecimento falha em prompts vagos como "Deploy falhou. Conserte!" sem detalhes do ambiente, logs ou mudanças recentes.
 
 ---
 
@@ -57,74 +67,77 @@ Especialistas humanos ainda superam IAs quando você considera conhecimento, con
 
 | Fator | **Humanos** | **IAs** |
 |--------|------------|---------|
-| **Conhecimento** | Limitado mas profundo. Construído através de prática, aprendizado e experiência vivida. Conexões intuitivas ao longo do tempo. | Vasto mas superficial. Pré-treinado na internet, com ampla lembrança mas sem experiência vivida ou intuição. |
-| **Contexto** | Inferido quase automaticamente: língua nativa, tom de voz, histórico compartilhado, suposições, prévias culturais. | Mínimo a menos que explicitamente fornecido. Modelos não têm seu histórico pessoal, ambiente ou suposições compartilhadas. Cada detalhe relevante deve ser declarado. |
-| **Ferramentas** | Praticamente ilimitadas. Adaptamos, combinamos ou inventamos ferramentas sob demanda. | Limitadas ao que está conectado (APIs, execução de código, navegadores, MCPs). Não conseguem criar novas ferramentas, mas podem usar as existentes para obter contexto faltante quando guiadas. |
+| **Conhecimento** | Limitado mas profundo. Construído através de prática, aprendizado e experiência vivida. Conexões intuitivas ao longo do tempo. | Vasto e cada vez mais profundo. Aquirido no pré-treinamento do modelo em cima de uma vasta base de dados, praticamente tudo o que está disponível online. |
+| **Contexto** | Inferido quase automaticamente: língua nativa, tom de voz, histórico compartilhado, suposições, prioridades culturais. | Mínimo a menos que explicitamente fornecido. Modelos carecem de seu histórico pessoal, ambiente ou suposições compartilhadas. Cada detalhe relevante deve ser declarado. |
+| **Ferramentas** | Praticamente ilimitado. Nós adaptamos, combinamos ou inventamos ferramentas sob demanda. | Limitado ao que está pré-programado (APIs, execução de código, navegadores, MCPs). Não pode criar novas ferramentas, mas pode usar as existentes para coletar contexto ausente quando orientado. |
 
-**O resultado:** Humanos geralmente têm dificuldade com *conhecimento*, por isso educação leva anos. IAs têm dificuldade com *contexto*, por isso existe engenharia de prompts (ou contexto).
+**O resultado:** Humanos geralmente têm dificuldade com *conhecimento*, é por isso que educação leva anos. IAs sofrem com *contexto*, é por isso que engenharia de prompt (ou contexto) existe.
 
 ---
 
 ## Aplicando a equação
 
-Vamos ver a equação em ação com um cenário de debugging. Tarefas de debugging têm alta dependência de contexto, então usarei estes pesos:
+Vamos ver a equação em ação com um cenário de debugging:
 
-- **<span class="term-knowledge-weight">α</span>** = 0,7 (peso do <span class="term-knowledge">conhecimento</span>): Moderado, já que debugging requer conhecimento de domínio mas não é altamente especializado
-- **<span class="term-context-weight">β</span>** = 0,9 (peso do <span class="term-context">contexto</span>): Muito alto, debugging é quase impossível sem especificidades
-- **<span class="term-tools-weight">γ</span>** = 0,8 (peso das <span class="term-tools">ferramentas</span>): Alto, debugging se beneficia muito de logs, controle de versão, etc.
-- **<span class="term-baseline">δ</span>** = 0,05 (baseline): Pequena chance de sucesso por sorte ou força bruta
-
-Agora vamos comparar dois pedidos:
-
-**Antes (contexto fraco):**  
-> "Deploy da Vercel falhou. Ajuda!"
+**Antes (contexto pobre):**  
+> Deploy do Vercel falhou. Ajuda!
 
 Quase nenhuma informação: qual deploy? qual erro? qual ambiente?
-
-Com contexto mínimo (**<span class="term-context">C</span>** ≈ 0,2), conhecimento decente (**<span class="term-knowledge">K</span>** ≈ 0,8), e boas ferramentas (**<span class="term-tools">T</span>** ≈ 0,9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0,7</span>×<span class="term-knowledge">0,8</span> × <span class="term-context-weight">0,9</span>×<span class="term-context">0,2</span> × <span class="term-tools-weight">0,8</span>×<span class="term-tools">0,9</span> + <span class="term-baseline">0,05</span> ≈ 0,12</p>
-<p class="text-xl font-semibold rounded-lg p-2">Probabilidade de sucesso = 12%</p>
 
 **Depois (bom contexto, estruturado):**  
 > **Objetivo:** Fazer o build de produção passar novamente.  
 > **Sintoma:** Deploys falham desde o commit `b7c9d1e`, erro: `Module not found: '@/components/Button'`.  
-> **Ambiente:** Next.js 14, Node 20, imagem de build da Vercel `2025.07`.  
-> **Tentei:** Limpei `.next` e `.vercel`, reimplantei duas vezes, confirmei que build local funciona.  
-> **Links:** Log do build com falha [link], commit `b7c9d1e`.  
-> **Pergunta:** Identificar causa (path alias vs import case-sensitive?) e sugerir correção ou rollback.  
+> **Ambiente:** Next.js 14, Node 20, imagem de build do Vercel `2025.07`.  
+> **Tentativas:** Limpei `.next` e `.vercel`, redeployei duas vezes, confirmei que build local funciona.  
+> **Links:** Log de build falhando [link], commit `b7c9d1e`.  
+> **Pergunta:** Identificar causa (alias de caminho vs importação case-sensitive?) e sugerir correção ou rollback.  
 
-Agora com contexto rico (**<span class="term-context">C</span>** ≈ 0,9), mesmo conhecimento (**<span class="term-knowledge">K</span>** ≈ 0,8), e mesmas ferramentas (**<span class="term-tools">T</span>** ≈ 0,9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0,7</span>×<span class="term-knowledge">0,8</span> × <span class="term-context-weight">0,9</span>×<span class="term-context">0,9</span> × <span class="term-tools-weight">0,8</span>×<span class="term-tools">0,9</span> + <span class="term-baseline">0,05</span> ≈ 0,38</p>
-<p class="text-xl font-semibold rounded-lg p-2">Probabilidade de sucesso = 38%</p>
+**Bom contexto triplicou as chances de sucesso, de 12% para 38%.** O mesmo especialista, mesmas ferramentas, mas contexto claro transforma uma provável falha em uma chance razoável de sucesso. (Veja o detalhamento matemático abaixo.)
 
-**O contexto triplicou as chances de sucesso.** O mesmo especialista, mesmas ferramentas, mas contexto claro transforma uma provável falha em uma chance razoável de sucesso.
+<details>
+<summary>Detalhamento matemático</summary>
+
+Tarefas de debugging têm alta dependência de contexto, então usei esses pesos:
+
+- **<span class="term-knowledge-weight">α</span>** = 0.7 (peso do <span class="term-knowledge">conhecimento</span>): Moderado, já que debugging requer conhecimento de domínio mas não é altamente especializado
+- **<span class="term-context-weight">β</span>** = 0.9 (peso do <span class="term-context">contexto</span>): Muito alto, debugging é quase impossível sem especificidades
+- **<span class="term-tools-weight">γ</span>** = 0.8 (peso das <span class="term-tools">ferramentas</span>): Alto, debugging se beneficia muito de logs, controle de versão, etc.
+- **<span class="term-baseline">δ</span>** = 0.05 (linha de base): Pequena chance de sucesso por sorte ou força bruta
+
+Com <span class="term-context">contexto</span> mínimo (**<span class="term-context">C</span>** ≈ 0.2), <span class="term-knowledge">conhecimento</span> decente (**<span class="term-knowledge">K</span>** ≈ 0.8), e boas <span class="term-tools">ferramentas</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.2</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.12 ou 12%</p>
+
+Com <span class="term-context">contexto</span> rico (**<span class="term-context">C</span>** ≈ 0.9), mesmo <span class="term-knowledge">conhecimento</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), e mesmas <span class="term-tools">ferramentas</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.9</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.38 ou 38%</p>
+
+</details>
 
 ---
 
-## Por que negligenciamos o contexto?
+## Se contexto é tão crítico, por que negligenciamos?
 
-Negligenciamos o contexto porque o carregamos invisivelmente. Nossas suposições, modelos mentais e histórico compartilhado parecem tão óbvios que esquecemos que outros (ou IAs) não os compartilham.
+Negligenciamos contexto porque não o vemos. Nossas suposições, modelos mentais e histórico compartilhado parecem tão óbvios que esquecemos que outros (ou IAs) não os compartilham.
 
-Além disso, contexto parece overhead. Digitar "Deploy falhou. Conserta!" parece eficiente, mesmo que garanta múltiplas idas e vindas depois.
+Além disso, contexto parece overhead. Digitar "Deploy falhou. Conserte!" parece eficiente, mesmo que isso implique em múltiplas idas e vindas depois para esclarecer detalhes.
 
-Esses atalhos funcionam (de certa forma) na interação humano-para-humano, porque somos bons em inferir contexto do tom, linguagem corporal e experiência compartilhada. Mas com IA, o problema se amplifica.
+Esses atalhos funcionam (de certa forma) na interação humano-humano, porque somos bons em inferir contexto do tom, linguagem corporal e experiência compartilhada. Mas com IA, o problema é amplificado.
 
-Outra razão é nosso mal-entendido fundamental de como os modelos funcionam:
+Outra razão é nossa incompreensão fundamental de como os modelos de IA funcionam:
 
 <blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">What I find endlessly fascinating:<br /><br />Some engineers really can&#39;t seem to grasp that LLMs are non-deterministic and how to build software taking that into account.<br /><br />For others it immediately clicked, but for some it seems like there&#39;s a real mental barrier to accept it.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">August 14, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-LLMs têm peculiaridades que fazem o contexto essencial:
-- **Não-determinismo:** O mesmo prompt pode gerar saídas diferentes. Bom contexto reduz o leque de possíveis respostas, diminuindo a aleatoriedade.
+LLMs têm peculiaridades que tornam o contexto essencial:
+- **Não-determinismo:** O mesmo prompt pode gerar saídas diferentes. Bom contexto estreita o leque de respostas possíveis, reduzindo aleatoriedade.
 - **Cortes de conhecimento:** Modelos não sabem nada depois da data de treinamento. Contexto explícito sobre versões, atualizações ou mudanças recentes preenche essa lacuna.
-- **Alucinações:** Quando faltam detalhes, modelos inventam coisas com confiança. Contexto rico os fundamenta, deixando menos espaço para fabricação.
+- **Alucinações:** Quando faltam detalhes, modelos inventam coisas com confiança. Contexto rico os fundamenta, deixando menos espaço para alucinações.
 
-Todas as três peculiaridades compartilham a mesma solução: contexto claro e estruturado transforma palpites incertos em soluções confiáveis.
+Todas as três peculiaridades compartilham a mesma solução: contexto claro e estruturado transforma suposições incertas em soluções confiáveis.
 
 ---
 
 ## A Ascensão da Engenharia de Contexto
 
-A IA mudou fundamentalmente quais habilidades importam. Na era pré-IA, o sucesso exigia acumular conhecimento e adquirir melhores ferramentas. Agora, com modelos que já possuem vasto conhecimento e acesso a ferramentas em expansão, **engenharia de contexto** emergiu como a habilidade crítica.
+IA mudou fundamentalmente quais habilidades importam. Na era pré-IA, sucesso requeria acumular conhecimento e adquirir melhores ferramentas. Agora, com modelos que já possuem vasto conhecimento e acesso expandindo a ferramentas, **engenharia de contexto** emergiu como a habilidade crítica.
 
 Tobi Lütke capturou essa mudança perfeitamente:
 
@@ -133,27 +146,49 @@ Tobi Lütke capturou essa mudança perfeitamente:
 Engenharia de contexto está se tornando tão fundamental quanto programação foi na era do software. Assim como desenvolvedores aprenderam a estruturar código, debugar sistemas e projetar arquiteturas, agora precisamos aprender como:
 
 - **Estruturar informação** para consumo de IA
-- **Antecipar contexto faltante** que humanos dão como garantido  
+- **Antecipar contexto ausente** que humanos dão por garantido  
 - **Projetar frameworks de contexto** que escalam através de diferentes tarefas e domínios
 - **Debugar lacunas de contexto** quando saídas de IA ficam aquém
 
-Os profissionais que dominarem engenharia de contexto terão a mesma vantagem que os primeiros programadores tiveram: conseguirão aproveitar de forma confiável as ferramentas mais poderosas de sua era enquanto outros lutam com resultados inconsistentes.
+Os profissionais que dominarem engenharia de contexto terão a mesma vantagem que os primeiros programadores tiveram: eles poderão aproveitar confiavelmente as ferramentas mais poderosas de sua era enquanto outros lutam com resultados inconsistentes.
+
+---
+
+## Guia Prático
+
+Engenharia de contexto é sobre fornecer todo o contexto necessário para tornar uma tarefa plausivelmente solucionável pelo LLM. Um prompt bem estruturado inclui:
+
+![Diagrama de estrutura de prompt mostrando os 10 componentes essenciais para comunicação eficaz com IA](../media/prompt-engineering.png)
+*Diagrama de [Advanced Prompt Engineering](https://www.youtube.com/watch?v=ysPbXH0LpIE) da Anthropic*
+
+1. **Contexto da tarefa** - A situação específica e background
+2. **Contexto de tom** - Como a IA deve se comunicar
+3. **Dados de background, documentos e imagens** - Informação relevante
+4. **Descrição detalhada da tarefa e regras** - Instruções claras e específicas
+5. **Exemplos** - Demonstrações concretas da saída esperada
+6. **Histórico de conversas** - Interações relevantes anteriores
+7. **Descrição imediata da tarefa ou solicitação** - A solicitação específica atual
+8. **Pensar passo a passo / respirar fundo** - Quebrar problemas complexos
+9. **Formatação de saída** - Como os resultados devem ser estruturados
+10. **Resposta pré-preenchida (se houver)** - Iniciando o padrão de resposta da IA
+
+Note como alguns desses componentes não fazem sentido para nós humanos, eles soam completamente óbvios ou até redundantes. Você não diria a um colega "você é um coach de carreira chamado João" ou "você deve responder em tom de atendimento ao cliente amigável" porque humanos inferem contexto naturalmente.
+
+Esse tipo de contexto é precisamente onde IA brilha: quando dados esses detalhes explícitos que humanos dão por garantido, IA pode processar vastas quantidades de contexto estruturado e manter atenção perfeita a cada requisito especificado.
 
 ---
 
 ## Conclusão
 
-A **equação da resolução de tarefas** destaca a mudança da era da IA. O sucesso não depende mais de acumular mais conhecimento ou melhores ferramentas. Essas estão se tornando cada vez mais commoditizadas. O que é escasso é a habilidade de fornecer contexto rico e explícito.
+A **equação da resolução de tarefas** destaca a mudança da era da IA. Sucesso não depende mais de acumular mais conhecimento ou melhores ferramentas. Esses estão cada vez mais commoditizados. O que é escasso é a habilidade de fornecer contexto rico e explícito.
 
-Humanos têm sucesso apesar do conhecimento limitado porque somos ricos em contexto e adaptáveis com ferramentas. IAs só têm sucesso quando fornecemos deliberadamente o contexto faltante. Cada suposição, cada nuance, cada artefato importa.
+Humanos têm sucesso apesar do conhecimento limitado porque somos ricos em contexto e adaptáveis com ferramentas. IAs têm sucesso apenas quando deliberadamente fornecemos o contexto ausente. Cada suposição, cada nuance, cada artefato importa.
 
 Como Guillermo Rauch observou:
 
 <blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-A qualidade dos seus pensamentos (expressa através de contexto claro) agora determina o sucesso.  
+A qualidade de seus pensamentos (expressa através de contexto claro) agora determina o sucesso.  
 
-**Contexto claro é alavanca. Num mundo onde conhecimento é barato e ferramentas são abundantes, contexto é o multiplicador que decide os resultados.**
-
-
+Na próxima vez que você der uma tarefa para uma IA (ou um colega de equipe), se pergunte: Eu dei <span class="term-knowledge">conhecimento</span>, <span class="term-context">contexto</span> e <span class="term-tools">ferramentas</span> suficientes?

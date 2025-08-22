@@ -20,19 +20,19 @@ export default function HumanVsAIRadarChart({ lang }: Props) {
   const data = [
     {
       dimension: t('chart.knowledge'),
-      averageHuman: 0.7,
+      averageHuman: 0.5,
       expert: 0.95,
-      ai: 0.9,
+      ai: 0.85,
     },
     {
       dimension: t('chart.context'),
-      averageHuman: 0.9,
+      averageHuman: 0.7,
       expert: 0.98,
-      ai: 0.3,
+      ai: 0.4,
     },
     {
       dimension: t('chart.tools'),
-      averageHuman: 0.8,
+      averageHuman: 0.75,
       expert: 0.92,
       ai: 0.6,
     },

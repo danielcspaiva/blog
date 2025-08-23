@@ -40,22 +40,17 @@ Different types of tasks require different balances of these factors. It's unlik
 The exponents are used to adjust the importance of each factor for each type of task, with <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 and <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1. Check the interactive visualizer below to see how the equation works.
 
 <details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Interactive visualizer</summary>
-  <TaskEquationVisualizer />
-</details>
-
-<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
     <summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Understanding the exponents</summary>
     <div class="py-3 px-6">
     The exponents determine how much each factor influences the overall probability. When an exponent approaches 0, that component becomes less critical to success. When it's higher, that component has more impact on the final result.
 
-    For example, if β = 0.8 and α = 0.1, then context dominates: even with perfect knowledge (K=1.0), poor context (C=0.2) would give:
+    For example, if <span class="term-context-weight">β</span> = 0.8 and <span class="term-knowledge-weight">α</span> = 0.1, then <span class="term-context">context</span> dominates: even with perfect <span class="term-knowledge">knowledge</span> (K=1.0), poor <span class="term-context">context</span> (C=0.2) would give:
 
     <Callout>
         p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1
     </Callout>
 
-    But with good context (C=0.9), you get:
+    But with good <span class="term-context">context</span> (C=0.9), you get:
 
     <Callout>
         p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1
@@ -63,10 +58,14 @@ The exponents are used to adjust the importance of each factor for each type of 
 
     Each exponent matters differently depending on the situation:
 
-    - **α** (knowledge exponent): Higher for specialized domains (e.g. surgery α≈0.6), lower for routine tasks (data entry α≈0.2).  
-    - **β** (context exponent): Extremely high for debugging (β≈0.7), moderate for creative tasks (β≈0.4).  
-    - **γ** (tools exponent): Strong in technical work (γ≈0.5), lower in pure reasoning (γ≈0.2).
+    - **<span class="term-knowledge-weight">α</span> (<span class="term-knowledge">knowledge</span> exponent):** Higher for specialized domains (e.g. surgery α≈0.6), lower for routine tasks (data entry α≈0.2).  
+    - **<span class="term-context-weight">β</span> (<span class="term-context">context</span> exponent):** Extremely high for debugging (β≈0.7), moderate for creative tasks (β≈0.4).  
+    - **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> exponent):** Strong in technical work (γ≈0.5), lower in pure reasoning (γ≈0.2).
     </div>
+</details>
+<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Interactive visualizer</summary>
+  <TaskEquationVisualizer />
 </details>
 
 

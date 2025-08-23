@@ -1,0 +1,11 @@
+---
+import Visualizer from './TaskEquationVisualizer.tsx';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Visualizer lang={lang} client:load />
+
+

@@ -37,28 +37,35 @@ Diferentes tipos de tarefas requerem diferentes equilíbrios desses fatores. É 
 
 <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
 
+Os expoentes são utilizados para ajustar a importância de cada fator para cada tipo de tarefa, com <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 e <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1. Confira o visualizador interativo abaixo para ver como a equação funciona.
+
 <details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">(Visualizador interativo)</summary>
-<div class="py-3 px-3">
-  <TaskEquationVisualizer />
-</div>
+    <summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Entendendo os expoentes</summary>
+    <div class="py-3 px-6">
+    Os expoentes determinam o quanto cada fator influencia a probabilidade geral. Quando um expoente se aproxima de 0, esse componente se torna menos crítico para o sucesso. Quando é maior, esse componente tem mais impacto no resultado final.
+
+    Por exemplo, se <span class="term-context-weight">β</span> = 0.8 e <span class="term-knowledge-weight">α</span> = 0.1, então o <span class="term-context">contexto</span> domina: mesmo com <span class="term-knowledge">conhecimento</span> perfeito (K=1.0), <span class="term-context">contexto</span> ruim (C=0.2) daria:
+
+    <Callout>
+        p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1
+    </Callout>
+
+    Mas com bom <span class="term-context">contexto</span> (C=0.9), você obtém:
+
+    <Callout>
+        p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1
+    </Callout>
+
+    Cada expoente importa de forma diferente dependendo da situação:
+
+    - **<span class="term-knowledge-weight">α</span> (expoente do <span class="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia α≈0.6), menor para tarefas rotineiras (entrada de dados α≈0.2).  
+    - **<span class="term-context-weight">β</span> (expoente do <span class="term-context">contexto</span>):** Extremamente alto para debugging (β≈0.7), moderado para tarefas criativas (β≈0.4).  
+    - **<span class="term-tools-weight">γ</span> (expoente das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (γ≈0.5), menor em raciocínio puro (γ≈0.2).
+    </div>
 </details>
-
-Os expoentes são utilizados para ajustar a importância de cada fator para cada tipo de tarefa, com <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 e <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1.
-
 <details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Entendendo os expoentes</summary>
-
-Os expoentes determinam o quanto cada fator influencia a probabilidade geral. Quando um expoente se aproxima de 0, esse componente se torna menos crítico para o sucesso. Quando é maior, esse componente tem mais impacto no resultado final.
-
-Por exemplo, se <span class="term-context-weight">β</span> = 0.8 e <span class="term-knowledge-weight">α</span> = 0.1, então o <span class="term-context">contexto</span> domina: mesmo com <span class="term-knowledge">conhecimento</span> perfeito (K=1.0), <span class="term-context">contexto</span> ruim (C=0.2) daria p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1. Mas com bom <span class="term-context">contexto</span> (C=0.9), você obtém p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1.
-
-Cada expoente importa de forma diferente dependendo da situação:
-
-- **<span class="term-knowledge-weight">α</span> (expoente do <span class="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia α≈0.6), menor para tarefas rotineiras (entrada de dados α≈0.2).  
-- **<span class="term-context-weight">β</span> (expoente do <span class="term-context">contexto</span>):** Extremamente alto para debugging (β≈0.7), moderado para tarefas criativas (β≈0.4).  
-- **<span class="term-tools-weight">γ</span> (expoente das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (γ≈0.5), menor em raciocínio puro (γ≈0.2).
-
+<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Visualizador interativo</summary>
+  <TaskEquationVisualizer />
 </details>
 
 
@@ -89,35 +96,47 @@ Especialistas humanos ainda superam IAs quando você considera conhecimento, con
 Vamos ver a equação em ação com um cenário de debugging:
 
 **Antes (contexto pobre):**  
-> Deploy do Vercel falhou. Ajuda!
+<Callout type="error">
+Deploy do Vercel falhou. Ajuda!
+</Callout>
 
 Quase nenhuma informação: qual deploy? qual erro? qual ambiente?
 
 **Depois (bom contexto, estruturado):**  
+<Callout type="success">
 > **Objetivo:** Fazer o build de produção passar novamente.  
 > **Sintoma:** Deploys falham desde o commit `b7c9d1e`, erro: `Module not found: '@/components/Button'`.  
 > **Ambiente:** Next.js 14, Node 20, imagem de build do Vercel `2025.07`.  
 > **Tentativas:** Limpei `.next` e `.vercel`, redeployei duas vezes, confirmei que build local funciona.  
 > **Links:** Log de build falhando [link], commit `b7c9d1e`.  
 > **Pergunta:** Identificar causa (alias de caminho vs importação case-sensitive?) e sugerir correção ou rollback.  
+</Callout>
 
 **Bom contexto mais que duplica as chances de sucesso, de 36% para 88%.** O mesmo especialista, mesmas ferramentas; contexto claro transforma uma provável luta em uma quase vitória.
 
 <details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Detalhamento matemático</summary>
+    <summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Detalhamento matemático</summary>
 
-Tarefas de debugging têm alta dependência de contexto, então usei esses expoentes:
+    <div class="py-3 px-6">
+    Tarefas de debugging têm alta dependência de contexto, então usei esses expoentes:
 
-- **<span class="term-knowledge-weight">α</span>** = 0.2 (expoente do <span class="term-knowledge">conhecimento</span>): Contribuição moderada do conhecimento de domínio
-- **<span class="term-context-weight">β</span>** = 0.6 (expoente do <span class="term-context">contexto</span>): Muito alto, debugging é quase impossível sem especificidades
-- **<span class="term-tools-weight">γ</span>** = 0.2 (expoente das <span class="term-tools">ferramentas</span>): Moderado, debugging se beneficia de logs, controle de versão, etc.
+    - **α** = 0.2 (expoente do conhecimento): Contribuição moderada do conhecimento de domínio
+    - **β** = 0.6 (expoente do contexto): Muito alto, debugging é quase impossível sem especificidades
+    - **γ** = 0.2 (expoente das ferramentas): Moderado, debugging se beneficia de logs, controle de versão, etc.
 
-Com <span class="term-context">contexto</span> mínimo (**<span class="term-context">C</span>** ≈ 0.2), <span class="term-knowledge">conhecimento</span> decente (**<span class="term-knowledge">K</span>** ≈ 0.8), e boas <span class="term-tools">ferramentas</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.2</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.36 ou 36%</p>
+    Com contexto mínimo (**C** ≈ 0.2), conhecimento decente (**K** ≈ 0.8), e boas ferramentas (**T** ≈ 0.9):
+       
+       
+    <Callout>
+    <p class="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.2<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.36 ou 36%</p>
+    </Callout>
 
-Com <span class="term-context">contexto</span> rico (**<span class="term-context">C</span>** ≈ 0.9), mesmo <span class="term-knowledge">conhecimento</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), e mesmas <span class="term-tools">ferramentas</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.9</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.88 ou 88%</p>
-
+    Com contexto rico (**C** ≈ 0.9), mesmo conhecimento (**K** ≈ 0.8), e mesmas ferramentas (**T** ≈ 0.9):
+    
+    <Callout>
+    <p class="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.9<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.88 ou 88%</p>
+    </Callout>
+    </div>
 </details>
 
 ---

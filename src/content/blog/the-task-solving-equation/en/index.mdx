@@ -49,13 +49,23 @@ The exponents are used to adjust the importance of each factor for each type of 
     <div class="py-3 px-6">
     The exponents determine how much each factor influences the overall probability. When an exponent approaches 0, that component becomes less critical to success. When it's higher, that component has more impact on the final result.
 
-    For example, if <span class="term-context-weight">β</span> = 0.8 and <span class="term-knowledge-weight">α</span> = 0.1, then <span class="term-context">context</span> dominates: even with perfect <span class="term-knowledge">knowledge</span> (K=1.0), poor <span class="term-context">context</span> (C=0.2) would give p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1. But with good <span class="term-context">context</span> (C=0.9), you get p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1.
+    For example, if β = 0.8 and α = 0.1, then context dominates: even with perfect knowledge (K=1.0), poor context (C=0.2) would give:
+
+    <Callout>
+        p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1
+    </Callout>
+
+    But with good context (C=0.9), you get:
+
+    <Callout>
+        p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1
+    </Callout>
 
     Each exponent matters differently depending on the situation:
 
-    - **<span class="term-knowledge-weight">α</span> (<span class="term-knowledge">knowledge</span> exponent):** Higher for specialized domains (e.g. surgery α≈0.6), lower for routine tasks (data entry α≈0.2).  
-    - **<span class="term-context-weight">β</span> (<span class="term-context">context</span> exponent):** Extremely high for debugging (β≈0.7), moderate for creative tasks (β≈0.4).  
-    - **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> exponent):** Strong in technical work (γ≈0.5), lower in pure reasoning (γ≈0.2).
+    - **α** (knowledge exponent): Higher for specialized domains (e.g. surgery α≈0.6), lower for routine tasks (data entry α≈0.2).  
+    - **β** (context exponent): Extremely high for debugging (β≈0.7), moderate for creative tasks (β≈0.4).  
+    - **γ** (tools exponent): Strong in technical work (γ≈0.5), lower in pure reasoning (γ≈0.2).
     </div>
 </details>
 
@@ -87,17 +97,21 @@ Human experts still outperform AIs when you consider knowledge, context, and too
 Let's see the equation in action with a debugging scenario:
 
 **Before (poor context):**  
-> "Vercel deploy failed. Help!"
+<Callout type="error">
+Vercel deploy failed. Help!
+</Callout>
 
 Almost no information: which deploy? what error? what environment?
 
 **After (good context, structured):**  
+<Callout type="success">
 > **Goal:** Get production build passing again.  
 > **Symptom:** Deploys fail since commit `b7c9d1e`, error: `Module not found: '@/components/Button'`.  
 > **Env:** Next.js 14, Node 20, Vercel build image `2025.07`.  
 > **Tried:** Cleared `.next` and `.vercel`, redeployed twice, confirmed local build works.  
 > **Links:** Failing build log [link], commit `b7c9d1e`.  
 > **Ask:** Identify cause (path alias vs case-sensitive import?) and suggest fix or rollback.  
+</Callout>  
 
 **Good context more than doubles the odds of success—from 36% to 88%.** The same expert, same tools; clear context transforms a likely struggle into a near-win.
 
@@ -107,15 +121,22 @@ Almost no information: which deploy? what error? what environment?
     <div class="py-3 px-6">
     Debugging tasks have high context dependency, so I used these exponents:
 
-    - **<span class="term-knowledge-weight">α</span>** = 0.2 (<span class="term-knowledge">knowledge</span> exponent): Moderate contribution from domain knowledge
-    - **<span class="term-context-weight">β</span>** = 0.6 (<span class="term-context">context</span> exponent): Very high, debugging is nearly impossible without specifics
-    - **<span class="term-tools-weight">γ</span>** = 0.2 (<span class="term-tools">tools</span> exponent): Moderate, debugging benefits from logs, version control, etc.
+    - **α** = 0.2 (knowledge exponent): Moderate contribution from domain knowledge
+    - **β** = 0.6 (context exponent): Very high, debugging is nearly impossible without specifics
+    - **γ** = 0.2 (tools exponent): Moderate, debugging benefits from logs, version control, etc.
 
-    With minimal <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.2), decent <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and good <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-    <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.2</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.36 or 36%</p>
+    With minimal context (**C** ≈ 0.2), decent knowledge (**K** ≈ 0.8), and good tools (**T** ≈ 0.9):
+       
+       
+    <Callout>
+    <p class="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.2<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.36 or 36%</p>
+    </Callout>
 
-    With rich <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.9), same <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and same <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-    <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.9</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.88 or 88%</p>
+    With rich context (**C** ≈ 0.9), same knowledge (**K** ≈ 0.8), and same tools (**T** ≈ 0.9):
+    
+    <Callout>
+    <p class="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.9<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.88 or 88%</p>
+    </Callout>
     </div>
 </details>
 

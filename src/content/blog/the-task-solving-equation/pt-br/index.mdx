@@ -9,6 +9,7 @@ hideTableOfContents: false
 
 import Callout from "@/components/Callout.astro";
 import HumanVsAIRadarChart from "@/components/HumanVsAIRadarChart.astro";
+import TaskEquationVisualizer from "@/components/TaskEquationVisualizer.astro";
 
 ## TL;DR
 
@@ -36,10 +37,17 @@ Diferentes tipos de tarefas requerem diferentes equilíbrios desses fatores. É 
 
 <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
 
+<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">(Visualizador interativo)</summary>
+<div class="py-3 px-3">
+  <TaskEquationVisualizer />
+</div>
+</details>
+
 Os expoentes são utilizados para ajustar a importância de cada fator para cada tipo de tarefa, com <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 e <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1.
 
-<details>
-<summary>Entendendo os expoentes</summary>
+<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Entendendo os expoentes</summary>
 
 Os expoentes determinam o quanto cada fator influencia a probabilidade geral. Quando um expoente se aproxima de 0, esse componente se torna menos crítico para o sucesso. Quando é maior, esse componente tem mais impacto no resultado final.
 
@@ -95,8 +103,8 @@ Quase nenhuma informação: qual deploy? qual erro? qual ambiente?
 
 **Bom contexto mais que duplica as chances de sucesso, de 36% para 88%.** O mesmo especialista, mesmas ferramentas; contexto claro transforma uma provável luta em uma quase vitória.
 
-<details>
-<summary>Detalhamento matemático</summary>
+<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Detalhamento matemático</summary>
 
 Tarefas de debugging têm alta dependência de contexto, então usei esses expoentes:
 

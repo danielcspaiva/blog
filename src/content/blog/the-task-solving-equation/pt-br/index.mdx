@@ -28,7 +28,7 @@ Imagine que alguém te dá uma tarefa. O que determina se você terá sucesso? P
 2. **<span class="term-context">Contexto (C)</span>**: informações sobre esta tarefa específica. Quem, o quê, quando, onde e por quê que transforma uma solicitação genérica em uma tarefa realizável.  
 3. **<span class="term-tools">Ferramentas (T)</span>**: o que você pode usar para executar a tarefa. Instrumentos, software, processos, colaboradores, ou sua habilidade de inventar novas soluções.
 
-Depois de pensar sobre como esses fatores interagem entre si, eu diria que a probabilidade é um produto dentre eles:
+Depois de pensar sobre como esses fatores interagem entre si, eu diria que a probabilidade é o produto desses fatores:
 
 <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
 
@@ -43,7 +43,7 @@ Os expoentes são utilizados para ajustar a importância de cada fator para cada
 
 Os expoentes determinam o quanto cada fator influencia a probabilidade geral. Quando um expoente se aproxima de 0, esse componente se torna menos crítico para o sucesso. Quando é maior, esse componente tem mais impacto no resultado final.
 
-Por exemplo, se <span class="term-context-weight">β</span> = 0.8 e <span class="term-knowledge-weight">α</span> = 0.1, então o <span class="term-context">contexto</span> domina: mesmo com <span class="term-knowledge">conhecimento</span> perfeito (K=1.0), <span class="term-context">contexto</span> ruim (C=0.2) daria p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.26 × T^0.1. Mas com bom <span class="term-context">contexto</span> (C=0.9), você obtém p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.87 × T^0.1.
+Por exemplo, se <span class="term-context-weight">β</span> = 0.8 e <span class="term-knowledge-weight">α</span> = 0.1, então o <span class="term-context">contexto</span> domina: mesmo com <span class="term-knowledge">conhecimento</span> perfeito (K=1.0), <span class="term-context">contexto</span> ruim (C=0.2) daria p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1. Mas com bom <span class="term-context">contexto</span> (C=0.9), você obtém p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1.
 
 Cada expoente importa de forma diferente dependendo da situação:
 
@@ -93,7 +93,7 @@ Quase nenhuma informação: qual deploy? qual erro? qual ambiente?
 > **Links:** Log de build falhando [link], commit `b7c9d1e`.  
 > **Pergunta:** Identificar causa (alias de caminho vs importação case-sensitive?) e sugerir correção ou rollback.  
 
-**Bom contexto mais que triplicou as chances de sucesso, de 15% para 53%.** O mesmo especialista, mesmas ferramentas, mas contexto claro transforma uma provável falha em uma chance razoável de sucesso. (Veja o detalhamento matemático abaixo.)
+**Bom contexto mais que duplica as chances de sucesso, de 36% para 88%.** O mesmo especialista, mesmas ferramentas; contexto claro transforma uma provável luta em uma quase vitória.
 
 <details>
 <summary>Detalhamento matemático</summary>
@@ -105,10 +105,10 @@ Tarefas de debugging têm alta dependência de contexto, então usei esses expoe
 - **<span class="term-tools-weight">γ</span>** = 0.2 (expoente das <span class="term-tools">ferramentas</span>): Moderado, debugging se beneficia de logs, controle de versão, etc.
 
 Com <span class="term-context">contexto</span> mínimo (**<span class="term-context">C</span>** ≈ 0.2), <span class="term-knowledge">conhecimento</span> decente (**<span class="term-knowledge">K</span>** ≈ 0.8), e boas <span class="term-tools">ferramentas</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.2</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.15 ou 15%</p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.2</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.36 ou 36%</p>
 
 Com <span class="term-context">contexto</span> rico (**<span class="term-context">C</span>** ≈ 0.9), mesmo <span class="term-knowledge">conhecimento</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), e mesmas <span class="term-tools">ferramentas</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.9</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.53 ou 53%</p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.9</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.88 ou 88%</p>
 
 </details>
 

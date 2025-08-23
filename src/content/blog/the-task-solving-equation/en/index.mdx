@@ -28,7 +28,7 @@ Imagine someone gives you a task. What determines whether you succeed? We can br
 2. **<span class="term-context">Context (C)</span>**: information about this specific task. The who, what, when, where, and why that turns a generic request into an actionable one.  
 3. **<span class="term-tools">Tools (T)</span>**: what you can use to get it done. Instruments, software, processes, collaborators, or your ability to invent new solutions.
 
-After thinking about how these factors interact with each other, I would say that the probability is a product among them:
+After thinking about how these factors interact with each other, I would say that the probability is the product of these factors:
 
 <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
 
@@ -43,7 +43,7 @@ The exponents are used to adjust the importance of each factor for each type of 
 
 The exponents determine how much each factor influences the overall probability. When an exponent approaches 0, that component becomes less critical to success. When it's higher, that component has more impact on the final result.
 
-For example, if <span class="term-context-weight">β</span> = 0.8 and <span class="term-knowledge-weight">α</span> = 0.1, then <span class="term-context">context</span> dominates: even with perfect <span class="term-knowledge">knowledge</span> (K=1.0), poor <span class="term-context">context</span> (C=0.2) would give p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.26 × T^0.1. But with good <span class="term-context">context</span> (C=0.9), you get p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.87 × T^0.1.
+For example, if <span class="term-context-weight">β</span> = 0.8 and <span class="term-knowledge-weight">α</span> = 0.1, then <span class="term-context">context</span> dominates: even with perfect <span class="term-knowledge">knowledge</span> (K=1.0), poor <span class="term-context">context</span> (C=0.2) would give p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1. But with good <span class="term-context">context</span> (C=0.9), you get p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1.
 
 Each exponent matters differently depending on the situation:
 
@@ -93,7 +93,7 @@ Almost no information: which deploy? what error? what environment?
 > **Links:** Failing build log [link], commit `b7c9d1e`.  
 > **Ask:** Identify cause (path alias vs case-sensitive import?) and suggest fix or rollback.  
 
-**Good context more than tripled the odds of success—from 15% to 53%.** The same expert, same tools, but clear context transforms a likely failure into a reasonable chance of success. (See mathematical breakdown below.)
+**Good context more than doubles the odds of success—from 36% to 88%.** The same expert, same tools; clear context transforms a likely struggle into a near-win.
 
 <details>
 <summary>Mathematical breakdown</summary>
@@ -105,10 +105,10 @@ Debugging tasks have high context dependency, so I used these exponents:
 - **<span class="term-tools-weight">γ</span>** = 0.2 (<span class="term-tools">tools</span> exponent): Moderate, debugging benefits from logs, version control, etc.
 
 With minimal <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.2), decent <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and good <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.2</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.15 or 15%</p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.2</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.36 or 36%</p>
 
 With rich <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.9), same <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and same <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.9</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.53 or 53%</p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.9</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.88 or 88%</p>
 
 </details>
 

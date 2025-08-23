@@ -6,6 +6,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Visualizer lang={lang} client:load />
+<div class="py-3 px-6">
+  <Visualizer lang={lang} client:load />
+</div>
 
 

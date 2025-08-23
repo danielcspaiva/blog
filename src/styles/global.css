@@ -349,11 +349,25 @@ pre {
     --neutral-track: rgba(0, 0, 0, 0.12);
     --neutral-track-outer: rgba(0, 0, 0, 0.06);
     --thumb-ring: #ffffff;
+    /* Slider colors that match term colors */
+    --slider-knowledge-weight: var(--color-yellow-400);
+    --slider-context-weight: var(--color-red-400);
+    --slider-tools-weight: var(--color-green-800);
+    --slider-knowledge: var(--color-yellow-600);
+    --slider-context: var(--color-red-600);
+    --slider-tools: var(--color-green-600);
   }
   .dark {
     --neutral-track: rgba(255, 255, 255, 0.22);
     --neutral-track-outer: rgba(255, 255, 255, 0.12);
     --thumb-ring: #0f172a;
+    /* Dark mode slider colors that match term colors */
+    --slider-knowledge-weight: var(--color-yellow-200);
+    --slider-context-weight: var(--color-red-200);
+    --slider-tools-weight: var(--color-green-200);
+    --slider-knowledge: var(--color-yellow-300);
+    --slider-context: var(--color-red-400);
+    --slider-tools: var(--color-green-300);
   }
 
   input.slider[type='range'] {

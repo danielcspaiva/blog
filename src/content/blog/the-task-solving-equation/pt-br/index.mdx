@@ -34,19 +34,22 @@ Depois de pensar sobre como esses fatores interagem entre si, eu diria que a pro
 
 Diferentes tipos de tarefas requerem diferentes equilíbrios desses fatores. É improvável que um encanador <span class="term-knowledge">experiente</span> consiga resolver um vazamento sem as <span class="term-tools">ferramentas certas</span>, já um advogado dificilmente conseguiria resolver um caso sem <span class="term-knowledge">conhecimento jurídico</span> e se debruçar no <span class="term-context">contexto do caso</span>. Isso leva à equação completa:
 
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">α</span>·<span class="term-knowledge">K</span> × <span class="term-context-weight">β</span>·<span class="term-context">C</span> × <span class="term-tools-weight">γ</span>·<span class="term-tools">T</span> + <span class="term-baseline">δ</span></p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
 
-Os pesos são utilizados para ajustar a importância de cada fator para cada tipo de tarefa.
+Os expoentes são utilizados para ajustar a importância de cada fator para cada tipo de tarefa, com <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 e <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1.
 
 <details>
-<summary>Entendendo os pesos</summary>
+<summary>Entendendo os expoentes</summary>
 
-Cada termo importa de forma diferente dependendo da situação:
+Os expoentes determinam o quanto cada fator influencia a probabilidade geral. Quando um expoente se aproxima de 0, esse componente se torna menos crítico para o sucesso. Quando é maior, esse componente tem mais impacto no resultado final.
 
-- **<span class="term-knowledge-weight">α</span> (peso do <span class="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia α≈0.9), menor para tarefas rotineiras (entrada de dados α≈0.3).  
-- **<span class="term-context-weight">β</span> (peso do <span class="term-context">contexto</span>):** Extremamente alto para debugging (β≈0.95), moderado para tarefas criativas (β≈0.6).  
-- **<span class="term-tools-weight">γ</span> (peso das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (γ≈0.8), menor em raciocínio puro (γ≈0.4).  
-- **<span class="term-baseline">δ (linha de base)</span>:** A pequena chance de sucesso através de sorte ou força bruta. Geralmente pequena (δ≈0.05) mas nunca zero.
+Por exemplo, se <span class="term-context-weight">β</span> = 0.8 e <span class="term-knowledge-weight">α</span> = 0.1, então o <span class="term-context">contexto</span> domina: mesmo com <span class="term-knowledge">conhecimento</span> perfeito (K=1.0), <span class="term-context">contexto</span> ruim (C=0.2) daria p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.26 × T^0.1. Mas com bom <span class="term-context">contexto</span> (C=0.9), você obtém p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.87 × T^0.1.
+
+Cada expoente importa de forma diferente dependendo da situação:
+
+- **<span class="term-knowledge-weight">α</span> (expoente do <span class="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia α≈0.6), menor para tarefas rotineiras (entrada de dados α≈0.2).  
+- **<span class="term-context-weight">β</span> (expoente do <span class="term-context">contexto</span>):** Extremamente alto para debugging (β≈0.7), moderado para tarefas criativas (β≈0.4).  
+- **<span class="term-tools-weight">γ</span> (expoente das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (γ≈0.5), menor em raciocínio puro (γ≈0.2).
 
 </details>
 
@@ -90,29 +93,28 @@ Quase nenhuma informação: qual deploy? qual erro? qual ambiente?
 > **Links:** Log de build falhando [link], commit `b7c9d1e`.  
 > **Pergunta:** Identificar causa (alias de caminho vs importação case-sensitive?) e sugerir correção ou rollback.  
 
-**Bom contexto triplicou as chances de sucesso, de 12% para 38%.** O mesmo especialista, mesmas ferramentas, mas contexto claro transforma uma provável falha em uma chance razoável de sucesso. (Veja o detalhamento matemático abaixo.)
+**Bom contexto mais que triplicou as chances de sucesso, de 15% para 53%.** O mesmo especialista, mesmas ferramentas, mas contexto claro transforma uma provável falha em uma chance razoável de sucesso. (Veja o detalhamento matemático abaixo.)
 
 <details>
 <summary>Detalhamento matemático</summary>
 
-Tarefas de debugging têm alta dependência de contexto, então usei esses pesos:
+Tarefas de debugging têm alta dependência de contexto, então usei esses expoentes:
 
-- **<span class="term-knowledge-weight">α</span>** = 0.7 (peso do <span class="term-knowledge">conhecimento</span>): Moderado, já que debugging requer conhecimento de domínio mas não é altamente especializado
-- **<span class="term-context-weight">β</span>** = 0.9 (peso do <span class="term-context">contexto</span>): Muito alto, debugging é quase impossível sem especificidades
-- **<span class="term-tools-weight">γ</span>** = 0.8 (peso das <span class="term-tools">ferramentas</span>): Alto, debugging se beneficia muito de logs, controle de versão, etc.
-- **<span class="term-baseline">δ</span>** = 0.05 (linha de base): Pequena chance de sucesso por sorte ou força bruta
+- **<span class="term-knowledge-weight">α</span>** = 0.2 (expoente do <span class="term-knowledge">conhecimento</span>): Contribuição moderada do conhecimento de domínio
+- **<span class="term-context-weight">β</span>** = 0.6 (expoente do <span class="term-context">contexto</span>): Muito alto, debugging é quase impossível sem especificidades
+- **<span class="term-tools-weight">γ</span>** = 0.2 (expoente das <span class="term-tools">ferramentas</span>): Moderado, debugging se beneficia de logs, controle de versão, etc.
 
 Com <span class="term-context">contexto</span> mínimo (**<span class="term-context">C</span>** ≈ 0.2), <span class="term-knowledge">conhecimento</span> decente (**<span class="term-knowledge">K</span>** ≈ 0.8), e boas <span class="term-tools">ferramentas</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.2</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.12 ou 12%</p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.2</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.15 ou 15%</p>
 
 Com <span class="term-context">contexto</span> rico (**<span class="term-context">C</span>** ≈ 0.9), mesmo <span class="term-knowledge">conhecimento</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), e mesmas <span class="term-tools">ferramentas</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.9</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.38 ou 38%</p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.9</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.53 ou 53%</p>
 
 </details>
 
 ---
 
-## Se contexto é tão crítico, por que negligenciamos?
+## Por que negligenciamos o contexto
 
 Negligenciamos contexto porque não o vemos. Nossas suposições, modelos mentais e histórico compartilhado parecem tão óbvios que esquecemos que outros (ou IAs) não os compartilham.
 

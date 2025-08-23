@@ -34,19 +34,22 @@ After thinking about how these factors interact with each other, I would say tha
 
 Different types of tasks require different balances of these factors. It's unlikely that an <span class="term-knowledge">experienced</span> plumber could fix a leak without the <span class="term-tools">right tools</span>, while a lawyer would hardly solve a case without <span class="term-knowledge">legal knowledge</span> and diving into the <span class="term-context">case context</span>. This leads to the complete equation:
 
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">α</span>·<span class="term-knowledge">K</span> × <span class="term-context-weight">β</span>·<span class="term-context">C</span> × <span class="term-tools-weight">γ</span>·<span class="term-tools">T</span> + <span class="term-baseline">δ</span></p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
 
-The weights are used to adjust the importance of each factor for each type of task.
+The exponents are used to adjust the importance of each factor for each type of task, with <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 and <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1.
 
 <details>
-<summary>Understanding the weights</summary>
+<summary>Understanding the exponents</summary>
 
-Each term matters differently depending on the situation:
+The exponents determine how much each factor influences the overall probability. When an exponent approaches 0, that component becomes less critical to success. When it's higher, that component has more impact on the final result.
 
-- **<span class="term-knowledge-weight">α</span> (<span class="term-knowledge">knowledge</span> weight):** Higher for specialized domains (e.g. surgery α≈0.9), lower for routine tasks (data entry α≈0.3).  
-- **<span class="term-context-weight">β</span> (<span class="term-context">context</span> weight):** Extremely high for debugging (β≈0.95), moderate for creative tasks (β≈0.6).  
-- **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> weight):** Strong in technical work (γ≈0.8), lower in pure reasoning (γ≈0.4).  
-- **<span class="term-baseline">δ (baseline)</span>:** The small chance of success through luck or brute force. Usually tiny (δ≈0.05) but never zero.
+For example, if <span class="term-context-weight">β</span> = 0.8 and <span class="term-knowledge-weight">α</span> = 0.1, then <span class="term-context">context</span> dominates: even with perfect <span class="term-knowledge">knowledge</span> (K=1.0), poor <span class="term-context">context</span> (C=0.2) would give p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.26 × T^0.1. But with good <span class="term-context">context</span> (C=0.9), you get p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.87 × T^0.1.
+
+Each exponent matters differently depending on the situation:
+
+- **<span class="term-knowledge-weight">α</span> (<span class="term-knowledge">knowledge</span> exponent):** Higher for specialized domains (e.g. surgery α≈0.6), lower for routine tasks (data entry α≈0.2).  
+- **<span class="term-context-weight">β</span> (<span class="term-context">context</span> exponent):** Extremely high for debugging (β≈0.7), moderate for creative tasks (β≈0.4).  
+- **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> exponent):** Strong in technical work (γ≈0.5), lower in pure reasoning (γ≈0.2).
 
 </details>
 
@@ -90,29 +93,28 @@ Almost no information: which deploy? what error? what environment?
 > **Links:** Failing build log [link], commit `b7c9d1e`.  
 > **Ask:** Identify cause (path alias vs case-sensitive import?) and suggest fix or rollback.  
 
-**Good context tripled the odds of success—from 12% to 38%.** The same expert, same tools, but clear context transforms a likely failure into a reasonable chance of success. (See mathematical breakdown below.)
+**Good context more than tripled the odds of success—from 15% to 53%.** The same expert, same tools, but clear context transforms a likely failure into a reasonable chance of success. (See mathematical breakdown below.)
 
 <details>
 <summary>Mathematical breakdown</summary>
 
-Debugging tasks have high context dependency, so I used these weights:
+Debugging tasks have high context dependency, so I used these exponents:
 
-- **<span class="term-knowledge-weight">α</span>** = 0.7 (<span class="term-knowledge">knowledge</span> weight): Moderate, since debugging requires domain knowledge but isn't highly specialized
-- **<span class="term-context-weight">β</span>** = 0.9 (<span class="term-context">context</span> weight): Very high, debugging is nearly impossible without specifics
-- **<span class="term-tools-weight">γ</span>** = 0.8 (<span class="term-tools">tools</span> weight): High, debugging benefits greatly from logs, version control, etc.
-- **<span class="term-baseline">δ</span>** = 0.05 (baseline): Small chance of luck or brute force success
+- **<span class="term-knowledge-weight">α</span>** = 0.2 (<span class="term-knowledge">knowledge</span> exponent): Moderate contribution from domain knowledge
+- **<span class="term-context-weight">β</span>** = 0.6 (<span class="term-context">context</span> exponent): Very high, debugging is nearly impossible without specifics
+- **<span class="term-tools-weight">γ</span>** = 0.2 (<span class="term-tools">tools</span> exponent): Moderate, debugging benefits from logs, version control, etc.
 
 With minimal <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.2), decent <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and good <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.2</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.12 or 12%</p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.2</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.15 or 15%</p>
 
 With rich <span class="term-context">context</span> (**<span class="term-context">C</span>** ≈ 0.9), same <span class="term-knowledge">knowledge</span> (**<span class="term-knowledge">K</span>** ≈ 0.8), and same <span class="term-tools">tools</span> (**<span class="term-tools">T</span>** ≈ 0.9):  
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge-weight">0.7</span>×<span class="term-knowledge">0.8</span> × <span class="term-context-weight">0.9</span>×<span class="term-context">0.9</span> × <span class="term-tools-weight">0.8</span>×<span class="term-tools">0.9</span> + <span class="term-baseline">0.05</span> ≈ 0.38 or 38%</p>
+<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">0.8</span><sup><span class="term-knowledge-weight">0.2</span></sup> × <span class="term-context">0.9</span><sup><span class="term-context-weight">0.6</span></sup> × <span class="term-tools">0.9</span><sup><span class="term-tools-weight">0.2</span></sup> ≈ 0.53 or 53%</p>
 
 </details>
 
 ---
 
-## If context is so critical, why do we neglect it?
+## Why do we neglect context
 
 We neglect context because we carry it invisibly. Our assumptions, mental models, and shared history feel so obvious that we forget others (or AIs) don't share them.
 

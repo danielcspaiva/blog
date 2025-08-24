@@ -29,7 +29,7 @@ Imagine someone gives you a task. What determines whether you succeed? We can br
 2. **<span class="term-context">Context (C)</span>**: information about this specific task. The who, what, when, where, and why that turns a generic request into an actionable one.  
 3. **<span class="term-tools">Tools (T)</span>**: what you can use to get it done. Instruments, software, processes, collaborators, or your ability to invent new solutions.
 
-After thinking about how these factors interact with each other, I would say that the probability is the product of these factors:
+After thinking about how these factors interact with each other, I would say that the probability of success is the product of these factors:
 
 <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
 
@@ -44,23 +44,23 @@ The exponents are used to adjust the importance of each factor for each type of 
     <div class="py-3 px-6">
     The exponents determine how much each factor influences the overall probability. When an exponent approaches 0, that component becomes less critical to success. When it's higher, that component has more impact on the final result.
 
-    For example, if <span class="term-context-weight">β</span> = 0.8 and <span class="term-knowledge-weight">α</span> = 0.1, then <span class="term-context">context</span> dominates: even with perfect <span class="term-knowledge">knowledge</span> (K=1.0), poor <span class="term-context">context</span> (C=0.2) would give:
+    For example, if <span class="term-context-weight">β</span> = <span class="term-context-weight">0.8</span> and <span class="term-knowledge-weight">α</span> = <span class="term-knowledge-weight">0.1</span>, then <span class="term-context">context</span> dominates: even with perfect <span class="term-knowledge">knowledge</span> (<span class="term-knowledge">K</span>=<span class="term-knowledge">1.0</span>), poor <span class="term-context">context</span> (<span class="term-context">C</span>=<span class="term-context">0.2</span>) would give:
 
     <Callout>
-        p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1
+        p = <span class="term-knowledge">1.0</span>^<span class="term-knowledge-weight">0.1</span> × <span class="term-context">0.2</span>^<span class="term-context-weight">0.8</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span> ≈ <span class="term-context">0.28</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span>
     </Callout>
 
-    But with good <span class="term-context">context</span> (C=0.9), you get:
+    But with good <span class="term-context">context</span> (<span class="term-context">C</span>=<span class="term-context">0.9</span>), you get:
 
     <Callout>
-        p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1
+        p = <span class="term-knowledge">1.0</span>^<span class="term-knowledge-weight">0.1</span> × <span class="term-context">0.9</span>^<span class="term-context-weight">0.8</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span> ≈ <span class="term-context">0.92</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span>
     </Callout>
 
     Each exponent matters differently depending on the situation:
 
-    - **<span class="term-knowledge-weight">α</span> (<span class="term-knowledge">knowledge</span> exponent):** Higher for specialized domains (e.g. surgery α≈0.6), lower for routine tasks (data entry α≈0.2).  
-    - **<span class="term-context-weight">β</span> (<span class="term-context">context</span> exponent):** Extremely high for debugging (β≈0.7), moderate for creative tasks (β≈0.4).  
-    - **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> exponent):** Strong in technical work (γ≈0.5), lower in pure reasoning (γ≈0.2).
+    - **<span class="term-knowledge-weight">α</span> (<span class="term-knowledge">knowledge</span> exponent):** Higher for specialized domains (e.g. surgery <span class="term-knowledge-weight">α</span>≈<span class="term-knowledge-weight">0.6</span>), lower for routine tasks (data entry <span class="term-knowledge-weight">α</span>≈<span class="term-knowledge-weight">0.2</span>).  
+    - **<span class="term-context-weight">β</span> (<span class="term-context">context</span> exponent):** Extremely high for debugging (<span class="term-context-weight">β</span>≈<span class="term-context-weight">0.7</span>), moderate for creative tasks (<span class="term-context-weight">β</span>≈<span class="term-context-weight">0.4</span>).  
+    - **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> exponent):** Strong in technical work (<span class="term-tools-weight">γ</span>≈<span class="term-tools-weight">0.5</span>), lower in pure reasoning (<span class="term-tools-weight">γ</span>≈<span class="term-tools-weight">0.2</span>).
     </div>
 </details>
 <details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
@@ -83,7 +83,7 @@ Human experts still outperform AIs when you consider knowledge, context, and too
 
 | Factor | **Humans** | **AIs** |
 |--------|------------|---------|
-| **Knowledge** | Limited but deep. Built through practice, learning, and lived experience. Intuitive connections over time. | Vast and increasingly deep. Acquired in model pre-training on top of a vast database, practically everything available online. |
+| **Knowledge** | Limited but deep. Built through practice, learning, and lived experience. Intuitive connections over time. | Vast and increasingly deep.<br/>Acquired in model pre-training<br/>on vast databases, practically<br/>everything available online. |
 | **Context** | Inferred almost automatically: native language, tone of voice, shared history, assumptions, cultural priors. | Minimal unless explicitly provided. Models lack your personal history, environment, or shared assumptions. Every relevant detail must be stated. |
 | **Tools** | Practically unlimited. We adapt, combine, or invent tools on demand. | Limited to what’s wired in (APIs, code exec, browsers, MCPs). Cannot create new tools, but can use existing ones to gather missing context when guided. |
 
@@ -203,7 +203,7 @@ Context is our water. It's so fundamental to how we navigate the world that we d
 
 On top of that, context feels like overhead. Typing "Deploy failed. Fix it!" feels efficient, even though it guarantees multiple back-and-forths later.
 
-These shortcuts work (somewhat) in human-to-human interaction, because we're good at inferring context from tone, body language, and shared experience. But with AI, the problem gets amplified, we're communicating with something that doesn't share our water.
+These shortcuts work (somewhat) in human-to-human interaction, because we're good at inferring context from tone, body language, and shared experience. But with AI, the problem gets amplified—we're communicating with something that doesn't share our water.
 
 Another reason is our fundamental misunderstanding of how models work:
 

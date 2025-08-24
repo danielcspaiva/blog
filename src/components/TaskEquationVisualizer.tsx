@@ -433,9 +433,6 @@ export default function TaskEquationVisualizer({ lang }: Props) {
               </span>
             </div>
           </div>
-          <div className="sr-only" aria-live="polite">
-            {t("equation.currentProbability")}: {gauge.label}
-          </div>
         </div>
       </section>
 

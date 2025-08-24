@@ -29,7 +29,7 @@ Imagine que alguém te dá uma tarefa. O que determina se você terá sucesso? P
 2. **<span class="term-context">Contexto (C)</span>**: informações sobre esta tarefa específica. Quem, o quê, quando, onde e por quê que transforma uma solicitação genérica em uma tarefa realizável.  
 3. **<span class="term-tools">Ferramentas (T)</span>**: o que você pode usar para executar a tarefa. Instrumentos, software, processos, colaboradores, ou sua habilidade de inventar novas soluções.
 
-Depois de pensar sobre como esses fatores interagem entre si, eu diria que a probabilidade é o produto desses fatores:
+Depois de pensar sobre como esses fatores interagem entre si, eu diria que a probabilidade de sucesso é o produto desses fatores:
 
 <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
 
@@ -44,23 +44,23 @@ Os expoentes são utilizados para ajustar a importância de cada fator para cada
     <div class="py-3 px-6">
     Os expoentes determinam o quanto cada fator influencia a probabilidade geral. Quando um expoente se aproxima de 0, esse componente se torna menos crítico para o sucesso. Quando é maior, esse componente tem mais impacto no resultado final.
 
-    Por exemplo, se <span class="term-context-weight">β</span> = 0.8 e <span class="term-knowledge-weight">α</span> = 0.1, então o <span class="term-context">contexto</span> domina: mesmo com <span class="term-knowledge">conhecimento</span> perfeito (K=1.0), <span class="term-context">contexto</span> ruim (C=0.2) daria:
+    Por exemplo, se <span class="term-context-weight">β</span> = <span class="term-context-weight">0.8</span> e <span class="term-knowledge-weight">α</span> = <span class="term-knowledge-weight">0.1</span>, então o <span class="term-context">contexto</span> domina: mesmo com <span class="term-knowledge">conhecimento</span> perfeito (<span class="term-knowledge">K</span>=<span class="term-knowledge">1.0</span>), <span class="term-context">contexto</span> ruim (<span class="term-context">C</span>=<span class="term-context">0.2</span>) daria:
 
     <Callout>
-        p = 1.0^0.1 × 0.2^0.8 × T^0.1 ≈ 0.28 × T^0.1
+        p = <span class="term-knowledge">1.0</span>^<span class="term-knowledge-weight">0.1</span> × <span class="term-context">0.2</span>^<span class="term-context-weight">0.8</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span> ≈ <span class="term-context">0.28</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span>
     </Callout>
 
-    Mas com bom <span class="term-context">contexto</span> (C=0.9), você obtém:
+    Mas com bom <span class="term-context">contexto</span> (<span class="term-context">C</span>=<span class="term-context">0.9</span>), você obtém:
 
     <Callout>
-        p = 1.0^0.1 × 0.9^0.8 × T^0.1 ≈ 0.92 × T^0.1
+        p = <span class="term-knowledge">1.0</span>^<span class="term-knowledge-weight">0.1</span> × <span class="term-context">0.9</span>^<span class="term-context-weight">0.8</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span> ≈ <span class="term-context">0.92</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span>
     </Callout>
 
     Cada expoente importa de forma diferente dependendo da situação:
 
-    - **<span class="term-knowledge-weight">α</span> (expoente do <span class="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia α≈0.6), menor para tarefas rotineiras (entrada de dados α≈0.2).  
-    - **<span class="term-context-weight">β</span> (expoente do <span class="term-context">contexto</span>):** Extremamente alto para debugging (β≈0.7), moderado para tarefas criativas (β≈0.4).  
-    - **<span class="term-tools-weight">γ</span> (expoente das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (γ≈0.5), menor em raciocínio puro (γ≈0.2).
+    - **<span class="term-knowledge-weight">α</span> (expoente do <span class="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia <span class="term-knowledge-weight">α</span>≈<span class="term-knowledge-weight">0.6</span>), menor para tarefas rotineiras (entrada de dados <span class="term-knowledge-weight">α</span>≈<span class="term-knowledge-weight">0.2</span>).  
+    - **<span class="term-context-weight">β</span> (expoente do <span class="term-context">contexto</span>):** Extremamente alto para debugging (<span class="term-context-weight">β</span>≈<span class="term-context-weight">0.7</span>), moderado para tarefas criativas (<span class="term-context-weight">β</span>≈<span class="term-context-weight">0.4</span>).  
+    - **<span class="term-tools-weight">γ</span> (expoente das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (<span class="term-tools-weight">γ</span>≈<span class="term-tools-weight">0.5</span>), menor em raciocínio puro (<span class="term-tools-weight">γ</span>≈<span class="term-tools-weight">0.2</span>).
     </div>
 </details>
 <details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
@@ -83,7 +83,7 @@ Especialistas humanos ainda superam IAs quando você considera conhecimento, con
 
 | Fator | **Humanos** | **IAs** |
 |--------|------------|---------|
-| **Conhecimento** | Limitado mas profundo. Construído através de prática, aprendizado e experiência vivida. Conexões intuitivas ao longo do tempo. | Vasto e cada vez mais profundo. Adquirido no pré-treinamento do modelo em cima de uma vasta base de dados, praticamente tudo o que está disponível online. |
+| **Conhecimento** | Limitado mas profundo. Construído através de prática, aprendizado e experiência vivida. Conexões intuitivas ao longo do tempo. | Vasto e cada vez mais profundo.<br/>Adquirido no pré-treinamento<br/>do modelo em vastas bases de dados,<br/>praticamente tudo disponível online. |
 | **Contexto** | Inferido quase automaticamente: língua nativa, tom de voz, histórico compartilhado, suposições, prioridades culturais. | Mínimo a menos que explicitamente fornecido. Modelos carecem de seu histórico pessoal, ambiente ou suposições compartilhadas. Cada detalhe relevante deve ser declarado. |
 | **Ferramentas** | Praticamente ilimitado. Nós adaptamos, combinamos ou inventamos ferramentas sob demanda. | Limitado ao que está pré-programado (APIs, execução de código, navegadores, MCPs). Não pode criar novas ferramentas, mas pode usar as existentes para coletar contexto ausente quando orientado. |
 
@@ -204,7 +204,7 @@ Contexto é nossa água. É tão fundamental para como navegamos o mundo que nem
 
 Além disso, contexto parece overhead. Digitar "Deploy falhou. Conserte!" parece eficiente, mesmo que isso implique em múltiplas idas e vindas depois para esclarecer detalhes.
 
-Esses atalhos funcionam (de certa forma) na interação humano-humano, porque somos bons em inferir contexto do tom, linguagem corporal e experiência compartilhada. Mas com IA, o problema é amplificado, estamos nos comunicando com algo que não compartilha nossa água.
+Esses atalhos funcionam (de certa forma) na interação humano-humano, porque somos bons em inferir contexto do tom, linguagem corporal e experiência compartilhada. Mas com IA, o problema é amplificado. Estamos nos comunicando com algo que não compartilha nossa água.
 
 Outra razão é nossa incompreensão fundamental de como os modelos de IA funcionam:
 

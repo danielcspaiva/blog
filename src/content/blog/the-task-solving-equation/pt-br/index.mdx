@@ -91,6 +91,56 @@ Especialistas humanos ainda superam IAs quando você considera conhecimento, con
 
 ---
 
+## Agentes de IA
+
+Se você já tentou construir agentes de IA, esse fórmula não é nenhuma novidade: Agentes são um produto de conhecimento, contexto e ferramentas.
+
+| Equação | Conceito de Agente | Exemplos |
+|---|---|---|
+| **Conhecimento** | Pesos do modelo / conhecimento pré-treinado | `gpt-5`, checkpoints ajustados para domínio |
+| **Contexto** | Prompt do sistema, mensagens, recuperação (RAG), memória, arquivos, parâmetros | Goal/constraints, env & versions, docs, customer record |
+| **Ferramentas** | Function calling / APIs, DB access, browsers, code exec, MCPs | `search()`, `getOrders()`, Vercel deploys, Slack post |
+
+Veja um exemplo simples de um agente de IA em Next.js usando o [Vercel AI SDK](https://sdk.vercel.ai/docs):
+
+
+```ts
+// app/api/agent/route.ts — Next.js (Vercel AI SDK)
+import { openai } from '@ai-sdk/openai';
+import { streamText } from 'ai';
+import { z } from 'zod';
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
+
+  const result = await streamText({
+    model: openai('gpt-4o-mini'), // conhecimento
+    system: 'Você é um agente prestativo. Use ferramentas quando necessário.', // contexto
+    messages, // contexto
+    tools: { // ferramentas
+      getWeather: { // nome da ferramenta
+        description: 'Obter o clima atual de uma cidade', // descrição da ferramenta
+        parameters: z.object({ // parâmetros da ferramenta  
+          city: z.string().min(1, 'cidade é obrigatória'), 
+          unit: z.enum(['metric', 'imperial']).default('metric'),
+        }),
+        // execução da ferramenta
+        execute: async ({ city, unit }) => {
+          const res = await fetch(`https://example.com/api/weather?city=${encodeURIComponent(city)}&unit=${unit}`);
+          if (!res.ok) throw new Error('falha ao buscar clima');
+          const data = await res.json();
+          return `${data.temp}°${unit === 'metric' ? 'C' : 'F'} e ${data.description} em ${city}`;
+        },
+      },
+    },
+  });
+
+  return result.toAIStreamResponse();
+}
+```
+
+---
+
 ## Aplicando a equação
 
 Vamos ver a equação em ação com um cenário de debugging:

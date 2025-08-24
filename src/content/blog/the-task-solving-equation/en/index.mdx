@@ -91,6 +91,55 @@ Human experts still outperform AIs when you consider knowledge, context, and too
 
 ---
 
+## AI Agents
+
+If you've tried to build AI agents, this framing is nothing new: Agents are a product of knowledge, context, and tools.
+
+| Equation | Agent concept | Examples |
+|---|---|---|
+| **Knowledge** | Model weights / pretrained knowledge | `gpt-5`, domain-tuned checkpoints |
+| **Context** | System prompt, messages, retrieval (RAG), memory, files, parameters | Goal/constraints, env & versions, docs, customer record |
+| **Tools** | Function calling / APIs, DB access, browsers, code exec, MCPs | `search()`, `getOrders()`, Vercel deploys, Slack post |
+
+Here is a simple example of an AI agent in Next.js using the [Vercel AI SDK](https://sdk.vercel.ai/docs):
+
+```ts
+// app/api/agent/route.ts — Next.js (Vercel AI SDK)
+import { openai } from '@ai-sdk/openai';
+import { streamText } from 'ai';
+import { z } from 'zod';
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
+
+  const result = await streamText({
+    model: openai('gpt-4o-mini'), // knowledge
+    system: 'You are a helpful agent. Use tools when needed.', // context
+    messages, // context
+    tools: { // tools
+      getWeather: { // tool name
+        description: 'Get current weather for a city', // tool description
+        parameters: z.object({ // tool parameters
+          city: z.string().min(1, 'city is required'),
+          unit: z.enum(['metric', 'imperial']).default('metric'),
+        }),
+        // tool execution
+        execute: async ({ city, unit }) => {
+          const res = await fetch(`https://example.com/api/weather?city=${encodeURIComponent(city)}&unit=${unit}`);
+          if (!res.ok) throw new Error('weather fetch failed');
+          const data = await res.json();
+          return `${data.temp}°${unit === 'metric' ? 'C' : 'F'} and ${data.description} in ${city}`;
+        },
+      },
+    },
+  });
+
+  return result.toAIStreamResponse();
+}
+```
+
+---
+
 ## Applying the equation
 
 Let's see the equation in action with a debugging scenario:

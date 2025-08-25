@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/blog/the-task-solving-equation",
+      "destination": "/blog/ai-success-equation",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/the-task-solving-equation",
+      "destination": "/en/blog/ai-success-equation",
+      "permanent": true
+    },
+    {
+      "source": "/pt-br/blog/the-task-solving-equation",
+      "destination": "/pt-br/blog/ai-success-equation",
+      "permanent": true
+    }
+  ]
+}

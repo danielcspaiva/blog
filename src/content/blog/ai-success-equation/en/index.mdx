@@ -1,6 +1,6 @@
 ---
-title: "The Task-Solving Equation"
-description: In the AI era, knowledge, context, and tools multiply to determine the probability of success.
+title: "The AI Success Equation"
+description: How knowledge, context, and tools multiply to determine the probability of success.
 date: 2025-08-20
 tags: [blog, ai, communication, tech]
 locale: en
@@ -13,11 +13,27 @@ import TaskEquationVisualizer from "@/components/TaskEquationVisualizer.astro";
 
 ## TL;DR
 
-Task success depends on three factors: knowledge, context, and tools. They multiply, not add, so if any one is missing, the probability of success collapses.
-- Humans: Usually limited in knowledge, but rich in context (through shared understanding) and with practically unlimited access to tools.
-- AIs: Vast in knowledge, but depend on tool access and explicit context to perform.
+Why do some people consistently get good results with AI while others don't? It comes down to three factors: knowledge, context, and tools. They multiply, not add. If any one is missing, the probability of success collapses.
 
-That's why in the AI era, context is the bottleneck. Clear, structured context is the leverage that turns AI from unreliable guesswork into a reliable collaborator.
+- Humans: Limited in knowledge, but rich in context (through shared understanding) and with practically unlimited access to tools.
+- AIs: Vast in knowledge, but depend on explicit context and have narrow tool access.
+
+The difference between getting production-ready code and hallucinated nonsense isn't luck or skill - it's understanding that in the AI era, context is the bottleneck.
+
+---
+
+## Motivation
+
+Some people claim that AI means the end of all jobs and even the downfall of humankind. Others dismiss it as hype and vaporware. I stand somewhere else: I believe this technology is real, here to stay, and transformative — but only if we understand what actually drives success with these systems.
+
+For a while I’ve been reflecting on a simple question:
+> Why do some people consistently get good results with AI while others don't?
+
+Some developers get production-ready code that ships to thousands of users, while others get hallucinated nonsense that won’t even compile. [Some teams automate away hours of grunt work](https://ghuntley.com/ralph/), while others struggle to get even basic answers. What makes the difference?
+
+It’s not about being “good with computers” or having access to the latest models. Something more fundamental is at play.
+
+After countless hours experimenting with models, building AI agents, coding with AI editors and CLIs, and studying how others succeed, I arrived at a straightforward equation that captures the probability of success. This article is my attempt to share that framework.
 
 ---
 
@@ -31,11 +47,11 @@ Imagine someone gives you a task. What determines whether you succeed? We can br
 
 After thinking about how these factors interact with each other, I would say that the probability of success is the product of these factors:
 
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
+> <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
 
 Different types of tasks require different balances of these factors. It's unlikely that an <span class="term-knowledge">experienced</span> plumber could fix a leak without the <span class="term-tools">right tools</span>, while a lawyer would hardly solve a case without <span class="term-knowledge">legal knowledge</span> and diving into the <span class="term-context">case context</span>. This leads to the complete equation:
 
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
+> <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
 
 The exponents are used to adjust the importance of each factor for each type of task, with <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 and <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1. Check the interactive visualizer below to see how the equation works.
 
@@ -274,4 +290,4 @@ As Guillermo Rauch observed:
 
 The quality of your thoughts (expressed through clear context) now determines success.  
 
-Next time you give a task to an AI (or a teammate), ask yourself: Did I give enough <span class="term-knowledge">knowledge</span>, <span class="term-context">context</span>, and <span class="term-tools">tools</span>?
+Next time you give a task to an AI (or a teammate), ask yourself: Does it have enough <span class="term-knowledge">knowledge</span>? Did I give it enough <span class="term-context">context</span>? Does it have access to the right <span class="term-tools">tools</span>?

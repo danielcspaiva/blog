@@ -127,6 +127,14 @@
   }
 }
 
+/* Remove auto-inserted quotes from Tailwind Typography blockquotes */
+@layer utilities {
+  .prose blockquote p:first-of-type::before,
+  .prose blockquote p:last-of-type::after {
+    content: none;
+  }
+}
+
 @layer utilities {
   article a {
     @apply font-sans text-current underline underline-offset-[3px];

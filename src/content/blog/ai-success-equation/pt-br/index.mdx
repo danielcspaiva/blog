@@ -1,6 +1,6 @@
 ---
-title: "A Equação da Resolução de Tarefas"
-description: Como conhecimento, contexto e ferramentas se multiplicam para determinar a probabilidade de sucesso na era da IA.
+title: "A Equação do Sucesso com IA"
+description: Como conhecimento, contexto e ferramentas se multiplicam para determinar a probabilidade de sucesso.
 date: 2025-08-20
 tags: [blog, ai, communication, tech]
 locale: pt-br
@@ -13,11 +13,28 @@ import TaskEquationVisualizer from "@/components/TaskEquationVisualizer.astro";
 
 ## TL;DR
 
-O sucesso de uma tarefa depende de três fatores: conhecimento, contexto e ferramentas. Eles se multiplicam, não se somam, então se qualquer um estiver ausente, a probabilidade de sucesso desaba.
-- Humanos: Geralmente limitados em conhecimento, mas ricos em contexto (através de entendimento compartilhado) e com acesso praticamente ilimitado a ferramentas.
-- IAs: Vastas em conhecimento, mas dependem de acesso a ferramentas e contexto explícito para performar.
+Por que algumas pessoas conseguem excelentes resultados com IA enquanto outras não? A resposta está em três fatores: conhecimento, contexto e ferramentas. Eles se multiplicam para determinar a probabilidade de sucesso de uma tarefa.
 
-É por isso que na era da IA, o contexto é o gargalo. Contexto claro e estruturado é a alavanca que mais potencializa os resultados.
+- Humanos: Limitados em conhecimento, mas ricos em contexto (através de entendimento compartilhado) e com acesso praticamente ilimitado a ferramentas.
+- IAs: Vastas em conhecimento, mas dependem de contexto explícito e têm acesso limitado a ferramentas.
+
+A diferença entre obter código de qualidade e alucinações sem sentido não é sorte ou habilidade técnica, mas entender que na era da IA, o contexto é o gargalo.
+
+---
+
+## Motivação
+
+Algumas pessoas dizem que a IA vai acabar com todos os empregos e vai destruir a humanidade. Outras dizem que não passa de hype. Eu acredito que essa tecnologia é real e veio para ficar, porém para obter o máximo dela precisamos entender o que realmente determina o sucesso com esses sistemas.
+
+Por um tempo venho refletindo sobre uma pergunta simples:
+
+> Por que algumas pessoas conseguem resultados consistentemente bons com IA enquanto outras não?
+
+Alguns desenvolvedores multiplicam sua produtividade e criam projetos usados por milhares de usuários, enquanto outros geram alucinações que nem compilam. Alguns times  [automatizam horas de trabalho repetitivo](https://ghuntley.com/ralph/), enquanto outros lutam para obter até mesmo respostas básicas. O que faz a diferença?
+
+Não se trata de ser "bom com computadores" ou ter acesso aos modelos mais recentes. Algo mais fundamental está em jogo.
+
+Após incontáveis horas experimentando com modelos, construindo agentes de IA, programando com editores de IA e CLIs, e estudando como outros têm sucesso, cheguei a uma equação simples que captura a probabilidade de sucesso. Este artigo é minha tentativa de compartilhar essa ideia.
 
 ---
 
@@ -31,11 +48,11 @@ Imagine que alguém te dá uma tarefa. O que determina se você terá sucesso? P
 
 Depois de pensar sobre como esses fatores interagem entre si, eu diria que a probabilidade de sucesso é o produto desses fatores:
 
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
+> <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
 
 Diferentes tipos de tarefas requerem diferentes equilíbrios desses fatores. É improvável que um encanador <span class="term-knowledge">experiente</span> consiga resolver um vazamento sem as <span class="term-tools">ferramentas certas</span>, já um advogado dificilmente conseguiria resolver um caso sem <span class="term-knowledge">conhecimento jurídico</span> e se debruçar no <span class="term-context">contexto do caso</span>. Isso leva à equação completa:
 
-<p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
+> <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
 
 Os expoentes são utilizados para ajustar a importância de cada fator para cada tipo de tarefa, com <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 e <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1. Confira o visualizador interativo abaixo para ver como a equação funciona.
 
@@ -275,4 +292,4 @@ Como Guillermo Rauch observou:
 
 A qualidade de seus pensamentos (expressa através de contexto claro) agora determina o sucesso.  
 
-Na próxima vez que você der uma tarefa para uma IA (ou um colega de equipe), se pergunte: Eu dei <span class="term-knowledge">conhecimento</span>, <span class="term-context">contexto</span> e <span class="term-tools">ferramentas</span> suficientes?
+Na próxima vez que você der uma tarefa para uma IA (ou até mesmo um colega de equipe), se pergunte: Ele tem o <span class="term-knowledge">conhecimento</span> necessário? Eu dei a ele o <span class="term-context">contexto</span> suficiente? Ele tem acesso às <span class="term-tools">ferramentas</span> certas?

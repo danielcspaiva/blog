@@ -1,6 +1,8 @@
 ---
-// Redirect to the default locale 404 page
-import { defaultLang } from '../i18n/ui';
+import { defaultLang } from "../i18n/ui";
+import PostHogLayout from "../layouts/PostHogLayout.astro";
 ---
 
-<meta http-equiv="refresh" content={`0;url=/${defaultLang}/404`} />
+<PostHogLayout>
+  <meta http-equiv="refresh" content={`0;url=/${defaultLang}/404`} />
+</PostHogLayout>

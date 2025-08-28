@@ -1,4 +1,5 @@
 ---
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import BackToPrevious from "@components/BackToPrevious.astro";
@@ -7,9 +8,9 @@ import { useTranslations } from "../../i18n/utils";
 import { languages, ui } from "../../i18n/ui";
 
 export function getStaticPaths() {
-  return Object.keys(languages).map(locale => ({
+  return Object.keys(languages).map((locale) => ({
     params: { locale },
-    props: { locale }
+    props: { locale },
   }));
 }
 
@@ -18,16 +19,20 @@ const lang = locale as keyof typeof ui;
 const t = useTranslations(lang);
 ---
 
-<Layout title={t('notFound.title')} description={SITE.DESCRIPTION}>
-  <Container>
-    <div class="mt-16 grid place-items-center gap-3">
-      <h4 class="animate text-2xl font-semibold text-black dark:text-white">
-        {t('notFound.title')}
-      </h4>
-      <p class="animate text-center">{t('notFound.message')}</p>
-      <span class="animate">
-        <BackToPrevious href={`/${locale === 'en' ? '' : locale}`}>{t('notFound.backHome')}</BackToPrevious>
-      </span>
-    </div>
-  </Container>
-</Layout> 
+<PostHogLayout>
+  <Layout title={t("notFound.title")} description={SITE.DESCRIPTION}>
+    <Container>
+      <div class="mt-16 grid place-items-center gap-3">
+        <h4 class="animate text-2xl font-semibold text-black dark:text-white">
+          {t("notFound.title")}
+        </h4>
+        <p class="animate text-center">{t("notFound.message")}</p>
+        <span class="animate">
+          <BackToPrevious href={`/${locale === "en" ? "" : locale}`}
+            >{t("notFound.backHome")}</BackToPrevious
+          >
+        </span>
+      </div>
+    </Container>
+  </Layout>
+</PostHogLayout>

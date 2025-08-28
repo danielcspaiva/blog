@@ -1,4 +1,5 @@
 ---
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
@@ -9,9 +10,9 @@ import { languages, ui } from "../../../i18n/ui";
 import { type BlogPost } from "../../../i18n/blog";
 
 export function getStaticPaths() {
-  return Object.keys(languages).map(locale => ({
+  return Object.keys(languages).map((locale) => ({
     params: { locale },
-    props: { locale }
+    props: { locale },
   }));
 }
 
@@ -36,58 +37,62 @@ const postsByYear = blog.reduce((acc: YearPosts, post) => {
   return acc;
 }, {});
 
-const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
+const years = Object.keys(postsByYear).sort(
+  (a, b) => parseInt(b) - parseInt(a),
+);
 
 // Content based on locale
 const content = {
   en: {
     title: localizedBlog.TITLE,
-    description: localizedBlog.DESCRIPTION
+    description: localizedBlog.DESCRIPTION,
   },
-  'pt-br': {
+  "pt-br": {
     title: localizedBlog.TITLE,
-    description: localizedBlog.DESCRIPTION
-  }
+    description: localizedBlog.DESCRIPTION,
+  },
 };
 
 const pageContent = content[lang];
 ---
 
-<Layout 
-  title={localizedBlog.TITLE} 
-  description={localizedBlog.DESCRIPTION}
-  pageType="blog"
->
-  <Container>
-    <aside>
-      <div class="space-y-10">
-        <section>
-          <h1 class="font-semibold text-black dark:text-white">
-            {pageContent.title}
-          </h1>
-          <p>{pageContent.description}</p>
-        </section>
-        <div class="space-y-4">
-          {
-            years.map((year) => (
-              <section class="animate space-y-4">
-                <div class="font-semibold text-black dark:text-white">
-                  {year}
-                </div>
-                <div>
-                  <ul class="not-prose flex flex-col gap-4">
-                    {postsByYear[year].map((post) => (
-                      <li>
-                        <ArrowCard entry={post} locale={locale} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </section>
-            ))
-          }
+<PostHogLayout>
+  <Layout
+    title={localizedBlog.TITLE}
+    description={localizedBlog.DESCRIPTION}
+    pageType="blog"
+  >
+    <Container>
+      <aside>
+        <div class="space-y-10">
+          <section>
+            <h1 class="font-semibold text-black dark:text-white">
+              {pageContent.title}
+            </h1>
+            <p>{pageContent.description}</p>
+          </section>
+          <div class="space-y-4">
+            {
+              years.map((year) => (
+                <section class="animate space-y-4">
+                  <div class="font-semibold text-black dark:text-white">
+                    {year}
+                  </div>
+                  <div>
+                    <ul class="not-prose flex flex-col gap-4">
+                      {postsByYear[year].map((post) => (
+                        <li>
+                          <ArrowCard entry={post} locale={locale} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </section>
+              ))
+            }
+          </div>
         </div>
-      </div>
-    </aside>
-  </Container>
-</Layout> 
+      </aside>
+    </Container>
+  </Layout>
+</PostHogLayout>

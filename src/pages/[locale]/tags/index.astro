@@ -1,21 +1,25 @@
 ---
 import { getCollection } from "astro:content";
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import { useTranslations } from "../../../i18n/utils";
 import { languages, ui } from "../../../i18n/ui";
 
 export function getStaticPaths() {
-  return Object.keys(languages).map(locale => ({
+  return Object.keys(languages).map((locale) => ({
     params: { locale },
-    props: { locale }
+    props: { locale },
   }));
 }
 
 const { locale } = Astro.params;
 const lang = locale as keyof typeof ui;
 
-const posts = await getCollection("blog", ({ data }) => !data.draft && data.locale === locale);
+const posts = await getCollection(
+  "blog",
+  ({ data }) => !data.draft && data.locale === locale,
+);
 const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))].sort();
 
 // Content based on locale
@@ -23,41 +27,45 @@ const content = {
   en: {
     title: "Tags",
     description: "List of tags used.",
-    allTags: "All Tags"
+    allTags: "All Tags",
   },
-  'pt-br': {
+  "pt-br": {
     title: "Tags",
     description: "Lista de tags utilizadas.",
-    allTags: "Todas as Tags"
-  }
+    allTags: "Todas as Tags",
+  },
 };
 
 const pageContent = content[lang];
 ---
 
-<Layout 
-  title={pageContent.title} 
-  description={pageContent.description}
-  pageType="tags"
->
-  <Container>
-    <div class="space-y-10">
-      <h1 class="animate font-semibold">{pageContent.allTags}</h1>
-      <div class="animate flex flex-wrap gap-2">
-        {
-          tags.map((tag) => (
-            <a
-              href={`/${locale}/tags/${tag}`}
-              class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-            >
-              {tag}{" "}
-              <span class="text-sm text-gray-600">
-                ({posts.filter((post) => post.data.tags?.includes(tag)).length})
-              </span>
-            </a>
-          ))
-        }
+<PostHogLayout>
+  <Layout
+    title={pageContent.title}
+    description={pageContent.description}
+    pageType="tags"
+  >
+    <Container>
+      <div class="space-y-10">
+        <h1 class="animate font-semibold">{pageContent.allTags}</h1>
+        <div class="animate flex flex-wrap gap-2">
+          {
+            tags.map((tag) => (
+              <a
+                href={`/${locale}/tags/${tag}`}
+                class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+              >
+                {tag}{" "}
+                <span class="text-sm text-gray-600">
+                  (
+                  {posts.filter((post) => post.data.tags?.includes(tag)).length}
+                  )
+                </span>
+              </a>
+            ))
+          }
+        </div>
       </div>
-    </div>
-  </Container>
-</Layout>
+    </Container>
+  </Layout>
+</PostHogLayout>

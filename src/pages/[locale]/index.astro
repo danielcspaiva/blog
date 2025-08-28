@@ -1,7 +1,14 @@
 ---
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import { SITE, HOME, SOCIALS, CAL_BOOKING, getLocalizedMetadata } from "@consts";
+import {
+  SITE,
+  HOME,
+  SOCIALS,
+  CAL_BOOKING,
+  getLocalizedMetadata,
+} from "@consts";
 import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
@@ -39,10 +46,8 @@ const links = createCommonLinks(locale);
 const content = {
   en: {
     title: "Hi, I'm Daniel 👋",
-    description:
-      `I work as CTO at ${links.qavi()}, managing vacation rentals across Brazil. Previously at ${links.tc()}, I worked as a Developer, Mobile Lead and Tech Lead. ${links.experience("Learn more about my experience")}.`,
-    education:
-      `My background is in Civil Engineering from ${links.ufrn()} (with an exchange at ${links.uiuc()}). I then transitioned to software development via ${links.ironhack()}'s bootcamp.`,
+    description: `I work as CTO at ${links.qavi()}, managing vacation rentals across Brazil. Previously at ${links.tc()}, I worked as a Developer, Mobile Lead and Tech Lead. ${links.experience("Learn more about my experience")}.`,
+    education: `My background is in Civil Engineering from ${links.ufrn()} (with an exchange at ${links.uiuc()}). I then transitioned to software development via ${links.ironhack()}'s bootcamp.`,
     personalNote:
       "I'm passionate about startups and entrepreneurship. Love building with TypeScript, React, React Native, and Next.js.",
     latestPosts: "Latest posts",
@@ -54,10 +59,8 @@ const content = {
   },
   "pt-br": {
     title: "Olá, sou Daniel 👋",
-    description:
-      `Sou CTO na ${links.qavi("Quarto à Vista")}, onde estamos reinventando o turismo através do ecossistema de aluguel por temporada no Brasil. Anteriormente na ${links.tc()}, trabalhei como Desenvolvedor, Tech Lead e Mobile Lead. ${links.experience("Saiba mais sobre minha experiência")}.`,
-    education:
-      `Minha formação é em Engenharia Civil pela ${links.ufrn()} (com intercâmbio na ${links.uiuc()}). Depois, transitei para o desenvolvimento de software pelo bootcamp da ${links.ironhack()}.`,
+    description: `Sou CTO na ${links.qavi("Quarto à Vista")}, onde estamos reinventando o turismo através do ecossistema de aluguel por temporada no Brasil. Anteriormente na ${links.tc()}, trabalhei como Desenvolvedor, Tech Lead e Mobile Lead. ${links.experience("Saiba mais sobre minha experiência")}.`,
+    education: `Minha formação é em Engenharia Civil pela ${links.ufrn()} (com intercâmbio na ${links.uiuc()}). Depois, transitei para o desenvolvimento de software pelo bootcamp da ${links.ironhack()}.`,
     personalNote:
       "Sou interessado por startups e empreendedorismo. Entusiasta do ecossistema TypeScript, costumo construir com React, React Native e Next.js.",
     latestPosts: "Últimos posts",
@@ -72,136 +75,142 @@ const content = {
 const pageContent = content[lang];
 ---
 
-<Layout 
-  title={localizedHome.TITLE} 
-  description={localizedHome.DESCRIPTION}
-  pageType="index"
->
-  <Container>
-    <aside>
-      <!-- Option 4: Layered Visual Hierarchy -->
-      <div class="animate space-y-6 text-center">
-        <!-- Larger profile image as focal point -->
-        <Image
-          src="/me.jpg"
-          alt="Daniel Paiva profile picture"
-          width={100}
-          height={100}
-          class="h-25 w-25 rounded-full object-cover mx-auto"
-          format="webp"
-          loading="eager"
-        />
-        
-        <!-- Primary greeting -->
-        <!-- <h1 class="text-3xl font-bold text-black dark:text-white">
-          {pageContent.title}
-        </h1> -->
-        
-        <!-- ASCII art as signature/brand mark -->
-        <div class="relative group overflow-x-auto mb-8">
-          <div class="font-mono text-[6px] xs:text-[7px] sm:text-[8px] md:text-xxs leading-tight select-all whitespace-pre min-w-fit">██████╗  █████╗ ███╗   ██╗██╗███████╗██╗         ██████╗  █████╗ ██╗██╗   ██╗ █████╗ 
-██╔══██╗██╔══██╗████╗  ██║██║██╔════╝██║         ██╔══██╗██╔══██╗██║██║   ██║██╔══██╗
-██║  ██║███████║██╔██╗ ██║██║█████╗  ██║         ██████╔╝███████║██║██║   ██║███████║
-██║  ██║██╔══██║██║╚██╗██║██║██╔══╝  ██║         ██╔═══╝ ██╔══██║██║╚██╗ ██╔╝██╔══██║
-██████╔╝██║  ██║██║ ╚████║██║███████╗███████╗    ██║     ██║  ██║██║ ╚████╔╝ ██║  ██║
-╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚══════╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝  ╚═╝  ╚═╝</div>
+<PostHogLayout>
+  <Layout
+    title={localizedHome.TITLE}
+    description={localizedHome.DESCRIPTION}
+    pageType="index"
+  >
+    <Container>
+      <aside>
+        <!-- Option 4: Layered Visual Hierarchy -->
+        <div class="animate space-y-6 text-center">
+          <!-- Larger profile image as focal point -->
+          <Image
+            src="/me.jpg"
+            alt="Daniel Paiva profile picture"
+            width={100}
+            height={100}
+            class="mx-auto h-25 w-25 rounded-full object-cover"
+            format="webp"
+            loading="eager"
+          />
+
+          <!-- Primary greeting -->
+          <!-- <h1 class="text-3xl font-bold text-black dark:text-white">
+            {pageContent.title}
+          </h1> -->
+
+          <!-- ASCII art as signature/brand mark -->
+          <div class="group relative mb-8 overflow-x-auto">
+            <div
+              class="xs:text-[7px] md:text-xxs min-w-fit font-mono text-[6px] leading-tight whitespace-pre select-all sm:text-[8px]"
+            >
+              ██████╗ █████╗ ███╗ ██╗██╗███████╗██╗ ██████╗ █████╗ ██╗██╗ ██╗
+              █████╗ ██╔══██╗██╔══██╗████╗ ██║██║██╔════╝██║
+              ██╔══██╗██╔══██╗██║██║ ██║██╔══██╗ ██║ ██║███████║██╔██╗
+              ██║██║█████╗ ██║ ██████╔╝███████║██║██║ ██║███████║ ██║
+              ██║██╔══██║██║╚██╗██║██║██╔══╝ ██║ ██╔═══╝ ██╔══██║██║╚██╗
+              ██╔╝██╔══██║ ██████╔╝██║ ██║██║ ╚████║██║███████╗███████╗ ██║ ██║
+              ██║██║ ╚████╔╝ ██║ ██║ ╚═════╝ ╚═╝ ╚═╝╚═╝ ╚═══╝╚═╝╚══════╝╚══════╝
+              ╚═╝ ╚═╝ ╚═╝╚═╝ ╚═══╝ ╚═╝ ╚═╝
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="space-y-8 sm:space-y-16">
-        <section>
-          <article class="space-y-4">
-            <span class="animate">
-              <p set:html={pageContent.description}>
-              </p>
-            </span>
-            <span class="animate">
-              <p set:html={pageContent.education}>
-              </p>
-              <p>
-                {pageContent.personalNote}
-              </p>
-            </span>
-          </article>
-        </section>
+        <div class="space-y-8 sm:space-y-16">
+          <section>
+            <article class="space-y-4">
+              <span class="animate">
+                <p set:html={pageContent.description} />
+              </span>
+              <span class="animate">
+                <p set:html={pageContent.education} />
+                <p>
+                  {pageContent.personalNote}
+                </p>
+              </span>
+            </article>
+          </section>
 
-        <section class="animate space-y-6">
-          <div class="flex flex-wrap items-center justify-between gap-y-2">
-            <h2 class="font-semibold text-black dark:text-white">
-              {pageContent.latestPosts}
-            </h2>
-            <Link href={`/blog`}> {pageContent.seeAllPosts} </Link>
-          </div>
-          <ul class="not-prose flex flex-col gap-4">
-            {
-              blog.map((post) => (
-                <li>
-                  <ArrowCard entry={post} locale={locale} />
-                </li>
-              ))
-            }
-          </ul>
-        </section>
-
-        <!-- TODO: Add projects section -->
-        <!-- <section class="animate space-y-6">
-          <div class="flex flex-wrap items-center justify-between gap-y-2">
-            <h2 class="font-semibold text-black dark:text-white">
-              {pageContent.recentProjects}
-            </h2>
-            <Link href={`/${locale}/projects`}>
-              {pageContent.seeAllProjects}
-            </Link>
-          </div>
-          <ul class="not-prose flex flex-col gap-4">
-            {
-              projects.map((project) => (
-                <li>
-                  <ArrowCard entry={project} locale={locale} />
-                </li>
-              ))
-            }
-          </ul>
-        </section> -->
-
-        <section class="animate space-y-4">
-          <h2 class="font-semibold text-black dark:text-white">
-            {pageContent.letsConnect}
-          </h2>
-          <article>
-            <p>
-              {pageContent.contactInfo}
-            </p>
-          </article>
-          <div class="flex flex-col gap-4">
-            <ul class="not-prose flex flex-wrap gap-2">
-              <li class="flex gap-x-2 text-nowrap">
-                <a
-                  href="javascript:void(0)"
-                  data-cal-link={`${CAL_BOOKING.USERNAME}/${CAL_BOOKING.MEETING_SLUG}`}
-                  data-cal-config='{"theme":"auto"}'
-                  class="inline-block cursor-pointer text-current underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50"
-                >
-                  {pageContent.scheduleMeeting}
-                </a>
-              </li>
+          <section class="animate space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-y-2">
+              <h2 class="font-semibold text-black dark:text-white">
+                {pageContent.latestPosts}
+              </h2>
+              <Link href={`/blog`}> {pageContent.seeAllPosts} </Link>
+            </div>
+            <ul class="not-prose flex flex-col gap-4">
               {
-                SOCIALS.map((SOCIAL) => (
-                  <li class="flex gap-x-2 text-nowrap">
-                    {"/"}
-                    <Link
-                      href={SOCIAL.HREF}
-                      external
-                      aria-label={`${SITE.TITLE} ${lang === "en" ? "on" : "no"} ${SOCIAL.NAME}`}
-                    >
-                      {SOCIAL.NAME}
-                    </Link>
+                blog.map((post) => (
+                  <li>
+                    <ArrowCard entry={post} locale={locale} />
                   </li>
                 ))
               }
             </ul>
-          </div>
-        </section>
-      </div>
-    </aside>
-  </Container>
-</Layout>
+          </section>
+
+          <!-- TODO: Add projects section -->
+          <!-- <section class="animate space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-y-2">
+              <h2 class="font-semibold text-black dark:text-white">
+                {pageContent.recentProjects}
+              </h2>
+              <Link href={`/${locale}/projects`}>
+                {pageContent.seeAllProjects}
+              </Link>
+            </div>
+            <ul class="not-prose flex flex-col gap-4">
+              {
+                projects.map((project) => (
+                  <li>
+                    <ArrowCard entry={project} locale={locale} />
+                  </li>
+                ))
+              }
+            </ul>
+          </section> -->
+
+          <section class="animate space-y-4">
+            <h2 class="font-semibold text-black dark:text-white">
+              {pageContent.letsConnect}
+            </h2>
+            <article>
+              <p>
+                {pageContent.contactInfo}
+              </p>
+            </article>
+            <div class="flex flex-col gap-4">
+              <ul class="not-prose flex flex-wrap gap-2">
+                <li class="flex gap-x-2 text-nowrap">
+                  <a
+                    href="javascript:void(0)"
+                    data-cal-link={`${CAL_BOOKING.USERNAME}/${CAL_BOOKING.MEETING_SLUG}`}
+                    data-cal-config='{"theme":"auto"}'
+                    class="inline-block cursor-pointer text-current underline decoration-black/30 underline-offset-[3px] transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50"
+                  >
+                    {pageContent.scheduleMeeting}
+                  </a>
+                </li>
+                {
+                  SOCIALS.map((SOCIAL) => (
+                    <li class="flex gap-x-2 text-nowrap">
+                      {"/"}
+                      <Link
+                        href={SOCIAL.HREF}
+                        external
+                        aria-label={`${SITE.TITLE} ${lang === "en" ? "on" : "no"} ${SOCIAL.NAME}`}
+                      >
+                        {SOCIAL.NAME}
+                      </Link>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </Container>
+  </Layout>
+</PostHogLayout>

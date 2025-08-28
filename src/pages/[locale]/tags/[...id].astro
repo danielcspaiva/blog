@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
@@ -14,11 +15,14 @@ export async function getStaticPaths() {
   const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
 
   // Create paths for each tag and locale
-  return Object.keys(languages).flatMap(locale => {
+  return Object.keys(languages).flatMap((locale) => {
     return tags.map((tag) => ({
       params: { locale, id: tag },
       props: {
-        posts: posts.filter((post) => post.data.tags?.includes(tag) && post.data.locale === locale),
+        posts: posts.filter(
+          (post) =>
+            post.data.tags?.includes(tag) && post.data.locale === locale,
+        ),
         locale,
       },
     }));
@@ -40,29 +44,37 @@ const content = {
     title: `Tag: ${id}`,
     description: `Posts with the tag: ${id}`,
     allTags: "All tags",
-    postsTaggedWith: `Posts tagged with "${id}"`
+    postsTaggedWith: `Posts tagged with "${id}"`,
   },
-  'pt-br': {
+  "pt-br": {
     title: `Tag: ${id}`,
     description: `Posts com a tag: ${id}`,
     allTags: "Todas as tags",
-    postsTaggedWith: `Posts com a tag "${id}"`
-  }
+    postsTaggedWith: `Posts com a tag "${id}"`,
+  },
 };
 
 const pageContent = content[lang];
 ---
 
-<Layout title={pageContent.title} description={pageContent.description}>
-  <Container>
-    <div class="space-y-10">
-      <BackToPrevious href={`/${locale}/tags`}> {pageContent.allTags} </BackToPrevious>
-      <h1 class="animate font-semibold text-black dark:text-white">
-        {pageContent.postsTaggedWith}
-      </h1>
-      <ul class="animate flex flex-col gap-4">
-        {sortedPosts.map((post) => <ArrowCard entry={post} locale={locale} />)}
-      </ul>
-    </div>
-  </Container>
-</Layout>
+<PostHogLayout>
+  <Layout title={pageContent.title} description={pageContent.description}>
+    <Container>
+      <div class="space-y-10">
+        <BackToPrevious href={`/${locale}/tags`}
+          >{pageContent.allTags}</BackToPrevious
+        >
+        <h1 class="animate font-semibold text-black dark:text-white">
+          {pageContent.postsTaggedWith}
+        </h1>
+        <ul class="animate flex flex-col gap-4">
+          {
+            sortedPosts.map((post) => (
+              <ArrowCard entry={post} locale={locale} />
+            ))
+          }
+        </ul>
+      </div>
+    </Container>
+  </Layout>
+</PostHogLayout>

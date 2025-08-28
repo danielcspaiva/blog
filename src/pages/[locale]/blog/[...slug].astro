@@ -1,6 +1,6 @@
----
 import { getCollection, render } from "astro:content";
 import Layout from "@layouts/Layout.astro";
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Container from "@components/Container.astro";
 import BackToPrevious from "@components/BackToPrevious.astro";
 import FormattedDate from "@components/FormattedDate.astro";
@@ -120,62 +120,64 @@ function getLocalizedTagUrl(tag: string) {
 const pageUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 ---
 
-<Layout title={post.data.title} description={post.data.description} isBlogPost={true} slug={post.id}>
-  <Container>
-    <div class="animate">
-      <BackToPrevious href={localizedBlogUrl}>
-        {pageContent.backToBlog}
-      </BackToPrevious>
-    </div>
-    <div class="my-10 space-y-1">
-      <div class="animate flex items-center gap-1.5">
-        <div class="font-base text-sm">
-          <FormattedDate date={post.data.date} />
-        </div>
-        &bull;
-        {post.body && (
+<PostHogLayout>
+  <Layout title={post.data.title} description={post.data.description} isBlogPost={true} slug={post.id}>
+    <Container>
+      <div class="animate">
+        <BackToPrevious href={localizedBlogUrl}>
+          {pageContent.backToBlog}
+        </BackToPrevious>
+      </div>
+      <div class="my-10 space-y-1">
+        <div class="animate flex items-center gap-1.5">
           <div class="font-base text-sm">
-            {readingTime(post.body)} {pageContent.minuteRead}
+            <FormattedDate date={post.data.date} />
           </div>
-        )}
-        <!-- &bull;
-        <PageViews slug={slug} />         -->
+          &bull;
+          {post.body && (
+            <div class="font-base text-sm">
+              {readingTime(post.body)} {pageContent.minuteRead}
+            </div>
+          )}
+          {/* &bull;
+          <PageViews slug={slug} />         */}
+        </div>
+        <h1 class="animate text-3xl py-4 font-semibold text-black dark:text-white">
+          {post.data.title}
+        </h1>
+        <p class="animate text-gray-500 mb-4">
+          {post.data.description}
+        </p>
+        {
+          post.data.tags && post.data.tags?.length > 0 ? (
+            <div class="animate flex gap-2 pt-1">
+              {post.data.tags.map((tag) => (
+                <a 
+                  href={getLocalizedTagUrl(tag)}
+                  class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+                >
+                  {tag}
+                </a>
+              ))}
+            </div>
+          ) : null
+        }
       </div>
-      <h1 class="animate text-3xl py-4 font-semibold text-black dark:text-white">
-        {post.data.title}
-      </h1>
-      <p class="animate text-gray-500 mb-4">
-        {post.data.description}
-      </p>
-      {
-        post.data.tags && post.data.tags?.length > 0 ? (
-          <div class="animate flex gap-2 pt-1">
-            {post.data.tags.map((tag) => (
-              <a 
-                href={getLocalizedTagUrl(tag)}
-                class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-              >
-                {tag}
-              </a>
-            ))}
-          </div>
-        ) : null
-      }
-    </div>
-    {headings && headings.length > 0 && !post.data.hideTableOfContents && <TableOfContents headings={headings} />}
-    <article class="animate prose-sm prose max-w-none dark:prose-invert sm:prose-base">
-      <Content />
-      <div class="mt-24">
-        <PostNavigation 
-          prevPost={prevPost} 
-          nextPost={nextPost} 
-          prevUrl={localizedPrevUrl}
-          nextUrl={localizedNextUrl}
-        />
-      </div>
-      <div class="mt-24">
-        <Giscus />
-      </div>
-    </article>
-  </Container>
-</Layout> 
+      {headings && headings.length > 0 && !post.data.hideTableOfContents && <TableOfContents headings={headings} />}
+      <article class="animate prose-sm prose max-w-none dark:prose-invert sm:prose-base">
+        <Content />
+        <div class="mt-24">
+          <PostNavigation 
+            prevPost={prevPost} 
+            nextPost={nextPost} 
+            prevUrl={localizedPrevUrl}
+            nextUrl={localizedNextUrl}
+          />
+        </div>
+        <div class="mt-24">
+          <Giscus />
+        </div>
+      </article>
+    </Container>
+  </Layout>
+</PostHogLayout>

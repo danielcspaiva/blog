@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
 import { PROJECTS, getLocalizedMetadata } from "@consts";
@@ -8,9 +9,9 @@ import { useTranslations } from "../../../i18n/utils";
 import { languages, ui } from "../../../i18n/ui";
 
 export function getStaticPaths() {
-  return Object.keys(languages).map(locale => ({
+  return Object.keys(languages).map((locale) => ({
     params: { locale },
-    props: { locale }
+    props: { locale },
   }));
 }
 
@@ -26,38 +27,40 @@ const projects = (await getCollection("projects"))
 const content = {
   en: {
     title: localizedProjects.TITLE,
-    description: localizedProjects.DESCRIPTION
+    description: localizedProjects.DESCRIPTION,
   },
-  'pt-br': {
+  "pt-br": {
     title: localizedProjects.TITLE,
-    description: localizedProjects.DESCRIPTION
-  }
+    description: localizedProjects.DESCRIPTION,
+  },
 };
 
 const pageContent = content[lang];
 ---
 
-<Layout 
-  title={localizedProjects.TITLE} 
-  description={localizedProjects.DESCRIPTION}
-  pageType="projects"
->
-  <Container>
-    <aside>
-      <div class="space-y-10">
-        <div class="animate font-semibold text-black dark:text-white">
-          {pageContent.title}
+<PostHogLayout>
+  <Layout
+    title={pageContent.title}
+    description={pageContent.description}
+    pageType="projects"
+  >
+    <Container>
+      <aside>
+        <div class="space-y-10">
+          <div class="animate font-semibold text-black dark:text-white">
+            {pageContent.title}
+          </div>
+          <ul class="animate not-prose flex flex-col gap-4">
+            {
+              projects.map((project) => (
+                <li>
+                  <ArrowCard entry={project} locale={locale} />
+                </li>
+              ))
+            }
+          </ul>
         </div>
-        <ul class="animate not-prose flex flex-col gap-4">
-          {
-            projects.map((project) => (
-              <li>
-                <ArrowCard entry={project} locale={locale} />
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </aside>
-  </Container>
-</Layout>
+      </aside>
+    </Container>
+  </Layout>
+</PostHogLayout>

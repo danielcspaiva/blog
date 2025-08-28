@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import FormattedDate from "@components/FormattedDate.astro";
@@ -14,8 +15,8 @@ export async function getStaticPaths() {
   const projects = (await getCollection("projects"))
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  
-  return Object.keys(languages).flatMap(locale => {
+
+  return Object.keys(languages).flatMap((locale) => {
     return projects.map((project) => ({
       params: { locale, id: project.id },
       props: { project, locale },
@@ -30,57 +31,61 @@ const { Content, headings } = await render(project);
 // Content based on locale
 const content = {
   en: {
-    backToProjects: "Back to projects"
+    backToProjects: "Back to projects",
   },
-  'pt-br': {
-    backToProjects: "Voltar para projetos"
-  }
+  "pt-br": {
+    backToProjects: "Voltar para projetos",
+  },
 };
 
 const pageContent = content[lang];
 ---
 
-<Layout title={project.data.title} description={project.data.description}>
-  <Container>
-    <div class="animate">
-      <BackToPrevious href={`/${locale}/projects`}>{pageContent.backToProjects}</BackToPrevious>
-    </div>
-    <div class="animate my-10 space-y-1">
-      <div class="flex items-center gap-1.5">
-        <div class="font-base text-sm">
-          <FormattedDate date={project.data.date} />
-        </div>
-        &bull;
-        {project.body && (
-          <div class="font-base text-sm">
-            {readingTime(project.body)}
-          </div>
-        )}     
+<PostHogLayout>
+  <Layout title={project.data.title} description={project.data.description}>
+    <Container>
+      <div class="animate">
+        <BackToPrevious href={`/${locale}/projects`}
+          >{pageContent.backToProjects}</BackToPrevious
+        >
       </div>
-      <h1 class="text-3xl font-semibold text-black dark:text-white">
-        {project.data.title}
-      </h1>
-      {
-        (project.data.demoURL || project.data.repoURL) && (
-          <nav class="flex gap-1">
-            {project.data.demoURL && (
-              <Link href={project.data.demoURL} external>
-                demo
-              </Link>
-            )}
-            {project.data.demoURL && project.data.repoURL && <span>/</span>}
-            {project.data.repoURL && (
-              <Link href={project.data.repoURL} external>
-                repo
-              </Link>
-            )}
-          </nav>
-        )
-      }
-    </div>
-    <TableOfContents headings={headings} />
-    <article class="animate">
-      <Content />
-    </article>
-  </Container>
-</Layout>
+      <div class="animate my-10 space-y-1">
+        <div class="flex items-center gap-1.5">
+          <div class="font-base text-sm">
+            <FormattedDate date={project.data.date} />
+          </div>
+          &bull;
+          {
+            project.body && (
+              <div class="font-base text-sm">{readingTime(project.body)}</div>
+            )
+          }
+        </div>
+        <h1 class="text-3xl font-semibold text-black dark:text-white">
+          {project.data.title}
+        </h1>
+        {
+          (project.data.demoURL || project.data.repoURL) && (
+            <nav class="flex gap-1">
+              {project.data.demoURL && (
+                <Link href={project.data.demoURL} external>
+                  demo
+                </Link>
+              )}
+              {project.data.demoURL && project.data.repoURL && <span>/</span>}
+              {project.data.repoURL && (
+                <Link href={project.data.repoURL} external>
+                  repo
+                </Link>
+              )}
+            </nav>
+          )
+        }
+      </div>
+      <TableOfContents headings={headings} />
+      <article class="animate">
+        <Content />
+      </article>
+    </Container>
+  </Layout>
+</PostHogLayout>

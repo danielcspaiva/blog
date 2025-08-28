@@ -1,4 +1,5 @@
 ---
+import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import { SITE } from "@consts";
@@ -83,45 +84,47 @@ const content = {
 const pageContent = content[lang];
 ---
 
-<Layout
-  title={pageContent.title}
-  description={pageContent.description}
-  pageType="experience"
->
-  <Container>
-    <aside>
-      <div class="space-y-8 sm:space-y-16">
-        <section>
-          <h1 class="font-semibold text-black dark:text-white">
-            {pageContent.title}
-          </h1>
+<PostHogLayout>
+  <Layout
+    title={pageContent.title}
+    description={pageContent.description}
+    pageType="experience"
+  >
+    <Container>
+      <aside>
+        <div class="space-y-8 sm:space-y-16">
+          <section>
+            <h1 class="font-semibold text-black dark:text-white">
+              {pageContent.title}
+            </h1>
 
-          <section class="animate space-y-6 mt-4">
-            <article class="space-y-8 sm:space-y-16">
-              {
-                pageContent.jobs.map((job) => (
-                  <div class="mb-0 mt-2 py-2">
-                    <div class="my-0 flex items-center justify-between py-0">
-                      <p class="text-lg my-0 font-medium">
-                        {job.companyLink ? (
-                          <span set:html={job.companyLink} />
-                        ) : (
-                          job.company
-                        )}
-                      </p>
-                      <span class="text-sm text-gray-600 dark:text-gray-400">
-                        {job.duration}
-                      </span>
+            <section class="animate mt-4 space-y-6">
+              <article class="space-y-8 sm:space-y-16">
+                {
+                  pageContent.jobs.map((job) => (
+                    <div class="mt-2 mb-0 py-2">
+                      <div class="my-0 flex items-center justify-between py-0">
+                        <p class="my-0 text-lg font-medium">
+                          {job.companyLink ? (
+                            <span set:html={job.companyLink} />
+                          ) : (
+                            job.company
+                          )}
+                        </p>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">
+                          {job.duration}
+                        </span>
+                      </div>
+                      <p class="text-sm font-medium">{job.position}</p>
+                      <p>{job.description}</p>
                     </div>
-                    <p class="font-medium text-sm ">{job.position}</p>
-                    <p>{job.description}</p>
-                  </div>
-                ))
-              }
-            </article>
+                  ))
+                }
+              </article>
+            </section>
           </section>
-        </section>
-      </div>
-    </aside>
-  </Container>
-</Layout>
+        </div>
+      </aside>
+    </Container>
+  </Layout>
+</PostHogLayout>

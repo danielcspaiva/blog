@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getSlugFromId } from "../i18n/blog";
+import { getSlugFromId as getBlogSlugFromId } from "../i18n/blog";
+import { getSlugFromId as getProjectSlugFromId } from "../i18n/projects";
 import { getLocalizedRoute } from "../i18n/utils";
 
 type Props = {
@@ -18,12 +19,13 @@ let url = '';
 
 // For blogs, use the slug from the ID
 if (entry.collection === 'blog') {
-  const slug = getSlugFromId(entry.id);
+  const slug = getBlogSlugFromId(entry.id);
   // Always include locale in the path
   url = `/${locale}/blog/${slug}`;
 } else {
-  // For other collections (like projects)
-  url = `/${locale}/${entry.collection}/${entry.id}`;
+  // For projects, use the slug from the ID
+  const slug = getProjectSlugFromId(entry.id);
+  url = `/${locale}/projects/${slug}`;
 }
 ---
 

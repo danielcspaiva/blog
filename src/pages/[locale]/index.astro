@@ -33,12 +33,11 @@ const blog = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
 
-// const projects: CollectionEntry<"projects">[] = (
-//   await getCollection("projects")
-// )
-//   .filter((project) => !project.data.draft)
-//   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-//   .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
+const projects = (await getCollection("projects"))
+  .filter((project) => !project.data.draft)
+  .filter((project) => !project.data.locale || project.data.locale === locale)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
 
 // Content based on locale
 const links = createCommonLinks(locale);
@@ -56,6 +55,8 @@ const content = {
     contactInfo:
       "Feel free to reach out if you want to chat about tech, share ideas, or just say hello.",
     scheduleMeeting: "Schedule a Meeting",
+    recentProjects: "Recent Projects",
+    seeAllProjects: "See all projects",
   },
   "pt-br": {
     title: "Olá, sou Daniel 👋",
@@ -69,6 +70,8 @@ const content = {
     contactInfo:
       "Sinta-se à vontade para entrar em contato se quiser conversar sobre tecnologia, compartilhar ideias ou apenas dizer olá.",
     scheduleMeeting: "Agendar uma Reunião",
+    recentProjects: "Projetos Recentes",
+    seeAllProjects: "Ver todos os projetos",
   },
 };
 
@@ -104,15 +107,15 @@ const pageContent = content[lang];
           <!-- ASCII art as signature/brand mark -->
           <div class="group relative mb-8 overflow-x-auto">
             <div
-              class="xs:text-[7px] md:text-xxs min-w-fit font-mono text-[6px] leading-tight whitespace-pre select-all sm:text-[8px]"
-            >
+            class="xs:text-[7px] md:text-xxs min-w-fit font-mono text-[6px] leading-tight whitespace-pre select-all sm:text-[8px]"
+          >
 ██████╗  █████╗ ███╗   ██╗██╗███████╗██╗         ██████╗  █████╗ ██╗██╗   ██╗ █████╗ 
 ██╔══██╗██╔══██╗████╗  ██║██║██╔════╝██║         ██╔══██╗██╔══██╗██║██║   ██║██╔══██╗
 ██║  ██║███████║██╔██╗ ██║██║█████╗  ██║         ██████╔╝███████║██║██║   ██║███████║
 ██║  ██║██╔══██║██║╚██╗██║██║██╔══╝  ██║         ██╔═══╝ ██╔══██║██║╚██╗ ██╔╝██╔══██║
 ██████╔╝██║  ██║██║ ╚████║██║███████╗███████╗    ██║     ██║  ██║██║ ╚████╔╝ ██║  ██║
 ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚══════╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝  ╚═╝  ╚═╝
-            </div>
+          </div>
           </div>
         </div>
         <div class="space-y-8 sm:space-y-16">
@@ -149,7 +152,7 @@ const pageContent = content[lang];
           </section>
 
           <!-- TODO: Add projects section -->
-          <!-- <section class="animate space-y-6">
+          <section class="animate space-y-6">
             <div class="flex flex-wrap items-center justify-between gap-y-2">
               <h2 class="font-semibold text-black dark:text-white">
                 {pageContent.recentProjects}
@@ -167,7 +170,7 @@ const pageContent = content[lang];
                 ))
               }
             </ul>
-          </section> -->
+          </section>
 
           <section class="animate space-y-4">
             <h2 class="font-semibold text-black dark:text-white">

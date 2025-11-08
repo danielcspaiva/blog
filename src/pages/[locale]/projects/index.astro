@@ -19,8 +19,10 @@ const { locale } = Astro.params;
 const lang = locale as keyof typeof ui;
 const localizedProjects = getLocalizedMetadata(PROJECTS, lang);
 
-const projects = (await getCollection("projects"))
+const allProjects = await getCollection("projects");
+const projects = allProjects
   .filter((project) => !project.data.draft)
+  .filter((project) => !project.data.locale || project.data.locale === locale)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 // Content based on locale

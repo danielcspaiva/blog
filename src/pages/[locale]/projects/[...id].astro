@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry, getCollection, render } from "astro:content";
+import { getCollection, render } from "astro:content";
 import PostHogLayout from "@layouts/PostHogLayout.astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
@@ -10,17 +10,35 @@ import Link from "@components/Link.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import { useTranslations } from "../../../i18n/utils";
 import { languages, ui } from "../../../i18n/ui";
+import { getSlugFromId, getLocalizedProject, type Project } from "../../../i18n/projects";
 
 export async function getStaticPaths() {
-  const projects = (await getCollection("projects"))
-    .filter((post) => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const projects = await getCollection("projects") as Project[];
+  const locales = Object.keys(languages);
 
-  return Object.keys(languages).flatMap((locale) => {
-    return projects.map((project) => ({
-      params: { locale, id: project.id },
-      props: { project, locale },
-    }));
+  // Get unique slugs (project identifiers) to generate paths
+  const slugs = [...new Set(projects.map(project => getSlugFromId(project.id)))];
+
+  return slugs.flatMap(slug => {
+    return locales.map(locale => {
+
+      // Find the appropriate project for this locale and slug
+      const project = getLocalizedProject(projects, slug, locale);
+
+      // If no project is found for this locale, skip it
+      if (!project) return null;
+
+      return {
+        params: {
+          locale,
+          id: slug
+        },
+        props: {
+          project,
+          locale
+        }
+      };
+    }).filter(Boolean); // Filter out null entries
   });
 }
 

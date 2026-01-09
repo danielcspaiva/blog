@@ -1,0 +1,465 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: Geist Sans, ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  /* Navy + Teal + Pure Colors Only */
+  --color-navy-50: #f8fafc;
+  --color-navy-100: #f1f5f9;
+  --color-navy-200: #e2e8f0;
+  --color-navy-300: #cbd5e1;
+  --color-navy-400: #94a3b8;
+  --color-navy-500: #64748b;
+  --color-navy-600: #475569;
+  --color-navy-700: #334155;
+  --color-navy-800: #1e293b;
+  --color-navy-900: #0f172a;
+  --color-navy-950: #020617;
+
+  /* Teal Accents */
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+
+  /* Pure neutrals */
+  --color-neutral-50: #ffffff;
+  --color-neutral-100: #f8fafc;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+
+  /* Additional accents used for term highlighting */
+  --color-yellow-100: #fef9c3;
+  --color-yellow-800: #92400e;
+  --color-red-200: #fecaca;
+  --color-red-800: #991b1b;
+  --color-green-200: #bbf7d0;
+  --color-green-800: #166534;
+  /* Lighter/darker shades for weight variants */
+  --color-yellow-200: #fef08a;
+  --color-yellow-600: #ca8a04;
+  --color-red-300: #fca5a5;
+  --color-red-600: #dc2626;
+  --color-green-300: #86efac;
+  --color-green-600: #16a34a;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-neutral-200, currentColor);
+  }
+}
+
+@layer utilities {
+  html {
+    overflow-y: auto;
+    color-scheme: light;
+    scroll-padding-top: 100px;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  html,
+  body {
+    @apply size-full;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    @apply flex flex-col;
+    @apply bg-white dark:bg-navy-950;
+    @apply text-navy-800 dark:text-neutral-100;
+  }
+
+  header {
+    @apply fixed left-0 right-0 top-0 z-50 py-4;
+    @apply bg-white/80 dark:bg-navy-950/80;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  main {
+    @apply flex-1 py-24 sm:py-32;
+  }
+
+  footer {
+    @apply py-6 text-sm;
+  }
+
+  article {
+    @apply prose prose-neutral max-w-full dark:prose-invert prose-img:mx-auto prose-img:my-auto;
+    @apply prose-headings:font-semibold;
+    @apply prose-headings:text-navy-900 dark:prose-headings:text-neutral-50;
+  }
+}
+
+/* Remove auto-inserted quotes from Tailwind Typography blockquotes */
+@layer utilities {
+  .prose blockquote p:first-of-type::before,
+  .prose blockquote p:last-of-type::after {
+    content: none;
+  }
+}
+
+@layer utilities {
+  article a {
+    @apply font-sans text-current underline underline-offset-[3px];
+    @apply decoration-teal-500/60 dark:decoration-teal-400/60;
+    @apply transition-colors duration-300 ease-in-out;
+  }
+  article a:hover {
+    @apply text-teal-600 dark:text-teal-400;
+    @apply decoration-teal-600 dark:decoration-teal-400;
+  }
+}
+
+.animate {
+  @apply -translate-y-3 opacity-0;
+  @apply transition-all duration-300 ease-out;
+}
+
+.animate.show {
+  @apply translate-y-0 opacity-100;
+}
+
+html #back-to-top {
+  @apply pointer-events-none opacity-0;
+}
+
+html.scrolled #back-to-top {
+  @apply pointer-events-auto opacity-100;
+}
+
+/* shiki config */
+pre {
+  @apply border border-neutral-200 py-5 dark:border-neutral-700;
+}
+
+:root {
+  --astro-code-foreground: #1e293b;
+  --astro-code-background: #ffffff;
+  --astro-code-token-comment: #64748b;
+  --astro-code-token-keyword: #0891b2;
+  --astro-code-token-string: #06b6d4;
+  --astro-code-token-function: #0f172a;
+  --astro-code-token-constant: #0e7490;
+  --astro-code-token-parameter: #22d3ee;
+  --astro-code-token-string-expression: #155e75;
+  --astro-code-token-punctuation: #475569;
+  --astro-code-token-link: #06b6d4;
+  --astro-code-token-variable: #334155;
+  --astro-code-token-number: #0891b2;
+  --astro-code-token-boolean: #164e63;
+  --astro-code-token-operator: #475569;
+  --astro-code-token-class-name: #1e293b;
+  --astro-code-token-type: #0e7490;
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --astro-code-foreground: #f8fafc;
+  --astro-code-background: #0f172a;
+  --astro-code-token-comment: #64748b;
+  --astro-code-token-keyword: #67e8f9;
+  --astro-code-token-string: #22d3ee;
+  --astro-code-token-function: #cffafe;
+  --astro-code-token-constant: #06b6d4;
+  --astro-code-token-parameter: #a5f3fc;
+  --astro-code-token-string-expression: #0891b2;
+  --astro-code-token-punctuation: #94a3b8;
+  --astro-code-token-link: #22d3ee;
+  --astro-code-token-variable: #e2e8f0;
+  --astro-code-token-number: #67e8f9;
+  --astro-code-token-boolean: #ecfeff;
+  --astro-code-token-operator: #cbd5e1;
+  --astro-code-token-class-name: #f1f5f9;
+  --astro-code-token-type: #a5f3fc;
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* copy code button on codeblocks */
+.copy-code {
+  @apply absolute right-3 top-3 grid size-9 place-content-center rounded-sm border border-neutral-200 bg-neutral-50 text-center duration-300 ease-in-out dark:border-neutral-700 dark:bg-neutral-800;
+}
+
+.copy-code:hover {
+  @apply bg-neutral-100 transition-colors dark:bg-neutral-700;
+}
+
+.copy-code:active {
+  @apply scale-90 transition-transform;
+}
+
+/* Twitter embeds */
+.twitter-tweet {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@layer utilities {
+  /* Themed term colors for Knowledge, Context, Tools */
+  .term-knowledge {
+    color: var(--color-yellow-600);
+    font-weight: 600;
+  }
+  .dark .term-knowledge {
+    color: var(--color-yellow-300);
+  }
+
+  .term-context {
+    color: var(--color-red-600);
+    font-weight: 600;
+  }
+  .dark .term-context {
+    color: var(--color-red-400);
+  }
+
+  .term-tools {
+    color: var(--color-green-600);
+    font-weight: 600;
+  }
+  .dark .term-tools {
+    color: var(--color-green-300);
+  }
+
+  .term-baseline {
+    color: var(--color-blue-900);
+    font-weight: 600;
+  }
+  .dark .term-baseline {
+    color: var(--color-blue-300);
+  }
+
+  /* Weight-specific shades */
+  .term-knowledge-weight {
+    color: var(--color-yellow-400);
+    font-weight: 600;
+  }
+  .dark .term-knowledge-weight {
+    color: var(--color-yellow-200);
+  }
+
+  .term-context-weight {
+    color: var(--color-red-400);
+    font-weight: 600;
+  }
+  .dark .term-context-weight {
+    color: var(--color-red-200);
+  }
+
+  .term-tools-weight {
+    font-weight: 600;
+    color: var(--color-green-800);
+  }
+  .dark .term-tools-weight {
+    color: var(--color-green-200);
+  }
+}
+
+/* Consistent slider styles */
+@layer base {
+  :root {
+    --neutral-track: rgba(0, 0, 0, 0.12);
+    --neutral-track-outer: rgba(0, 0, 0, 0.06);
+    --thumb-ring: #ffffff;
+    /* Slider colors that match term colors */
+    --slider-knowledge-weight: var(--color-yellow-400);
+    --slider-context-weight: var(--color-red-400);
+    --slider-tools-weight: var(--color-green-800);
+    --slider-knowledge: var(--color-yellow-600);
+    --slider-context: var(--color-red-600);
+    --slider-tools: var(--color-green-600);
+  }
+  .dark {
+    --neutral-track: rgba(255, 255, 255, 0.22);
+    --neutral-track-outer: rgba(255, 255, 255, 0.12);
+    --thumb-ring: #0f172a;
+    /* Dark mode slider colors that match term colors */
+    --slider-knowledge-weight: var(--color-yellow-200);
+    --slider-context-weight: var(--color-red-200);
+    --slider-tools-weight: var(--color-green-200);
+    --slider-knowledge: var(--color-yellow-300);
+    --slider-context: var(--color-red-400);
+    --slider-tools: var(--color-green-300);
+  }
+
+  input.slider[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--neutral-track);
+    outline: none;
+  }
+  input.slider[type='range']::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 9999px;
+    background: transparent;
+  }
+  input.slider[type='range']::-moz-range-track {
+    height: 6px;
+    border-radius: 9999px;
+    background: transparent;
+  }
+  input.slider[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 9999px;
+    background: var(--slider-color, #22c55e);
+    border: 2px solid var(--thumb-ring);
+    box-shadow: 0 0 0 1px var(--neutral-track-outer);
+    margin-top: -5px; /* centers the thumb on the 6px track */
+  }
+  input.slider[type='range']::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 9999px;
+    background: var(--slider-color, #22c55e);
+    border: 2px solid var(--thumb-ring);
+    box-shadow: 0 0 0 1px var(--neutral-track-outer);
+  }
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

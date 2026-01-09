@@ -24,3 +24,15 @@ pnpm-debug.log*
 .idea/
 
 .vercel
+
+# Next.js
+.next/
+
+# Contentlayer
+.contentlayer/
+
+# Playwright test artifacts
+.playwright-mcp/
+
+# Astro backup (migration complete)
+src_astro_backup/

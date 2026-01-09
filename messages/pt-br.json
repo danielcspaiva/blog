@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "projects": "Projetos",
+    "experience": "Experiência",
+    "tags": "Tags"
+  },
+  "search": {
+    "placeholder": "Pesquisar..."
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados."
+  },
+  "blog": {
+    "readMore": "Leia mais",
+    "publishedOn": "Publicado em",
+    "minuteRead": "min de leitura",
+    "backToBlog": "Voltar para o blog"
+  },
+  "projects": {
+    "viewProject": "Ver Projeto"
+  },
+  "notFound": {
+    "title": "404: Não Encontrado",
+    "message": "A página que você estava procurando não existe.",
+    "backHome": "Voltar para o Início"
+  },
+  "chart": {
+    "knowledge": "Conhecimento",
+    "context": "Contexto",
+    "tools": "Ferramentas",
+    "humanExpert": "Especialista Humano",
+    "averageHuman": "Humano Médio",
+    "ai": "IA"
+  },
+  "equation": {
+    "alpha": "Alfa (α)",
+    "beta": "Beta (β)",
+    "gamma": "Gama (γ)",
+    "weights": "Pesos",
+    "factors": "Fatores",
+    "autoNormalize": "Auto-normalizar pesos (soma = 1)",
+    "sumNote": "Usando pesos normalizados que somam 1",
+    "presets": "Predefinições",
+    "preset": {
+      "dataAnalysis": "Análise de Dados",
+      "customerService": "Atendimento ao Cliente",
+      "research": "Pesquisa",
+      "aiPrompting": "Prompting de IA"
+    },
+    "reset": "Redefinir",
+    "currentProbability": "Probabilidade atual",
+    "sweep": "Variação",
+    "sweepDescription": "Visualize p variando um fator de 0 a 1, mantendo os outros fixos",
+    "openVisualizer": "Visualizador interativo",
+    "close": "Fechar",
+    "title": "Probabilidade de Sucesso da Tarefa",
+    "subtitle": "Estime a probabilidade de conclusão da tarefa usando conhecimento, contexto e ferramentas",
+    "alphaLabel": "Peso do Conhecimento (α)",
+    "betaLabel": "Peso do Contexto (β)",
+    "gammaLabel": "Peso das Ferramentas (γ)",
+    "knowledgeLabel": "Nível de Conhecimento (K)",
+    "contextLabel": "Nível de Contexto (C)",
+    "toolsLabel": "Nível de Ferramentas (T)",
+    "chartTitle": "Análise de Sensibilidade dos Fatores",
+    "chartSubtitle": "Como a probabilidade de sucesso muda quando um fator varia",
+    "chartXaxisKnowledge": "Nível de Conhecimento",
+    "chartXaxisContext": "Qualidade do Contexto",
+    "chartXaxisTools": "Acesso a Ferramentas",
+    "chartYaxis": "Probabilidade de Sucesso",
+    "weightsDescription": "Ajuste o quanto cada fator influencia o sucesso para este tipo de tarefa",
+    "factorsDescription": "Defina os valores reais para conhecimento, contexto e ferramentas disponíveis",
+    "factor": {
+      "analyze": "Analisar",
+      "knowledge": "Conhecimento",
+      "context": "Contexto",
+      "tools": "Ferramentas",
+      "sensitivity": "sensibilidade do fator"
+    },
+    "tooltip": {
+      "invalidData": "Dados inválidos",
+      "invalid": "Inválido"
+    }
+  }
+}

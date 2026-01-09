@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "projects": "Projects",
+    "experience": "Experience",
+    "tags": "Tags"
+  },
+  "search": {
+    "placeholder": "Search..."
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "blog": {
+    "readMore": "Read more",
+    "publishedOn": "Published on",
+    "minuteRead": "min read",
+    "backToBlog": "Back to blog"
+  },
+  "projects": {
+    "viewProject": "View Project"
+  },
+  "notFound": {
+    "title": "404: Not Found",
+    "message": "The page you were looking for doesn't exist.",
+    "backHome": "Back to Home"
+  },
+  "chart": {
+    "knowledge": "Knowledge",
+    "context": "Context",
+    "tools": "Tools",
+    "humanExpert": "Human Expert",
+    "averageHuman": "Average Human",
+    "ai": "AI"
+  },
+  "equation": {
+    "alpha": "Alpha (α)",
+    "beta": "Beta (β)",
+    "gamma": "Gamma (γ)",
+    "weights": "Weights",
+    "factors": "Factors",
+    "autoNormalize": "Auto-normalize weights (sum = 1)",
+    "sumNote": "Using normalized weights that sum to 1",
+    "presets": "Presets",
+    "preset": {
+      "dataAnalysis": "Data Analysis",
+      "customerService": "Customer Service",
+      "research": "Research",
+      "aiPrompting": "AI Prompting"
+    },
+    "reset": "Reset",
+    "currentProbability": "Current probability",
+    "sweep": "Sweep",
+    "sweepDescription": "Visualize p while sweeping one factor from 0 to 1, keeping others fixed",
+    "openVisualizer": "Interactive visualizer",
+    "close": "Close",
+    "title": "Task Success Probability",
+    "subtitle": "Estimate the likelihood of task completion using knowledge, context, and tools",
+    "alphaLabel": "Knowledge Weight (α)",
+    "betaLabel": "Context Weight (β)",
+    "gammaLabel": "Tools Weight (γ)",
+    "knowledgeLabel": "Knowledge Level (K)",
+    "contextLabel": "Context Level (C)",
+    "toolsLabel": "Tools Level (T)",
+    "chartTitle": "Factor Sensitivity Analysis",
+    "chartSubtitle": "How success probability changes as one factor varies",
+    "chartXaxisKnowledge": "Knowledge Level",
+    "chartXaxisContext": "Context Quality",
+    "chartXaxisTools": "Tool Access",
+    "chartYaxis": "Success Probability",
+    "weightsDescription": "Adjust how much each factor influences success for this type of task",
+    "factorsDescription": "Set the actual values for knowledge, context, and available tools",
+    "factor": {
+      "analyze": "Analyze",
+      "knowledge": "Knowledge",
+      "context": "Context",
+      "tools": "Tools",
+      "sensitivity": "factor sensitivity"
+    },
+    "tooltip": {
+      "invalidData": "Invalid data",
+      "invalid": "Invalid"
+    }
+  }
+}

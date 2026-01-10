@@ -25,7 +25,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ],
       "contentlayer/generated": [
         "./.contentlayer/generated"
@@ -41,7 +41,6 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "src_astro_backup"
+    "node_modules"
   ]
 }

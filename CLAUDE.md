@@ -4,39 +4,53 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-- `pnpm dev` - Start development server
-- `pnpm build` - Build for production (includes TypeScript check via `astro check`)
-- `pnpm preview` - Preview production build locally
-- `prettier --write .` - Format code using Prettier
+- `pnpm dev` - Start development server (with Turbopack)
+- `pnpm build` - Build for production (runs contentlayer2 build + next build)
+- `pnpm start` - Start production server
+- `pnpm lint` - Run ESLint
+- `pnpm format` - Format code using Prettier
 
 ## Project Architecture
 
-This is an Astro-based personal website and blog with internationalization support (English and Portuguese Brazilian). The site uses static site generation and is deployed on Vercel.
+This is a Next.js 16 personal website and blog with internationalization support (English and Portuguese Brazilian). The site uses static site generation and is deployed on Vercel.
 
 ### Key Architecture Components
 
 **Content Management:**
-- Blog posts and projects are managed through Astro's content collections (src/content.config.ts)
-- Blog posts support multilingual content with locale-specific directories (en/, pt-br/)
-- Content is loaded using Astro's glob loader for markdown/MDX files
+- Blog posts and projects are managed through Contentlayer2 (contentlayer.config.ts)
+- Blog posts support multilingual content with locale-specific directories (content/blog/[post]/[locale]/index.mdx)
+- Content types: Blog and Project with computed fields for slug, readingTime, and URL
 
 **Internationalization (i18n):**
-- Configured for English (default) and Portuguese Brazilian locales
-- Language routing handled through src/i18n/utils.ts with functions like `getLangFromUrl()` and `getLocalizedRoute()`
-- Localized metadata and UI strings defined in src/i18n/ui.ts and src/consts.ts
-- Default locale (English) doesn't require URL prefix, other locales use /[locale]/ prefix
+- Configured for English (default) and Portuguese Brazilian locales using next-intl
+- Language routing handled through src/i18n/ with routing.ts and navigation.ts
+- Localized UI strings defined in src/messages/en.json and src/messages/pt-br.json
+- English uses /en/ prefix, Portuguese uses /pt-br/ prefix
 
 **Site Configuration:**
-- Global site constants in src/consts.ts including social links, Cal.com integration, and localized metadata
-- Astro config includes Vercel adapter with web analytics and image optimization enabled
-- TypeScript paths configured with @* alias pointing to src/*
+- Global site constants in src/lib/constants.ts
+- Next.js config in next.config.mjs with contentlayer and next-intl plugins
+- TypeScript paths configured with @/* alias pointing to src/*
 
 **Styling & UI:**
 - TailwindCSS v4 for styling with typography plugin
-- Components organized in src/components/ with focus on accessibility
-- Global styles in src/styles/global.css
+- Components organized in src/components/
+- Global styles in src/app/globals.css
+- shadcn/ui components in src/components/ui/
 
 **Content Structure:**
-- Blog posts: src/content/blog/[post-name]/[locale]/index.mdx
-- Projects: src/content/projects/[project-name]/index.md
+- Blog posts: content/blog/[post-name]/[locale]/index.mdx
+- Projects: content/projects/[project-name]/[locale]/index.mdx
 - Both collections support draft status and metadata like tags, dates, and external links
+
+**File Structure:**
+```
+src/
+  app/          # Next.js App Router pages
+  components/   # React components
+  i18n/         # Internationalization config
+  lib/          # Utility functions
+  messages/     # i18n translation files
+content/        # Blog posts and projects (Contentlayer)
+public/         # Static assets
+```

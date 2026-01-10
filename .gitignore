@@ -1,8 +1,3 @@
-# build output
-dist/
-# generated types
-.astro/
-
 # dependencies
 node_modules/
 
@@ -11,7 +6,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
 
 # environment variables
 .env
@@ -33,6 +27,3 @@ pnpm-debug.log*
 
 # Playwright test artifacts
 .playwright-mcp/
-
-# Astro backup (migration complete)
-src_astro_backup/

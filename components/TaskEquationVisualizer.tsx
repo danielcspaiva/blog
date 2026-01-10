@@ -550,7 +550,9 @@ export default function TaskEquationVisualizer() {
                       stroke="var(--color-background)"
                       strokeWidth={2}
                     />
-                  ) : null;
+                  ) : (
+                    <g key={`dot-${index}`} />
+                  );
                 }}
               />
             </recharts.LineChart>

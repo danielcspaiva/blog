@@ -35,25 +35,21 @@ if (pathSegments.length > 0 && Object.keys(languages).includes(pathSegments[0]))
     
     // Get current path - ensures we have the latest URL
     const currentPath = window.location.pathname;
-    console.log("Current path:", currentPath);
-    
+
     // Get available languages from data attributes
     const availableLangs = [];
     document.querySelectorAll('.language-switcher a[data-lang]').forEach(el => {
       availableLangs.push(el.getAttribute('data-lang'));
     });
-    console.log("Available languages:", availableLangs);
-    
+
     // Parse the current path
     const pathParts = currentPath.split('/').filter(Boolean);
-    console.log("Path parts:", pathParts);
-    
+
     // Check if first part is a language code
     let currentLang = '';
     if (pathParts.length > 0 && availableLangs.includes(pathParts[0])) {
       currentLang = pathParts[0];
     }
-    console.log("Current language:", currentLang);
     
     let newUrl = '';
     
@@ -75,7 +71,6 @@ if (pathSegments.length > 0 && Object.keys(languages).includes(pathSegments[0]))
       newUrl = `/${targetLang}${currentPath}`;
     }
     
-    console.log("New URL:", newUrl);
     window.location.href = newUrl;
   }
 </script> 

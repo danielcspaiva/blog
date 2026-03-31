@@ -27,3 +27,6 @@ pnpm-debug.log*
 .idea/
 
 .vercel
+
+# playwright MCP screenshots
+.playwright-mcp/

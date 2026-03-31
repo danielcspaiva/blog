@@ -16,23 +16,28 @@ export default {
     },
   },
   // The template function that returns the canvas configuration
-  template: ({ title, description, authorName }: { title: string; description: string; authorName: string }) => {
+  template: ({
+    title,
+    description,
+    authorName,
+  }: {
+    title: string;
+    description: string;
+    authorName: string;
+  }) => {
     // Use the provided author name or default to "Daniel Paiva"
     const author = authorName || "Daniel Paiva";
-    
+
     // Format the description to include the author name with a line break
     // This will make the author name appear on a separate line
     const formattedDescription = `${description}\n\nBy ${author}`;
-    
+
     return {
       // Main content
       title,
       description: formattedDescription,
       // Use Geist Sans fonts
-      fonts: [
-        "./public/fonts/GeistSans-Regular.otf",
-        "./public/fonts/GeistSans-Bold.otf",
-      ],
+      fonts: ["./public/fonts/GeistSans-Regular.otf", "./public/fonts/GeistSans-Bold.otf"],
     };
   },
-}; 
+};

@@ -9,6 +9,7 @@
 [![Download on the App Store](https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83)](https://apps.apple.com/us/app/hacker-reader/id6754137305)
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Key Features](#key-features)
 - [Monorepo Layout](#monorepo-layout)
@@ -120,6 +121,7 @@ pnpm web       # smoke-test the marketing site
 - **Home Screen Widgets**: Three widget sizes (small/medium/large) displaying Top Stories with auto-updates every 30 minutes, deep linking to stories, and offline support via cached data
 
 **Core Libraries** (`apps/mobile/lib/shared/`):
+
 - **API Clients**: HN API, Algolia search, Open Graph metadata fetching
 - **Authentication**: Secure session wrapper, HTML parsers, rate limiting, write operations
 - **Types**: Fully typed interfaces for `HNItem`, `HNUser`, `AlgoliaStory`, etc.

@@ -5,10 +5,10 @@ date: 2025-04-14
 tags: [tech, typescript, full-stack, type-safety]
 locale: pt-br
 hideTableOfContents: false
-
 ---
 
-import video from './../v10-dark-landscape.mp4';
+import Image from "next/image";
+import fullStackTypeSafety from "../fullstack-type-safety.png";
 
 ## TL;DR
 
@@ -22,7 +22,7 @@ Segurança de tipos de ponta a ponta (end-to-end type safety) conecta seu banco 
 
 O resultado? Código mais limpo, mais fácil de manter, com menos bugs e melhor experiência de desenvolvimento para o seu time.
 
-___
+---
 
 ## Introdução
 
@@ -31,7 +31,7 @@ O desenvolvimento full-stack frequentemente envolve uma luta entre Frontend e Ba
 Considere este exemplo:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function PostsComponent() {
   const [posts, setPosts] = useState([]);
@@ -40,7 +40,7 @@ function PostsComponent() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('https://api.example.com/posts');
+        const response = await fetch("https://api.example.com/posts");
         const data = await response.json();
         // Não podemos ter certeza da estrutura dos dados
         setPosts(data);
@@ -64,8 +64,10 @@ function PostsComponent() {
               <p>{post.content}</p>
             </div>
           ) : (
-            <div key={index}><p>Formato de post inesperado</p></div>
-          )
+            <div key={index}>
+              <p>Formato de post inesperado</p>
+            </div>
+          ),
         )
       ) : (
         <p>Nenhum post disponível</p>
@@ -137,6 +139,7 @@ function PostsComponent() {
 ```
 
 Esta abordagem tem limitações significativas:
+
 - **Falhas silenciosas quando APIs mudam**: Se o backend mudar (como renomear `totalCount` para `count`), o TypeScript não pegará porque é apenas uma assertion de tipo (estamos mentindo para o TypeScript, e para nós mesmos)
 - **Sem validação em tempo de execução**: Os tipos do TypeScript desaparecem em tempo de execução
 - **Duplicação de conhecimento**: Os tipos devem ser mantidos manualmente em sincronia com o backend (e se o backend mudar, temos que atualizar os tipos manualmente)
@@ -157,6 +160,7 @@ const user = await db.query.users.findFirst({ where: eq(users.id, 1) });
 ```
 
 Os benefícios incluem:
+
 - Uma única fonte de verdade
 - Atualizações automáticas quando os esquemas mudam
 - Tipos que refletem as estruturas de dados reais
@@ -168,7 +172,7 @@ Os benefícios incluem:
 
 Segurança de tipos de ponta a ponta conecta seu banco de dados, backend e frontend em um sistema de tipos unificado onde os tipos fluem automaticamente através de cada camada, como mostra o diagrama abaixo.
 
-![End-to-End Type Safety](./../fullstack-type-safety.png)
+<Image alt="End-to-End Type Safety" src={fullStackTypeSafety} />
 
 Vamos ver como isso funciona na prática.
 
@@ -190,7 +194,7 @@ Nas palavras deles, o tRPC permite que você:
 Vamos ver isso em ação. No vídeo abaixo, você pode ver como o tRPC mantém a segurança de tipos em toda a sua stack:
 
 <video
-  src={video}
+  src="/blog/full-stack-type-safety/v10-dark-landscape.mp4"
   autoPlay
   loop
   muted
@@ -198,7 +202,9 @@ Vamos ver isso em ação. No vídeo abaixo, você pode ver como o tRPC mantém a
   className="rounded-lg shadow-lg"
 />
 
-<small className="text-gray-500 block text-center mb-4">Crédito do vídeo: [tRPC website](https://trpc.io/)</small>
+<small className="text-gray-500 block text-center mb-4">
+  Crédito do vídeo: [tRPC website](https://trpc.io/)
+</small>
 
 No vídeo, o lado esquerdo mostra o código do servidor e o direito o código do cliente. O tRPC proporciona feedback instantâneo entre ambos - quando você modifica o código do servidor, o cliente é imediatamente atualizado. Erros de tipo aparecem automaticamente no cliente quando há incompatibilidades, indicando precisamente o que precisa ser corrigido.
 
@@ -209,6 +215,7 @@ A inferência automática de tipos do tRPC garante que sua IDE sempre mostre as 
 Aqui está como implementar segurança de tipos de ponta a ponta:
 
 1. **Esquema do Banco de Dados** com [Prisma](https://www.prisma.io/) ou [Drizzle](https://orm.drizzle.team/):
+
 ```prisma
 // schema.prisma (Prisma)
 model Post {
@@ -221,17 +228,18 @@ model Post {
 
 ```typescript
 // schema.ts (Drizzle)
-import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
-export const posts = pgTable('posts', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  content: text('content').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
+export const posts = pgTable("posts", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 ```
 
 2. **API Backend** com [tRPC](https://trpc.io/):
+
 ```typescript
 // server/router.ts
 export const appRouter = router({
@@ -239,11 +247,11 @@ export const appRouter = router({
     getAll: publicProcedure.query(async () => {
       // Com Prisma
       return await prisma.post.findMany();
-      
+
       // Ou com Drizzle
       return await db.query.posts.findMany();
-    })
-  })
+    }),
+  }),
 });
 
 // Exporta a definição de tipo da API
@@ -251,6 +259,7 @@ export type AppRouter = typeof appRouter;
 ```
 
 3. **Integração Frontend**:
+
 ```typescript
 // client/components/PostList.tsx
 function PostsComponent() {
@@ -277,12 +286,14 @@ function PostsComponent() {
 ```
 
 Os tipos fluem automaticamente através de cada camada:
+
 1. O schema do banco de dados define a estrutura
 2. O Prisma/Drizzle gera tipos TypeScript a partir do schema
 3. O tRPC infere tipos de retorno do Prisma/Drizzle
 4. Componentes React recebem dados totalmente tipados
 
 Quando você faz alterações, como adicionar um campo `published` ao seu modelo `Post`:
+
 1. O Prisma/Drizzle atualiza os tipos TypeScript após a regeneração
 2. O tRPC infere automaticamente os novos tipos de retorno
 3. O novo campo `published` é imediatamente disponível no frontend
@@ -292,28 +303,27 @@ Quando você faz alterações, como adicionar um campo `published` ao seu modelo
 O TypeScript fornece segurança em tempo de compilação, mas a validação em tempo de execução ainda é necessária. O Zod preenche essa lacuna:
 
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 // Define um esquema que valida em tempo de execução
 const PostSchema = z.object({
   title: z.string().min(1).max(100),
-  content: z.string().min(10)
+  content: z.string().min(10),
 });
 
 // Integração com tRPC
 export const appRouter = router({
   posts: router({
-    create: publicProcedure
-      .input(PostSchema)
-      .mutation(async ({ input }) => {
-        // A entrada é validada antes deste código ser executado
-        return await prisma.post.create({ data: input });
-      })
-  })
+    create: publicProcedure.input(PostSchema).mutation(async ({ input }) => {
+      // A entrada é validada antes deste código ser executado
+      return await prisma.post.create({ data: input });
+    }),
+  }),
 });
 ```
 
 Esta combinação fornece:
+
 - Validação em tempo de execução para garantir que os dados enviados para o backend tenham o formato esperado
 - APIs auto-documentadas com requisitos de input explícitos
 - Mensagens de erro automáticas com falhas de validação detalhadas
@@ -322,12 +332,14 @@ Esta combinação fornece:
 Por exemplo, uma requisição do cliente com dados inválidos:
 
 ```typescript
-trpc.posts.create.mutate({
-  title: "", // Muito curto!
-  content: "Este é um teste"
-}).catch(error => {
-  // ZodError com informações detalhadas sobre a falha de validação
-});
+trpc.posts.create
+  .mutate({
+    title: "", // Muito curto!
+    content: "Este é um teste",
+  })
+  .catch((error) => {
+    // ZodError com informações detalhadas sobre a falha de validação
+  });
 ```
 
 ---
@@ -373,14 +385,14 @@ Para mutações, Server Actions podem ser combinados perfeitamente com Zod para 
 
 ```typescript
 // app/actions/posts.ts
-'use server';
+"use server";
 
-import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
+import { prisma } from "@/lib/prisma";
+import { z } from "zod";
 
 const createPostSchema = z.object({
   title: z.string().min(1).max(100),
-  content: z.string().min(10)
+  content: z.string().min(10),
 });
 
 export async function createPost(data: z.infer<typeof createPostSchema>) {
@@ -398,18 +410,23 @@ Além disso, a separação entre Server and Client Components pode ser confusa i
 ---
 
 ### GraphQL com CodeGen
+
 Tipagem forte através da definição de esquema, mas requer:
+
 - Aprender uma linguagem de consulta separada
 - Ferramentas extras para cache e gerenciamento de estado
 - Manutenção de esquema e resolvers
 
 ### OpenAPI/Swagger
+
 APIs REST com tipos gerados, mas requer:
+
 - Manutenção manual de especificações
 - Desconexão entre implementação e especificação
 - Complexidade adicional de build
 
 Comparado às soluções alternativas, tRPC oferece as seguintes vantagens:
+
 - Zero manutenção de esquema
 - Integração nativa com TypeScript
 - Conexão direta entre backend e frontend

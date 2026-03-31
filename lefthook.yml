@@ -1,0 +1,14 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: oxfmt
+      glob: "*.{cjs,css,cts,js,json,jsonc,jsx,md,mdx,mjs,mts,scss,ts,tsx,yaml,yml}"
+      run: pnpm exec oxfmt --check -- {staged_files}
+    - name: oxlint
+      glob: "*.{cjs,cts,js,jsx,mjs,mts,ts,tsx}"
+      run: pnpm exec oxlint -- {staged_files}
+
+pre-push:
+  jobs:
+    - name: build
+      run: pnpm build

@@ -1,18 +1,22 @@
+"use client";
+
 import { useMemo, useState } from "react";
-import { useTranslations } from "@/i18n/utils";
-import type { ui } from "@/i18n/ui";
+
 import * as recharts from "recharts";
+
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { defaultLang, useTranslations } from "@/lib/i18n";
+import type { ui } from "@/lib/i18n";
 
 type Lang = keyof typeof ui;
 
 interface Props {
-  lang: Lang;
+  lang?: Lang;
 }
 
 type Factor = "K" | "C" | "T";
@@ -35,7 +39,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function TaskEquationVisualizer({ lang }: Props) {
+export default function TaskEquationVisualizer({ lang = defaultLang }: Props) {
   const t = useTranslations(lang);
 
   const [alpha, setAlpha] = useState(0.2);
@@ -136,10 +140,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
     return { pct, label: `${pct}%` };
   }, [p]);
 
-  const probabilityHue = useMemo(
-    () => Math.max(0, Math.min(120, p * 120)),
-    [p],
-  );
+  const probabilityHue = useMemo(() => Math.max(0, Math.min(120, p * 120)), [p]);
   const barFillStyle = useMemo(() => {
     return {
       width: `${gauge.pct}%`,
@@ -155,8 +156,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
       const k = sweep === "K" ? x : K;
       const c = sweep === "C" ? x : C;
       const t = sweep === "T" ? x : T;
-      const value =
-        pow(clamp01(k), a) * pow(clamp01(c), b) * pow(clamp01(t), g);
+      const value = pow(clamp01(k), a) * pow(clamp01(c), b) * pow(clamp01(t), g);
       const isCurrent = Math.abs(x - currentValue) < 0.03;
       points.push({ x, p: value, isCurrent });
     }
@@ -236,9 +236,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
           >
             {t("equation.reset")}
           </button>
-          <span className="text-navy-800/50 text-xs dark:text-neutral-100/50">
-            •
-          </span>
+          <span className="text-navy-800/50 text-xs dark:text-neutral-100/50">•</span>
           <button
             onClick={applyPresetDataAnalysis}
             className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
@@ -299,9 +297,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
             <LabeledSlider
               label={t("equation.alpha.label")}
               value={alpha}
-              onChange={(v) =>
-                handleWeightChange("a", v, setAlpha, setBeta, setGamma)
-              }
+              onChange={(v) => handleWeightChange("a", v, setAlpha, setBeta, setGamma)}
               min={0}
               max={1}
               step={0.01}
@@ -310,9 +306,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
             <LabeledSlider
               label={t("equation.beta.label")}
               value={beta}
-              onChange={(v) =>
-                handleWeightChange("b", v, setAlpha, setBeta, setGamma)
-              }
+              onChange={(v) => handleWeightChange("b", v, setAlpha, setBeta, setGamma)}
               min={0}
               max={1}
               step={0.01}
@@ -321,9 +315,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
             <LabeledSlider
               label={t("equation.gamma.label")}
               value={gamma}
-              onChange={(v) =>
-                handleWeightChange("g", v, setAlpha, setBeta, setGamma)
-              }
+              onChange={(v) => handleWeightChange("g", v, setAlpha, setBeta, setGamma)}
               min={0}
               max={1}
               step={0.01}
@@ -528,10 +520,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
                       if (isNaN(numValue)) {
                         return [t("equation.tooltip.invalidData"), "Success Probability"];
                       }
-                      return [
-                        `${Math.round(numValue * 100)}%`,
-                        "Success Probability",
-                      ];
+                      return [`${Math.round(numValue * 100)}%`, "Success Probability"];
                     }}
                     labelFormatter={(label) => {
                       const numLabel = Number(label);
@@ -598,11 +587,7 @@ function LabeledSlider({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-sm">
-        <span
-          className={`text-navy-800 dark:text-neutral-100 ${labelClass ?? ""}`}
-        >
-          {label}
-        </span>
+        <span className={`text-navy-800 dark:text-neutral-100 ${labelClass ?? ""}`}>{label}</span>
         <span className="text-navy-800/70 font-mono text-xs tabular-nums dark:text-neutral-100/70">
           {value.toFixed(2)}
         </span>

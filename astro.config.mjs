@@ -8,11 +8,7 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   site: "https://dcsp.dev",
-  integrations: [
-    sitemap(), 
-    mdx(),
-    react(),
-  ],
+  integrations: [sitemap(), mdx(), react()],
   i18n: {
     defaultLocale: "en",
     locales: ["en", "pt-br"],

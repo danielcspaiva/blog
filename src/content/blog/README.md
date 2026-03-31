@@ -25,7 +25,7 @@ title: Post Title
 description: Post description
 date: 2023-01-01
 tags: [tag1, tag2]
-locale: en  # 'en' or 'pt-br'
+locale: en # 'en' or 'pt-br'
 ---
 ```
 
@@ -60,6 +60,7 @@ This ensures consistent spacing between the Table of Contents and the first head
 ## URL Structure
 
 Posts will be accessible at:
+
 - `/en/blog/example-post` (English version)
 - `/pt-br/blog/example-post` (Portuguese version)
 
@@ -74,4 +75,4 @@ To migrate existing posts:
 
 ## Fallbacks
 
-If a post is not available in a specific language, it won't be listed in that language's blog index or accessible via URL. 
+If a post is not available in a specific language, it won't be listed in that language's blog index or accessible via URL.

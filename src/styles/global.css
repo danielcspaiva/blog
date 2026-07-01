@@ -1,17 +1,16 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
-@import "./pixel-fonts.css";
 
 @plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: Geist Sans, ui-sans-serif, system-ui, sans-serif,
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-mono: Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco,
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --font-pixel: 'Geist Pixel Square', var(--font-mono);
+  --font-pixel: var(--font-geist-pixel-square), var(--font-mono);
 
   /* Eink monochrome — never pure black/white */
   --color-black: #14130f;
@@ -269,7 +268,7 @@ html.scrolled #back-to-top {
 
 /* Hero wordmark — Geist Pixel Grid, regular weight */
 .wordmark {
-  font-family: 'Geist Pixel Grid', var(--font-mono);
+  font-family: var(--font-geist-pixel-grid), var(--font-mono);
   font-weight: 500;
 }
 .prose :is(h1, h2, h3, h4, h5, h6) {

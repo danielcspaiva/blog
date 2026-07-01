@@ -1,15 +1,12 @@
 ---
 title: "A Equação do Sucesso com IA"
 description: Como conhecimento, contexto e ferramentas se multiplicam para determinar a probabilidade de sucesso.
-date: 2025-08-20
+date: "2025-08-20"
 tags: [blog, ai, communication, tech]
 locale: pt-br
 hideTableOfContents: false
 ---
 
-import Callout from "@/components/Callout.astro";
-import HumanVsAIRadarChart from "@/components/HumanVsAIRadarChart.astro";
-import TaskEquationVisualizer from "@/components/TaskEquationVisualizer.astro";
 
 ## TL;DR
 
@@ -45,46 +42,46 @@ Este artigo é minha tentativa de compartilhar esse framework.
 
 Imagine que alguém te dá uma tarefa. O que determina se você terá sucesso? Podemos dividir isso em três fatores principais:
 
-1. **<span class="term-knowledge">Conhecimento (K)</span>**: o que você já sabe. Isso inclui sua expertise, hard skills aprendidas, experiências passadas e sabedoria acumulada.  
-2. **<span class="term-context">Contexto (C)</span>**: informações sobre esta tarefa específica. Quem, o quê, quando, onde e por quê que transforma uma solicitação genérica em uma tarefa realizável.  
-3. **<span class="term-tools">Ferramentas (T)</span>**: o que você pode usar para executar a tarefa. Instrumentos, software, processos, colaboradores, ou sua habilidade de inventar novas soluções.
+1. **<span className="term-knowledge">Conhecimento (K)</span>**: o que você já sabe. Isso inclui sua expertise, hard skills aprendidas, experiências passadas e sabedoria acumulada.  
+2. **<span className="term-context">Contexto (C)</span>**: informações sobre esta tarefa específica. Quem, o quê, quando, onde e por quê que transforma uma solicitação genérica em uma tarefa realizável.  
+3. **<span className="term-tools">Ferramentas (T)</span>**: o que você pode usar para executar a tarefa. Instrumentos, software, processos, colaboradores, ou sua habilidade de inventar novas soluções.
 
 Depois de pensar sobre como esses fatores interagem entre si, eu diria que a probabilidade de sucesso é o produto desses fatores:
 
-> <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
+> <p className="text-xl font-semibold rounded-lg p-2">p = <span className="term-knowledge">K</span> × <span className="term-context">C</span> × <span className="term-tools">T</span></p>
 
-Diferentes tipos de tarefas requerem diferentes equilíbrios desses fatores. É improvável que um encanador <span class="term-knowledge">experiente</span> consiga resolver um vazamento sem as <span class="term-tools">ferramentas certas</span>, já um advogado dificilmente conseguiria resolver um caso sem <span class="term-knowledge">conhecimento jurídico</span> e se debruçar no <span class="term-context">contexto do caso</span>. Isso leva à equação completa:
+Diferentes tipos de tarefas requerem diferentes equilíbrios desses fatores. É improvável que um encanador <span className="term-knowledge">experiente</span> consiga resolver um vazamento sem as <span className="term-tools">ferramentas certas</span>, já um advogado dificilmente conseguiria resolver um caso sem <span className="term-knowledge">conhecimento jurídico</span> e se debruçar no <span className="term-context">contexto do caso</span>. Isso leva à equação completa:
 
-> <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
+> <p className="text-xl font-semibold rounded-lg p-2">p = <span className="term-knowledge">K</span><sup><span className="term-knowledge-weight">α</span></sup> × <span className="term-context">C</span><sup><span className="term-context-weight">β</span></sup> × <span className="term-tools">T</span><sup><span className="term-tools-weight">γ</span></sup></p>
 
-Os expoentes são utilizados para ajustar a importância de cada fator para cada tipo de tarefa, com <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 e <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1. Confira o visualizador interativo abaixo para ver como a equação funciona.
+Os expoentes são utilizados para ajustar a importância de cada fator para cada tipo de tarefa, com <span className="term-knowledge-weight">α</span>, <span className="term-context-weight">β</span>, <span className="term-tools-weight">γ</span> ≥ 0 e <span className="term-knowledge-weight">α</span> + <span className="term-context-weight">β</span> + <span className="term-tools-weight">γ</span> = 1. Confira o visualizador interativo abaixo para ver como a equação funciona.
 
-<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-    <summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Entendendo os expoentes</summary>
-    <div class="py-3 px-6">
+<details className="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+    <summary className="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Entendendo os expoentes</summary>
+    <div className="py-3 px-6">
     Os expoentes determinam o quanto cada fator influencia a probabilidade geral. Quando um expoente se aproxima de 0, esse componente se torna menos crítico para o sucesso. Quando é maior, esse componente tem mais impacto no resultado final.
 
-    Por exemplo, se <span class="term-context-weight">β</span> = <span class="term-context-weight">0.8</span> e <span class="term-knowledge-weight">α</span> = <span class="term-knowledge-weight">0.1</span>, então o <span class="term-context">contexto</span> domina: mesmo com <span class="term-knowledge">conhecimento</span> perfeito (<span class="term-knowledge">K</span>=<span class="term-knowledge">1.0</span>), <span class="term-context">contexto</span> ruim (<span class="term-context">C</span>=<span class="term-context">0.2</span>) daria:
+    Por exemplo, se <span className="term-context-weight">β</span> = <span className="term-context-weight">0.8</span> e <span className="term-knowledge-weight">α</span> = <span className="term-knowledge-weight">0.1</span>, então o <span className="term-context">contexto</span> domina: mesmo com <span className="term-knowledge">conhecimento</span> perfeito (<span className="term-knowledge">K</span>=<span className="term-knowledge">1.0</span>), <span className="term-context">contexto</span> ruim (<span className="term-context">C</span>=<span className="term-context">0.2</span>) daria:
 
     <Callout>
-        p = <span class="term-knowledge">1.0</span>^<span class="term-knowledge-weight">0.1</span> × <span class="term-context">0.2</span>^<span class="term-context-weight">0.8</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span> ≈ <span class="term-context">0.28</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span>
+        p = <span className="term-knowledge">1.0</span>^<span className="term-knowledge-weight">0.1</span> × <span className="term-context">0.2</span>^<span className="term-context-weight">0.8</span> × <span className="term-tools">T</span>^<span className="term-tools-weight">0.1</span> ≈ <span className="term-context">0.28</span> × <span className="term-tools">T</span>^<span className="term-tools-weight">0.1</span>
     </Callout>
 
-    Mas com bom <span class="term-context">contexto</span> (<span class="term-context">C</span>=<span class="term-context">0.9</span>), você obtém:
+    Mas com bom <span className="term-context">contexto</span> (<span className="term-context">C</span>=<span className="term-context">0.9</span>), você obtém:
 
     <Callout>
-        p = <span class="term-knowledge">1.0</span>^<span class="term-knowledge-weight">0.1</span> × <span class="term-context">0.9</span>^<span class="term-context-weight">0.8</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span> ≈ <span class="term-context">0.92</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span>
+        p = <span className="term-knowledge">1.0</span>^<span className="term-knowledge-weight">0.1</span> × <span className="term-context">0.9</span>^<span className="term-context-weight">0.8</span> × <span className="term-tools">T</span>^<span className="term-tools-weight">0.1</span> ≈ <span className="term-context">0.92</span> × <span className="term-tools">T</span>^<span className="term-tools-weight">0.1</span>
     </Callout>
 
     Cada expoente importa de forma diferente dependendo da situação:
 
-    - **<span class="term-knowledge-weight">α</span> (expoente do <span class="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia <span class="term-knowledge-weight">α</span>≈<span class="term-knowledge-weight">0.6</span>), menor para tarefas rotineiras (entrada de dados <span class="term-knowledge-weight">α</span>≈<span class="term-knowledge-weight">0.2</span>).  
-    - **<span class="term-context-weight">β</span> (expoente do <span class="term-context">contexto</span>):** Extremamente alto para debugging (<span class="term-context-weight">β</span>≈<span class="term-context-weight">0.7</span>), moderado para tarefas criativas (<span class="term-context-weight">β</span>≈<span class="term-context-weight">0.4</span>).  
-    - **<span class="term-tools-weight">γ</span> (expoente das <span class="term-tools">ferramentas</span>):** Forte em trabalho técnico (<span class="term-tools-weight">γ</span>≈<span class="term-tools-weight">0.5</span>), menor em raciocínio puro (<span class="term-tools-weight">γ</span>≈<span class="term-tools-weight">0.2</span>).
+    - **<span className="term-knowledge-weight">α</span> (expoente do <span className="term-knowledge">conhecimento</span>):** Maior para domínios especializados (ex: cirurgia <span className="term-knowledge-weight">α</span>≈<span className="term-knowledge-weight">0.6</span>), menor para tarefas rotineiras (entrada de dados <span className="term-knowledge-weight">α</span>≈<span className="term-knowledge-weight">0.2</span>).  
+    - **<span className="term-context-weight">β</span> (expoente do <span className="term-context">contexto</span>):** Extremamente alto para debugging (<span className="term-context-weight">β</span>≈<span className="term-context-weight">0.7</span>), moderado para tarefas criativas (<span className="term-context-weight">β</span>≈<span className="term-context-weight">0.4</span>).  
+    - **<span className="term-tools-weight">γ</span> (expoente das <span className="term-tools">ferramentas</span>):** Forte em trabalho técnico (<span className="term-tools-weight">γ</span>≈<span className="term-tools-weight">0.5</span>), menor em raciocínio puro (<span className="term-tools-weight">γ</span>≈<span className="term-tools-weight">0.2</span>).
     </div>
 </details>
-<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Visualizador interativo</summary>
+<details className="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+<summary className="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Visualizador interativo</summary>
   <TaskEquationVisualizer />
 </details>
 
@@ -184,10 +181,10 @@ Quase nenhuma informação: qual deploy? qual erro? qual ambiente?
 
 **Bom contexto mais que duplica as chances de sucesso, de 36% para 88%.** O mesmo especialista, mesmas ferramentas; contexto claro transforma uma provável luta em uma quase vitória.
 
-<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-    <summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Detalhamento matemático</summary>
+<details className="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+    <summary className="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Detalhamento matemático</summary>
 
-    <div class="py-3 px-6">
+    <div className="py-3 px-6">
     Tarefas de debugging têm alta dependência de contexto, então usei esses expoentes:
 
     - **α** = 0.2 (expoente do conhecimento): Contribuição moderada do conhecimento de domínio
@@ -198,13 +195,13 @@ Quase nenhuma informação: qual deploy? qual erro? qual ambiente?
        
        
     <Callout>
-    <p class="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.2<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.36 ou 36%</p>
+    <p className="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.2<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.36 ou 36%</p>
     </Callout>
 
     Com contexto rico (**C** ≈ 0.9), mesmo conhecimento (**K** ≈ 0.8), e mesmas ferramentas (**T** ≈ 0.9):
     
     <Callout>
-    <p class="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.9<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.88 ou 88%</p>
+    <p className="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.9<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.88 ou 88%</p>
     </Callout>
     </div>
 </details>
@@ -218,7 +215,7 @@ Negligenciamos contexto porque não o vemos. Nossas suposições, modelos mentai
 David Foster Wallace capturou isso lindamente em seu [discurso de formatura de 2005 no Kenyon College](https://www.youtube.com/watch?v=8CrOL-ydFMI):
 
 ![Dois peixes jovens nadando encontram um peixe mais velho que pergunta 'Bom dia, rapazes. Como está a água?' Os peixes jovens continuam nadando, com um eventualmente perguntando 'Que diabos é água?'](../media/water.png)
-<p class="text-center text-sm italic">Ilustração gerada por GPT-5</p>
+<p className="text-center text-sm italic">Ilustração gerada por GPT-5</p>
 
 Contexto é nossa água. É tão fundamental para como navegamos o mundo que nem notamos. Assumimos que outros compartilham nosso ambiente mental: nossas referências culturais, nosso background técnico, nossa situação imediata. Mas como aqueles peixes, frequentemente não temos consciência do meio em que estamos nadando.
 
@@ -228,8 +225,7 @@ Esses atalhos funcionam (de certa forma) na interação humano-humano, porque so
 
 Outra razão é nossa incompreensão fundamental de como os modelos de IA funcionam:
 
-<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">What I find endlessly fascinating:<br /><br />Some engineers really can&#39;t seem to grasp that LLMs are non-deterministic and how to build software taking that into account.<br /><br />For others it immediately clicked, but for some it seems like there&#39;s a real mental barrier to accept it.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">August 14, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<blockquote className="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">What I find endlessly fascinating:<br /><br />Some engineers really can&#39;t seem to grasp that LLMs are non-deterministic and how to build software taking that into account.<br /><br />For others it immediately clicked, but for some it seems like there&#39;s a real mental barrier to accept it.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">August 14, 2025</a></blockquote>
 LLMs têm peculiaridades que tornam o contexto essencial:
 - **Não-determinismo:** O mesmo prompt pode gerar saídas diferentes. Bom contexto estreita o leque de respostas possíveis, reduzindo aleatoriedade.
 - **Cortes de conhecimento:** Modelos não sabem nada depois da data de treinamento. Contexto explícito sobre versões, atualizações ou mudanças recentes preenche essa lacuna.
@@ -245,8 +241,7 @@ IA mudou fundamentalmente quais habilidades importam. Na era pré-IA, sucesso re
 
 Tobi Lütke capturou essa mudança perfeitamente:
 
-<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">I really like the term "context engineering" over prompt engineering. <br /><br />It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM.</p>&mdash; tobi lutke (@tobi) <a href="https://twitter.com/tobi/status/1935533422589399127?ref_src=twsrc%5Etfw">June 19, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<blockquote className="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">I really like the term "context engineering" over prompt engineering. <br /><br />It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM.</p>&mdash; tobi lutke (@tobi) <a href="https://twitter.com/tobi/status/1935533422589399127?ref_src=twsrc%5Etfw">June 19, 2025</a></blockquote>
 Engenharia de contexto está se tornando tão fundamental quanto programação foi na era do software. Assim como desenvolvedores aprenderam a estruturar código, debugar sistemas e projetar arquiteturas, agora precisamos aprender como:
 
 - **Estruturar informação** para consumo de IA
@@ -263,7 +258,7 @@ Os profissionais que dominarem engenharia de contexto terão a mesma vantagem qu
 Engenharia de contexto é sobre fornecer todo o contexto necessário para tornar uma tarefa plausivelmente solucionável pelo LLM. Um prompt bem estruturado inclui:
 
 ![Diagrama de estrutura de prompt mostrando os 10 componentes essenciais para comunicação eficaz com IA](../media/prompt-engineering.png)
-<p class="text-center text-sm italic">Diagrama de <a href="https://www.youtube.com/watch?v=ysPbXH0LpIE">Advanced Prompt Engineering</a> da Anthropic</p>
+<p className="text-center text-sm italic">Diagrama de <a href="https://www.youtube.com/watch?v=ysPbXH0LpIE">Advanced Prompt Engineering</a> da Anthropic</p>
 
 1. **Contexto da tarefa** - A situação específica e background
 2. **Contexto de tom** - Como a IA deve se comunicar
@@ -290,9 +285,8 @@ Humanos têm sucesso apesar do conhecimento limitado porque somos ricos em conte
 
 Como Guillermo Rauch observou:
 
-<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<blockquote className="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote>
 
 A qualidade de seus pensamentos (expressa através de contexto claro) agora determina o sucesso.  
 
-Na próxima vez que você der uma tarefa para uma IA (ou até mesmo um colega de equipe), se pergunte: Ele tem o <span class="term-knowledge">conhecimento</span> necessário? Eu dei a ele o <span class="term-context">contexto</span> suficiente? Ele tem acesso às <span class="term-tools">ferramentas</span> certas?
+Na próxima vez que você der uma tarefa para uma IA (ou até mesmo um colega de equipe), se pergunte: Ele tem o <span className="term-knowledge">conhecimento</span> necessário? Eu dei a ele o <span className="term-context">contexto</span> suficiente? Ele tem acesso às <span className="term-tools">ferramentas</span> certas?

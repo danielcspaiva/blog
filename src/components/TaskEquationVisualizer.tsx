@@ -1,6 +1,7 @@
+"use client";
+
 import { useMemo, useState } from "react";
-import { useTranslations } from "@/i18n/utils";
-import type { ui } from "@/i18n/ui";
+import { useTranslations } from "next-intl";
 import * as recharts from "recharts";
 import {
   ChartContainer,
@@ -8,12 +9,6 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-
-type Lang = keyof typeof ui;
-
-interface Props {
-  lang: Lang;
-}
 
 type Factor = "K" | "C" | "T";
 
@@ -35,8 +30,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function TaskEquationVisualizer({ lang }: Props) {
-  const t = useTranslations(lang);
+export default function TaskEquationVisualizer() {
+  const t = useTranslations();
 
   const [alpha, setAlpha] = useState(0.2);
   const [beta, setBeta] = useState(0.6);
@@ -289,7 +284,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
         <section className="flex-1 space-y-4 md:pr-8">
           <div>
             <h3 className="text-ink-900 !mt-0 font-semibold dark:text-neutral-50">
-              {t("equation.weights")}
+              {t("equation.weights.title")}
             </h3>
             <p className="text-ink-800/70 mt-1 text-sm dark:text-neutral-100/70">
               {t("equation.weights.description")}
@@ -337,7 +332,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
         <section className="flex-1 space-y-4 md:pl-8">
           <div>
             <h3 className="text-ink-900 !mt-0 font-semibold dark:text-neutral-50">
-              {t("equation.factors")}
+              {t("equation.factors.title")}
             </h3>
             <p className="text-ink-800/70 mt-1 text-sm dark:text-neutral-100/70">
               {t("equation.factors.description")}

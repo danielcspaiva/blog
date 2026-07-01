@@ -158,6 +158,23 @@
   }
 }
 
+/* Justify body copy (paragraphs + list items) across the site — pairs with
+   auto-hyphenation so justification doesn't open ugly word-gaps/rivers. The
+   pages set html[lang], which hyphens:auto needs to break correctly.
+   Target `article` too: the homepage bio gets prose via `@apply prose` on the
+   <article> element, so it has no literal `.prose` class for `.prose p` to hit. */
+@layer utilities {
+  .prose p,
+  .prose li,
+  article p,
+  article li {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+}
+
 @layer utilities {
   article a {
     @apply font-sans text-current underline underline-offset-[3px];

@@ -45,7 +45,7 @@ export default function HumanVsAIRadarChart({ lang }: Props) {
             <PolarGrid className="stroke-gray-300" />
             <PolarAngleAxis 
               dataKey="dimension"
-              className="text-sm fill-navy-50 dark:fill-navy-900"
+              className="text-sm fill-ink-50 dark:fill-ink-900"
               tick={{ fontSize: 12, fill: 'currentColor' }}
             />
             <PolarRadiusAxis 

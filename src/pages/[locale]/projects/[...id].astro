@@ -68,18 +68,18 @@ const pageContent = content[lang];
         >
       </div>
       <div class="animate my-10 space-y-1">
-        <div class="flex items-center gap-1.5">
-          <div class="font-base text-sm">
-            <FormattedDate date={project.data.date} />
-          </div>
-          &bull;
+        <div class="eyebrow flex items-center gap-2 text-[0.7rem] text-ink-500 dark:text-ink-400">
+          <FormattedDate date={project.data.date} />
           {
             project.body && (
-              <div class="font-base text-sm">{readingTime(project.body)}</div>
+              <Fragment>
+                <span class="text-ink-400 dark:text-ink-500">·</span>
+                <span>{readingTime(project.body)}</span>
+              </Fragment>
             )
           }
         </div>
-        <h1 class="text-3xl font-semibold text-black dark:text-white">
+        <h1 class="text-3xl font-pixel leading-tight tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">
           {project.data.title}
         </h1>
         {

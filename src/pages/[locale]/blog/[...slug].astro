@@ -124,32 +124,28 @@ const pageUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
         </BackToPrevious>
       </div>
       <div class="my-10 space-y-1">
-        <div class="animate flex items-center gap-1.5">
-          <div class="font-base text-sm">
-            <FormattedDate date={post.data.date} />
-          </div>
-          &bull;
+        <div class="animate eyebrow flex items-center gap-2 text-[0.7rem] text-ink-500 dark:text-ink-400">
+          <FormattedDate date={post.data.date} />
+          <span class="text-ink-400 dark:text-ink-500">·</span>
           {post.body && (
-            <div class="font-base text-sm">
+            <span>
               {readingTime(post.body)} {pageContent.minuteRead}
-            </div>
+            </span>
           )}
-          {/* &bull;
-          <PageViews slug={slug} />         */}
         </div>
-        <h1 class="animate text-3xl py-4 font-semibold text-black dark:text-white">
+        <h1 class="animate py-4 text-3xl font-pixel leading-tight tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">
           {post.data.title}
         </h1>
-        <p class="animate text-gray-500 mb-4">
+        <p class="animate mb-4 text-ink-600 dark:text-ink-300">
           {post.data.description}
         </p>
         {
           post.data.tags && post.data.tags?.length > 0 ? (
             <div class="animate flex gap-2 pt-1">
               {post.data.tags.map((tag) => (
-                <a 
+                <a
                   href={getLocalizedTagUrl(tag)}
-                  class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+                  class="eyebrow rounded-[2px] border border-ink-950/25 px-2 py-1 text-[0.7rem] text-ink-600 transition-colors duration-200 ease-out hover:border-ink-950 hover:text-ink-950 focus-visible:border-ink-950 focus-visible:text-ink-950 dark:border-ink-50/25 dark:text-ink-300 dark:hover:border-ink-50 dark:hover:text-white dark:focus-visible:border-ink-50 dark:focus-visible:text-white"
                 >
                   {tag}
                 </a>

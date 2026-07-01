@@ -94,7 +94,7 @@ const pageContent = content[lang];
       <aside>
         <div class="space-y-8 sm:space-y-16">
           <section>
-            <h1 class="font-semibold text-black dark:text-white">
+            <h1 class="text-3xl font-pixel tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">
               {pageContent.title}
             </h1>
 
@@ -103,19 +103,19 @@ const pageContent = content[lang];
                 {
                   pageContent.jobs.map((job) => (
                     <div class="mt-2 mb-0 py-2">
-                      <div class="my-0 flex items-center justify-between py-0">
-                        <p class="my-0 text-lg font-medium">
+                      <div class="my-0 flex items-baseline justify-between gap-4 py-0">
+                        <p class="my-0 text-lg font-bold tracking-tight text-ink-950 dark:text-ink-50">
                           {job.companyLink ? (
                             <span set:html={job.companyLink} />
                           ) : (
                             job.company
                           )}
                         </p>
-                        <span class="text-sm text-gray-600 dark:text-gray-400">
+                        <span class="eyebrow shrink-0 text-[0.7rem] text-ink-500 dark:text-ink-400">
                           {job.duration}
                         </span>
                       </div>
-                      <p class="text-sm font-medium">{job.position}</p>
+                      <p class="text-sm font-medium text-ink-600 dark:text-ink-300">{job.position}</p>
                       <p>{job.description}</p>
                     </div>
                   ))

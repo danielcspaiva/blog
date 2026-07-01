@@ -15,13 +15,15 @@ const t = useTranslations(lang);
         <BackToTop />
       </div>
     </div>
-    <div class="flex items-center justify-between">
-      <div>&copy; {new Date().getFullYear()} • {SITE.TITLE} • {t('footer.rights')}</div>
+    <div class="flex items-center justify-between border-t hr-eink pt-5">
+      <div class="eyebrow text-[0.65rem] text-ink-500 dark:text-ink-400">
+        &copy; {new Date().getFullYear()} · {SITE.TITLE}
+      </div>
       <div class="flex flex-wrap items-center gap-1.5">
         <button
           id="light-theme-button"
           aria-label="Light theme"
-          class="group flex size-9 items-center justify-center rounded-sm border border-black/15 hover:bg-black/5 focus-visible:bg-black/5 dark:border-white/20 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
+          class="group flex size-9 items-center justify-center rounded-[2px] border border-ink-950/20 hover:bg-ink-950/5 focus-visible:bg-ink-950/5 dark:border-ink-50/20 dark:hover:bg-ink-50/5 dark:focus-visible:bg-ink-50/5"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +51,7 @@ const t = useTranslations(lang);
         <button
           id="dark-theme-button"
           aria-label="Dark theme"
-          class="group flex size-9 items-center justify-center rounded-sm border border-black/15 hover:bg-black/5 focus-visible:bg-black/5 dark:border-white/20 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
+          class="group flex size-9 items-center justify-center rounded-[2px] border border-ink-950/20 hover:bg-ink-950/5 focus-visible:bg-ink-950/5 dark:border-ink-50/20 dark:hover:bg-ink-50/5 dark:focus-visible:bg-ink-50/5"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +71,7 @@ const t = useTranslations(lang);
         <button
           id="system-theme-button"
           aria-label="System theme"
-          class="group flex size-9 items-center justify-center rounded-sm border border-black/15 hover:bg-black/5 focus-visible:bg-black/5 dark:border-white/20 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
+          class="group flex size-9 items-center justify-center rounded-[2px] border border-ink-950/20 hover:bg-ink-950/5 focus-visible:bg-ink-950/5 dark:border-ink-50/20 dark:hover:bg-ink-50/5 dark:focus-visible:bg-ink-50/5"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

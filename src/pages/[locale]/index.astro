@@ -13,7 +13,6 @@ import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
 import { ui, languages } from "../../i18n/ui";
-import { Image } from "astro:assets";
 import { createCommonLinks } from "@lib/linkUtils";
 
 export function getStaticPaths() {
@@ -85,37 +84,37 @@ const pageContent = content[lang];
   >
     <Container>
       <aside>
-        <!-- Option 4: Layered Visual Hierarchy -->
-        <div class="animate space-y-6 text-center">
-          <!-- Larger profile image as focal point -->
-          <Image
-            src="/me.jpg"
-            alt="Daniel Paiva profile picture"
-            width={100}
-            height={100}
-            class="mx-auto h-25 w-25 rounded-full object-cover"
-            format="webp"
-            loading="eager"
-          />
+        <!-- Hero: dithered self-portrait as thesis, theme-matched so the
+             photo's dark background drops out into the page -->
+        <div class="animate flex flex-col items-center text-center">
+          <figure class="flex flex-col items-center">
+            <img
+              src="/images/me-dither-light.png"
+              alt="Daniel Paiva, dithered portrait"
+              width="460"
+              height="460"
+              class="block size-44 sm:size-48 dark:hidden"
+              style="image-rendering: pixelated;"
+              loading="eager"
+            />
+            <img
+              src="/images/me-dither-dark.png"
+              alt="Daniel Paiva, dithered portrait"
+              width="460"
+              height="460"
+              class="hidden size-44 sm:size-48 dark:block"
+              style="image-rendering: pixelated;"
+              loading="eager"
+            />
+          </figure>
 
-          <!-- Primary greeting -->
-          <!-- <h1 class="text-3xl font-bold text-black dark:text-white">
-            {pageContent.title}
-          </h1> -->
-
-          <!-- ASCII art as signature/brand mark -->
-          <div class="group relative mb-8 overflow-x-auto">
-            <div
-            class="xs:text-[7px] md:text-xxs min-w-fit font-mono text-[6px] leading-tight whitespace-pre select-all sm:text-[8px]"
-          >
-██████╗  █████╗ ███╗   ██╗██╗███████╗██╗         ██████╗  █████╗ ██╗██╗   ██╗ █████╗ 
-██╔══██╗██╔══██╗████╗  ██║██║██╔════╝██║         ██╔══██╗██╔══██╗██║██║   ██║██╔══██╗
-██║  ██║███████║██╔██╗ ██║██║█████╗  ██║         ██████╔╝███████║██║██║   ██║███████║
-██║  ██║██╔══██║██║╚██╗██║██║██╔══╝  ██║         ██╔═══╝ ██╔══██║██║╚██╗ ██╔╝██╔══██║
-██████╔╝██║  ██║██║ ╚████║██║███████╗███████╗    ██║     ██║  ██║██║ ╚████╔╝ ██║  ██║
-╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚══════╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝  ╚═╝  ╚═╝
-          </div>
-          </div>
+          <!-- Pixel-font wordmark — the signature, used big and once -->
+          <h1 class="wordmark mt-3 whitespace-nowrap text-[clamp(1.75rem,8.5vw,2.5rem)] leading-[0.95] tracking-tight text-ink-950 sm:text-6xl md:text-7xl dark:text-ink-50">
+            DANIEL PAIVA
+          </h1>
+          <p class="eyebrow mt-4 text-xs text-ink-600 dark:text-ink-300">
+            CTO&nbsp;·&nbsp;Builder&nbsp;·&nbsp;Writer
+          </p>
         </div>
         <div class="space-y-8 sm:space-y-16">
           <section>
@@ -132,12 +131,14 @@ const pageContent = content[lang];
             </article>
           </section>
 
-          <section class="animate space-y-6">
-            <div class="flex flex-wrap items-center justify-between gap-y-2">
-              <h2 class="font-semibold text-black dark:text-white">
+          <section class="animate space-y-5">
+            <div class="flex items-baseline justify-between gap-y-2 border-t hr-eink pt-4">
+              <h2 class="eyebrow text-xs text-ink-700 dark:text-ink-200">
                 {pageContent.latestPosts}
               </h2>
-              <Link href={`/blog`}> {pageContent.seeAllPosts} </Link>
+              <span class="eyebrow text-[0.7rem] text-ink-500 dark:text-ink-400">
+                <Link href={`/blog`}>{pageContent.seeAllPosts} →</Link>
+              </span>
             </div>
             <ul class="not-prose flex flex-col gap-4">
               {
@@ -150,15 +151,14 @@ const pageContent = content[lang];
             </ul>
           </section>
 
-          <!-- TODO: Add projects section -->
-          <section class="animate space-y-6">
-            <div class="flex flex-wrap items-center justify-between gap-y-2">
-              <h2 class="font-semibold text-black dark:text-white">
+          <section class="animate space-y-5">
+            <div class="flex items-baseline justify-between gap-y-2 border-t hr-eink pt-4">
+              <h2 class="eyebrow text-xs text-ink-700 dark:text-ink-200">
                 {pageContent.recentProjects}
               </h2>
-              <Link href={`/${locale}/projects`}>
-                {pageContent.seeAllProjects}
-              </Link>
+              <span class="eyebrow text-[0.7rem] text-ink-500 dark:text-ink-400">
+                <Link href={`/${locale}/projects`}>{pageContent.seeAllProjects} →</Link>
+              </span>
             </div>
             <ul class="not-prose flex flex-col gap-4">
               {
@@ -172,9 +172,11 @@ const pageContent = content[lang];
           </section>
 
           <section class="animate space-y-4">
-            <h2 class="font-semibold text-black dark:text-white">
-              {pageContent.letsConnect}
-            </h2>
+            <div class="border-t hr-eink pt-4">
+              <h2 class="eyebrow text-xs text-ink-700 dark:text-ink-200">
+                {pageContent.letsConnect}
+              </h2>
+            </div>
             <article>
               <p>
                 {pageContent.contactInfo}

@@ -47,19 +47,17 @@ const pageContent = content[lang];
   >
     <Container>
       <div class="space-y-10">
-        <h1 class="animate font-semibold">{pageContent.allTags}</h1>
+        <h1 class="animate text-3xl font-pixel tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">{pageContent.allTags}</h1>
         <div class="animate flex flex-wrap gap-2">
           {
             tags.map((tag) => (
               <a
                 href={`/${locale}/tags/${tag}`}
-                class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+                class="eyebrow rounded-[2px] border border-ink-950/25 px-2.5 py-1 text-[0.7rem] text-ink-600 transition-colors duration-200 ease-out hover:border-ink-950 hover:text-ink-950 focus-visible:border-ink-950 focus-visible:text-ink-950 dark:border-ink-50/25 dark:text-ink-300 dark:hover:border-ink-50 dark:hover:text-white dark:focus-visible:border-ink-50 dark:focus-visible:text-white"
               >
                 {tag}{" "}
-                <span class="text-sm text-gray-600">
-                  (
-                  {posts.filter((post) => post.data.tags?.includes(tag)).length}
-                  )
+                <span class="text-ink-400 dark:text-ink-500">
+                  [{posts.filter((post) => post.data.tags?.includes(tag)).length}]
                 </span>
               </a>
             ))

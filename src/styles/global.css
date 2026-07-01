@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
+@import "./pixel-fonts.css";
 
 @plugin '@tailwindcss/typography';
 
@@ -10,58 +11,59 @@
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-mono: Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-pixel: 'Geist Pixel Square', var(--font-mono);
 
-  /* Navy + Teal + Pure Colors Only */
-  --color-navy-50: #f8fafc;
-  --color-navy-100: #f1f5f9;
-  --color-navy-200: #e2e8f0;
-  --color-navy-300: #cbd5e1;
-  --color-navy-400: #94a3b8;
-  --color-navy-500: #64748b;
-  --color-navy-600: #475569;
-  --color-navy-700: #334155;
-  --color-navy-800: #1e293b;
-  --color-navy-900: #0f172a;
-  --color-navy-950: #020617;
+  /* Eink monochrome — never pure black/white */
+  --color-black: #14130f;
+  --color-white: #f6f4ef;
 
-  /* Teal Accents */
-  --color-teal-50: #f0fdfa;
-  --color-teal-100: #ccfbf1;
-  --color-teal-200: #99f6e4;
-  --color-teal-300: #5eead4;
-  --color-teal-400: #2dd4bf;
-  --color-teal-500: #14b8a6;
-  --color-teal-600: #0d9488;
-  --color-teal-700: #0f766e;
-  --color-teal-800: #115e59;
-  --color-teal-900: #134e4a;
+  /* Warm-grayscale "ink" scale (replaces navy/teal) */
+  --color-ink-50: #f6f4ef;
+  --color-ink-100: #ece9e1;
+  --color-ink-200: #d9d4c8;
+  --color-ink-300: #bfb9ab;
+  --color-ink-400: #9a9384;
+  --color-ink-500: #79736d;
+  --color-ink-600: #5c574c;
+  --color-ink-700: #443f37;
+  --color-ink-800: #2c2924;
+  --color-ink-900: #1e1b17;
+  --color-ink-950: #14130f;
 
-  /* Pure neutrals */
-  --color-neutral-50: #ffffff;
-  --color-neutral-100: #f8fafc;
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-400: #94a3b8;
-  --color-neutral-500: #64748b;
-  --color-neutral-600: #475569;
-  --color-neutral-700: #334155;
-  --color-neutral-800: #1e293b;
-  --color-neutral-900: #0f172a;
+  /* Alias neutral-* to the same ink scale so prose-neutral (typography
+     plugin) and any remaining neutral-* utility usage inherit the eink
+     tone instead of Tailwind's stock cool-gray default */
+  --color-neutral-50: #f6f4ef;
+  --color-neutral-100: #ece9e1;
+  --color-neutral-200: #d9d4c8;
+  --color-neutral-300: #bfb9ab;
+  --color-neutral-400: #9a9384;
+  --color-neutral-500: #79736d;
+  --color-neutral-600: #5c574c;
+  --color-neutral-700: #443f37;
+  --color-neutral-800: #2c2924;
+  --color-neutral-900: #1e1b17;
 
-  /* Additional accents used for term highlighting */
-  --color-yellow-100: #fef9c3;
-  --color-yellow-800: #92400e;
-  --color-red-200: #fecaca;
-  --color-red-800: #991b1b;
-  --color-green-200: #bbf7d0;
-  --color-green-800: #166534;
-  /* Lighter/darker shades for weight variants */
-  --color-yellow-200: #fef08a;
-  --color-yellow-600: #ca8a04;
-  --color-red-300: #fca5a5;
-  --color-red-600: #dc2626;
-  --color-green-300: #86efac;
-  --color-green-600: #16a34a;
+  /* Muted/desaturated accents for the Knowledge/Context/Tools term
+     legend + equation-visualizer sliders (functional, not decorative —
+     kept as a 3-way distinction but desaturated per redesign) */
+  --color-yellow-100: #f0e6cc;
+  --color-yellow-200: #d9c290;
+  --color-yellow-300: #c4a668;
+  --color-yellow-400: #b89a5c;
+  --color-yellow-600: #9c7f3f;
+  --color-yellow-800: #7a6435;
+  --color-red-200: #d9a89f;
+  --color-red-300: #c9958c;
+  --color-red-400: #b87a70;
+  --color-red-600: #9c5347;
+  --color-red-800: #6e3a32;
+  --color-green-200: #b3c6ac;
+  --color-green-300: #93ab89;
+  --color-green-600: #5f7a54;
+  --color-green-800: #47593f;
+  --color-blue-300: #9fb8cc;
+  --color-blue-900: #3d5a72;
 }
 
 /*
@@ -101,15 +103,34 @@
   body {
     @apply font-sans antialiased;
     @apply flex flex-col;
-    @apply bg-white dark:bg-navy-950;
-    @apply text-navy-800 dark:text-neutral-100;
+    @apply bg-white dark:bg-ink-950;
+    @apply text-ink-800 dark:text-ink-100;
+    position: relative;
+  }
+
+  /* Subtle eink/paper halftone grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(circle, var(--color-ink-900) 0.5px, transparent 0.5px);
+    background-size: 3px 3px;
+    opacity: 0.035;
+  }
+
+  html.dark body::before {
+    background-image: radial-gradient(circle, var(--color-ink-50) 0.5px, transparent 0.5px);
+    opacity: 0.05;
   }
 
   header {
     @apply fixed left-0 right-0 top-0 z-50 py-4;
-    @apply bg-white/80 dark:bg-navy-950/80;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    @apply bg-white/90 dark:bg-ink-950/90;
+    @apply border-b border-ink-950/12 dark:border-ink-50/12;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
 
   main {
@@ -122,8 +143,10 @@
 
   article {
     @apply prose prose-neutral max-w-full dark:prose-invert prose-img:mx-auto prose-img:my-auto;
-    @apply prose-headings:font-semibold;
-    @apply prose-headings:text-navy-900 dark:prose-headings:text-neutral-50;
+    /* All headings share the pixel display face (font-medium matches the
+       single 500-weight face so glyphs stay crisp instead of faux-bold). */
+    @apply prose-headings:font-pixel prose-headings:font-medium prose-headings:tracking-tight;
+    @apply prose-headings:text-ink-950 dark:prose-headings:text-ink-50;
   }
 }
 
@@ -138,13 +161,65 @@
 @layer utilities {
   article a {
     @apply font-sans text-current underline underline-offset-[3px];
-    @apply decoration-teal-500/60 dark:decoration-teal-400/60;
+    @apply decoration-ink-400/70 dark:decoration-ink-500/70;
     @apply transition-colors duration-300 ease-in-out;
   }
   article a:hover {
-    @apply text-teal-600 dark:text-teal-400;
-    @apply decoration-teal-600 dark:decoration-teal-400;
+    @apply text-ink-950 dark:text-white;
+    @apply decoration-ink-950 dark:decoration-white;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   EINK TOOLKIT — the dither is load-bearing, not decorative.
+   Structural devices (eyebrows, rules, halftone dividers) plus the
+   signature "Dither UI" halftone fill on interactive surfaces.
+   ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Mono uppercase eyebrow / label. Size + color set at call site so
+     markup utilities never fight this class's specificity. */
+  .eyebrow {
+    @apply font-mono uppercase tracking-[0.18em];
+  }
+
+  /* Hairline structural rule in ink (replaces soft neutral borders) */
+  .hr-eink {
+    @apply border-0 border-t border-ink-950/18 dark:border-ink-50/15;
+  }
+
+  /* Halftone dot band — a dithered section divider */
+  .dither-band {
+    height: 6px;
+    background-image: radial-gradient(var(--dither-ink) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  /* Eink card — sharp corners, solid ink hairline, and a crisp halftone
+     fill that blooms in on hover/focus (the "Dither UI" signature). */
+  .eink-card {
+    @apply relative border transition-colors duration-200 ease-out;
+    @apply border-ink-950/25 dark:border-ink-50/20;
+    border-radius: 2px;
+    background-image: radial-gradient(var(--dither-ink) 1px, transparent 1px);
+    background-size: 4px 4px;
+    background-position: 0 0;
+    /* hidden until hover: transparent tile, revealed by animating the dot */
+    background-image: none;
+  }
+  .eink-card:hover,
+  .eink-card:focus-visible,
+  .eink-card:focus-within {
+    @apply border-ink-950 text-ink-950 dark:border-ink-50 dark:text-white;
+    background-image: radial-gradient(var(--dither-ink) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+}
+
+/* Legacy alias kept for any remaining usages */
+.dither-hover:hover,
+.dither-hover:focus-visible {
+  background-image: radial-gradient(var(--dither-ink) 1px, transparent 1px);
+  background-size: 4px 4px;
 }
 
 .animate {
@@ -164,121 +239,150 @@ html.scrolled #back-to-top {
   @apply pointer-events-auto opacity-100;
 }
 
+/* Every pixel heading — page titles, article titles, section headings —
+   renders the SAME: the bold/solid pixel look (weight 700 fills the open
+   grid so glyphs read dark and solid) in warm ink. The typography plugin
+   otherwise painted prose headings cool slate; this unlayered rule wins. */
+/* Pixel headings everywhere use Geist Pixel Square at bold weight (the chosen
+   look); the single hero wordmark uses Grid at regular weight (see .wordmark). */
+.font-pixel,
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 700;
+}
+
+/* Hero wordmark — Geist Pixel Grid, regular weight */
+.wordmark {
+  font-family: 'Geist Pixel Grid', var(--font-mono);
+  font-weight: 500;
+}
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--color-ink-950);
+  font-family: var(--font-pixel);
+  letter-spacing: -0.025em;
+}
+.dark .prose :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--color-ink-50);
+}
+
 /* shiki config */
 pre {
-  @apply border border-neutral-200 py-5 dark:border-neutral-700;
+  @apply border border-ink-200 py-5 dark:border-ink-700;
 }
 
 :root {
-  --astro-code-foreground: #1e293b;
-  --astro-code-background: #ffffff;
-  --astro-code-token-comment: #64748b;
-  --astro-code-token-keyword: #0891b2;
-  --astro-code-token-string: #06b6d4;
-  --astro-code-token-function: #0f172a;
-  --astro-code-token-constant: #0e7490;
-  --astro-code-token-parameter: #22d3ee;
-  --astro-code-token-string-expression: #155e75;
-  --astro-code-token-punctuation: #475569;
-  --astro-code-token-link: #06b6d4;
-  --astro-code-token-variable: #334155;
-  --astro-code-token-number: #0891b2;
-  --astro-code-token-boolean: #164e63;
-  --astro-code-token-operator: #475569;
-  --astro-code-token-class-name: #1e293b;
-  --astro-code-token-type: #0e7490;
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --astro-code-foreground: #1e1b17;
+  --astro-code-background: #f6f4ef;
+  --astro-code-token-comment: #79736d;
+  --astro-code-token-keyword: #2c2924;
+  --astro-code-token-string: #5c574c;
+  --astro-code-token-function: #14130f;
+  --astro-code-token-constant: #443f37;
+  --astro-code-token-parameter: #9a9384;
+  --astro-code-token-string-expression: #443f37;
+  --astro-code-token-punctuation: #79736d;
+  --astro-code-token-link: #5c574c;
+  --astro-code-token-variable: #2c2924;
+  --astro-code-token-number: #443f37;
+  --astro-code-token-boolean: #2c2924;
+  --astro-code-token-operator: #79736d;
+  --astro-code-token-class-name: #1e1b17;
+  --astro-code-token-type: #443f37;
+  --radius: 0.125rem;
+  /* Halftone ink for load-bearing dither fills. Hard-edged 1px dots so
+     they stay crisp at DPR 1 (sub-pixel dots antialias to nothing). */
+  --dither-ink: rgba(20, 19, 15, 0.62);
+  --background: oklch(0.97 0.004 80);
+  --foreground: oklch(0.19 0.004 80);
+  --card: oklch(0.97 0.004 80);
+  --card-foreground: oklch(0.19 0.004 80);
+  --popover: oklch(0.97 0.004 80);
+  --popover-foreground: oklch(0.19 0.004 80);
+  --primary: oklch(0.25 0.004 80);
+  --primary-foreground: oklch(0.97 0.004 80);
+  --secondary: oklch(0.9 0.004 80);
+  --secondary-foreground: oklch(0.25 0.004 80);
+  --muted: oklch(0.9 0.004 80);
+  --muted-foreground: oklch(0.5 0.004 80);
+  --accent: oklch(0.9 0.004 80);
+  --accent-foreground: oklch(0.25 0.004 80);
+  --destructive: oklch(0.55 0.03 30);
+  --border: oklch(0.85 0.004 80);
+  --input: oklch(0.85 0.004 80);
+  --ring: oklch(0.65 0.004 80);
+  --chart-1: oklch(0.25 0 0);
+  --chart-2: oklch(0.4 0 0);
+  --chart-3: oklch(0.55 0 0);
+  --chart-4: oklch(0.7 0 0);
+  --chart-5: oklch(0.85 0 0);
+  --sidebar: oklch(0.95 0.004 80);
+  --sidebar-foreground: oklch(0.19 0.004 80);
+  --sidebar-primary: oklch(0.25 0.004 80);
+  --sidebar-primary-foreground: oklch(0.97 0.004 80);
+  --sidebar-accent: oklch(0.9 0.004 80);
+  --sidebar-accent-foreground: oklch(0.25 0.004 80);
+  --sidebar-border: oklch(0.85 0.004 80);
+  --sidebar-ring: oklch(0.65 0.004 80);
 }
 
 .dark {
-  --astro-code-foreground: #f8fafc;
-  --astro-code-background: #0f172a;
-  --astro-code-token-comment: #64748b;
-  --astro-code-token-keyword: #67e8f9;
-  --astro-code-token-string: #22d3ee;
-  --astro-code-token-function: #cffafe;
-  --astro-code-token-constant: #06b6d4;
-  --astro-code-token-parameter: #a5f3fc;
-  --astro-code-token-string-expression: #0891b2;
-  --astro-code-token-punctuation: #94a3b8;
-  --astro-code-token-link: #22d3ee;
-  --astro-code-token-variable: #e2e8f0;
-  --astro-code-token-number: #67e8f9;
-  --astro-code-token-boolean: #ecfeff;
-  --astro-code-token-operator: #cbd5e1;
-  --astro-code-token-class-name: #f1f5f9;
-  --astro-code-token-type: #a5f3fc;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
+  --dither-ink: rgba(246, 244, 239, 0.5);
+  --astro-code-foreground: #f6f4ef;
+  --astro-code-background: #14130f;
+  --astro-code-token-comment: #9a9384;
+  --astro-code-token-keyword: #d9d4c8;
+  --astro-code-token-string: #bfb9ab;
+  --astro-code-token-function: #f6f4ef;
+  --astro-code-token-constant: #bfb9ab;
+  --astro-code-token-parameter: #d9d4c8;
+  --astro-code-token-string-expression: #bfb9ab;
+  --astro-code-token-punctuation: #9a9384;
+  --astro-code-token-link: #bfb9ab;
+  --astro-code-token-variable: #ece9e1;
+  --astro-code-token-number: #d9d4c8;
+  --astro-code-token-boolean: #f6f4ef;
+  --astro-code-token-operator: #d9d4c8;
+  --astro-code-token-class-name: #ece9e1;
+  --astro-code-token-type: #d9d4c8;
+  --background: oklch(0.19 0.004 80);
+  --foreground: oklch(0.95 0.004 80);
+  --card: oklch(0.24 0.004 80);
+  --card-foreground: oklch(0.95 0.004 80);
+  --popover: oklch(0.24 0.004 80);
+  --popover-foreground: oklch(0.95 0.004 80);
+  --primary: oklch(0.88 0.004 80);
+  --primary-foreground: oklch(0.24 0.004 80);
+  --secondary: oklch(0.32 0.004 80);
+  --secondary-foreground: oklch(0.95 0.004 80);
+  --muted: oklch(0.32 0.004 80);
+  --muted-foreground: oklch(0.65 0.004 80);
+  --accent: oklch(0.32 0.004 80);
+  --accent-foreground: oklch(0.95 0.004 80);
+  --destructive: oklch(0.65 0.03 30);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.55 0.004 80);
+  --chart-1: oklch(0.35 0 0);
+  --chart-2: oklch(0.48 0 0);
+  --chart-3: oklch(0.6 0 0);
+  --chart-4: oklch(0.73 0 0);
+  --chart-5: oklch(0.85 0 0);
+  --sidebar: oklch(0.22 0.004 80);
+  --sidebar-foreground: oklch(0.95 0.004 80);
+  --sidebar-primary: oklch(0.35 0.004 80);
+  --sidebar-primary-foreground: oklch(0.95 0.004 80);
+  --sidebar-accent: oklch(0.32 0.004 80);
+  --sidebar-accent-foreground: oklch(0.95 0.004 80);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.55 0.004 80);
 }
 
 /* copy code button on codeblocks */
 .copy-code {
-  @apply absolute right-3 top-3 grid size-9 place-content-center rounded-sm border border-neutral-200 bg-neutral-50 text-center duration-300 ease-in-out dark:border-neutral-700 dark:bg-neutral-800;
+  @apply absolute right-3 top-3 grid size-9 place-content-center rounded-sm border border-ink-200 bg-ink-50 text-center duration-300 ease-in-out dark:border-ink-700 dark:bg-ink-800;
 }
 
 .copy-code:hover {
-  @apply bg-neutral-100 transition-colors dark:bg-neutral-700;
+  @apply bg-ink-100 transition-colors dark:bg-ink-700;
 }
 
 .copy-code:active {
@@ -292,7 +396,8 @@ pre {
 }
 
 @layer utilities {
-  /* Themed term colors for Knowledge, Context, Tools */
+  /* Themed term colors for Knowledge, Context, Tools — muted/desaturated,
+     kept as a functional 3-way distinction rather than removed */
   .term-knowledge {
     color: var(--color-yellow-600);
     font-weight: 600;
@@ -354,9 +459,9 @@ pre {
 /* Consistent slider styles */
 @layer base {
   :root {
-    --neutral-track: rgba(0, 0, 0, 0.12);
-    --neutral-track-outer: rgba(0, 0, 0, 0.06);
-    --thumb-ring: #ffffff;
+    --neutral-track: rgba(20, 19, 15, 0.12);
+    --neutral-track-outer: rgba(20, 19, 15, 0.06);
+    --thumb-ring: #f6f4ef;
     /* Slider colors that match term colors */
     --slider-knowledge-weight: var(--color-yellow-400);
     --slider-context-weight: var(--color-red-400);
@@ -366,9 +471,9 @@ pre {
     --slider-tools: var(--color-green-600);
   }
   .dark {
-    --neutral-track: rgba(255, 255, 255, 0.22);
-    --neutral-track-outer: rgba(255, 255, 255, 0.12);
-    --thumb-ring: #0f172a;
+    --neutral-track: rgba(246, 244, 239, 0.22);
+    --neutral-track-outer: rgba(246, 244, 239, 0.12);
+    --thumb-ring: #14130f;
     /* Dark mode slider colors that match term colors */
     --slider-knowledge-weight: var(--color-yellow-200);
     --slider-context-weight: var(--color-red-200);

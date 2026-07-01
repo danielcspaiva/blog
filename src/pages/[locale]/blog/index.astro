@@ -65,28 +65,31 @@ const pageContent = content[lang];
     <Container>
       <aside>
         <div class="space-y-10">
-          <section>
-            <h1 class="font-semibold text-black dark:text-white">
+          <section class="space-y-2">
+            <h1 class="font-pixel text-3xl tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">
               {pageContent.title}
             </h1>
-            <p>{pageContent.description}</p>
+            <p class="text-ink-600 dark:text-ink-300">{pageContent.description}</p>
           </section>
-          <div class="space-y-4">
+          <div class="space-y-8">
             {
               years.map((year) => (
                 <section class="animate space-y-4">
-                  <div class="font-semibold text-black dark:text-white">
-                    {year}
+                  <div class="flex items-baseline justify-between border-t hr-eink pt-4">
+                    <h2 class="eyebrow text-xs text-ink-700 dark:text-ink-200">
+                      {year}
+                    </h2>
+                    <span class="eyebrow text-[0.7rem] text-ink-500 dark:text-ink-400">
+                      [{String(postsByYear[year].length).padStart(2, "0")}]
+                    </span>
                   </div>
-                  <div>
-                    <ul class="not-prose flex flex-col gap-4">
-                      {postsByYear[year].map((post) => (
-                        <li>
-                          <ArrowCard entry={post} locale={locale} />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul class="not-prose flex flex-col gap-4">
+                    {postsByYear[year].map((post) => (
+                      <li>
+                        <ArrowCard entry={post} locale={locale} />
+                      </li>
+                    ))}
+                  </ul>
                 </section>
               ))
             }

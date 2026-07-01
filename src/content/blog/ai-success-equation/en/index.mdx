@@ -1,15 +1,12 @@
 ---
 title: "The AI Success Equation"
 description: How knowledge, context, and tools multiply to determine the probability of success.
-date: 2025-08-20
+date: "2025-08-20"
 tags: [blog, ai, communication, tech]
 locale: en
 hideTableOfContents: false
 ---
 
-import Callout from "@/components/Callout.astro";
-import HumanVsAIRadarChart from "@/components/HumanVsAIRadarChart.astro";
-import TaskEquationVisualizer from "@/components/TaskEquationVisualizer.astro";
 
 ## TL;DR
 
@@ -45,46 +42,46 @@ This article is my attempt to share that framework.
 
 Imagine someone gives you a task. What determines whether you succeed? We can break it down into three main factors:
 
-1. **<span class="term-knowledge">Knowledge (K)</span>**: what you already know. This includes domain expertise, learned skills, past experiences, and accumulated wisdom.  
-2. **<span class="term-context">Context (C)</span>**: information about this specific task. The who, what, when, where, and why that turns a generic request into an actionable one.  
-3. **<span class="term-tools">Tools (T)</span>**: what you can use to get it done. Instruments, software, processes, collaborators, or your ability to invent new solutions.
+1. **<span className="term-knowledge">Knowledge (K)</span>**: what you already know. This includes domain expertise, learned skills, past experiences, and accumulated wisdom.  
+2. **<span className="term-context">Context (C)</span>**: information about this specific task. The who, what, when, where, and why that turns a generic request into an actionable one.  
+3. **<span className="term-tools">Tools (T)</span>**: what you can use to get it done. Instruments, software, processes, collaborators, or your ability to invent new solutions.
 
 After thinking about how these factors interact with each other, I would say that the probability of success is the product of these factors:
 
-> <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span> × <span class="term-context">C</span> × <span class="term-tools">T</span></p>
+> <p className="text-xl font-semibold rounded-lg p-2">p = <span className="term-knowledge">K</span> × <span className="term-context">C</span> × <span className="term-tools">T</span></p>
 
-Different types of tasks require different balances of these factors. It's unlikely that an <span class="term-knowledge">experienced</span> plumber could fix a leak without the <span class="term-tools">right tools</span>, while a lawyer would hardly solve a case without <span class="term-knowledge">legal knowledge</span> and diving into the <span class="term-context">case context</span>. This leads to the complete equation:
+Different types of tasks require different balances of these factors. It's unlikely that an <span className="term-knowledge">experienced</span> plumber could fix a leak without the <span className="term-tools">right tools</span>, while a lawyer would hardly solve a case without <span className="term-knowledge">legal knowledge</span> and diving into the <span className="term-context">case context</span>. This leads to the complete equation:
 
-> <p class="text-xl font-semibold rounded-lg p-2">p = <span class="term-knowledge">K</span><sup><span class="term-knowledge-weight">α</span></sup> × <span class="term-context">C</span><sup><span class="term-context-weight">β</span></sup> × <span class="term-tools">T</span><sup><span class="term-tools-weight">γ</span></sup></p>
+> <p className="text-xl font-semibold rounded-lg p-2">p = <span className="term-knowledge">K</span><sup><span className="term-knowledge-weight">α</span></sup> × <span className="term-context">C</span><sup><span className="term-context-weight">β</span></sup> × <span className="term-tools">T</span><sup><span className="term-tools-weight">γ</span></sup></p>
 
-The exponents are used to adjust the importance of each factor for each type of task, with <span class="term-knowledge-weight">α</span>, <span class="term-context-weight">β</span>, <span class="term-tools-weight">γ</span> ≥ 0 and <span class="term-knowledge-weight">α</span> + <span class="term-context-weight">β</span> + <span class="term-tools-weight">γ</span> = 1. Check the interactive visualizer below to see how the equation works.
+The exponents are used to adjust the importance of each factor for each type of task, with <span className="term-knowledge-weight">α</span>, <span className="term-context-weight">β</span>, <span className="term-tools-weight">γ</span> ≥ 0 and <span className="term-knowledge-weight">α</span> + <span className="term-context-weight">β</span> + <span className="term-tools-weight">γ</span> = 1. Check the interactive visualizer below to see how the equation works.
 
-<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-    <summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Understanding the exponents</summary>
-    <div class="py-3 px-6">
+<details className="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+    <summary className="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Understanding the exponents</summary>
+    <div className="py-3 px-6">
     The exponents determine how much each factor influences the overall probability. When an exponent approaches 0, that component becomes less critical to success. When it's higher, that component has more impact on the final result.
 
-    For example, if <span class="term-context-weight">β</span> = <span class="term-context-weight">0.8</span> and <span class="term-knowledge-weight">α</span> = <span class="term-knowledge-weight">0.1</span>, then <span class="term-context">context</span> dominates: even with perfect <span class="term-knowledge">knowledge</span> (<span class="term-knowledge">K</span>=<span class="term-knowledge">1.0</span>), poor <span class="term-context">context</span> (<span class="term-context">C</span>=<span class="term-context">0.2</span>) would give:
+    For example, if <span className="term-context-weight">β</span> = <span className="term-context-weight">0.8</span> and <span className="term-knowledge-weight">α</span> = <span className="term-knowledge-weight">0.1</span>, then <span className="term-context">context</span> dominates: even with perfect <span className="term-knowledge">knowledge</span> (<span className="term-knowledge">K</span>=<span className="term-knowledge">1.0</span>), poor <span className="term-context">context</span> (<span className="term-context">C</span>=<span className="term-context">0.2</span>) would give:
 
     <Callout>
-        p = <span class="term-knowledge">1.0</span>^<span class="term-knowledge-weight">0.1</span> × <span class="term-context">0.2</span>^<span class="term-context-weight">0.8</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span> ≈ <span class="term-context">0.28</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span>
+        p = <span className="term-knowledge">1.0</span>^<span className="term-knowledge-weight">0.1</span> × <span className="term-context">0.2</span>^<span className="term-context-weight">0.8</span> × <span className="term-tools">T</span>^<span className="term-tools-weight">0.1</span> ≈ <span className="term-context">0.28</span> × <span className="term-tools">T</span>^<span className="term-tools-weight">0.1</span>
     </Callout>
 
-    But with good <span class="term-context">context</span> (<span class="term-context">C</span>=<span class="term-context">0.9</span>), you get:
+    But with good <span className="term-context">context</span> (<span className="term-context">C</span>=<span className="term-context">0.9</span>), you get:
 
     <Callout>
-        p = <span class="term-knowledge">1.0</span>^<span class="term-knowledge-weight">0.1</span> × <span class="term-context">0.9</span>^<span class="term-context-weight">0.8</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span> ≈ <span class="term-context">0.92</span> × <span class="term-tools">T</span>^<span class="term-tools-weight">0.1</span>
+        p = <span className="term-knowledge">1.0</span>^<span className="term-knowledge-weight">0.1</span> × <span className="term-context">0.9</span>^<span className="term-context-weight">0.8</span> × <span className="term-tools">T</span>^<span className="term-tools-weight">0.1</span> ≈ <span className="term-context">0.92</span> × <span className="term-tools">T</span>^<span className="term-tools-weight">0.1</span>
     </Callout>
 
     Each exponent matters differently depending on the situation:
 
-    - **<span class="term-knowledge-weight">α</span> (<span class="term-knowledge">knowledge</span> exponent):** Higher for specialized domains (e.g. surgery <span class="term-knowledge-weight">α</span>≈<span class="term-knowledge-weight">0.6</span>), lower for routine tasks (data entry <span class="term-knowledge-weight">α</span>≈<span class="term-knowledge-weight">0.2</span>).  
-    - **<span class="term-context-weight">β</span> (<span class="term-context">context</span> exponent):** Extremely high for debugging (<span class="term-context-weight">β</span>≈<span class="term-context-weight">0.7</span>), moderate for creative tasks (<span class="term-context-weight">β</span>≈<span class="term-context-weight">0.4</span>).  
-    - **<span class="term-tools-weight">γ</span> (<span class="term-tools">tools</span> exponent):** Strong in technical work (<span class="term-tools-weight">γ</span>≈<span class="term-tools-weight">0.5</span>), lower in pure reasoning (<span class="term-tools-weight">γ</span>≈<span class="term-tools-weight">0.2</span>).
+    - **<span className="term-knowledge-weight">α</span> (<span className="term-knowledge">knowledge</span> exponent):** Higher for specialized domains (e.g. surgery <span className="term-knowledge-weight">α</span>≈<span className="term-knowledge-weight">0.6</span>), lower for routine tasks (data entry <span className="term-knowledge-weight">α</span>≈<span className="term-knowledge-weight">0.2</span>).  
+    - **<span className="term-context-weight">β</span> (<span className="term-context">context</span> exponent):** Extremely high for debugging (<span className="term-context-weight">β</span>≈<span className="term-context-weight">0.7</span>), moderate for creative tasks (<span className="term-context-weight">β</span>≈<span className="term-context-weight">0.4</span>).  
+    - **<span className="term-tools-weight">γ</span> (<span className="term-tools">tools</span> exponent):** Strong in technical work (<span className="term-tools-weight">γ</span>≈<span className="term-tools-weight">0.5</span>), lower in pure reasoning (<span className="term-tools-weight">γ</span>≈<span className="term-tools-weight">0.2</span>).
     </div>
 </details>
-<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-<summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Interactive visualizer</summary>
+<details className="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+<summary className="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Interactive visualizer</summary>
   <TaskEquationVisualizer />
 </details>
 
@@ -183,10 +180,10 @@ Almost no information: which deploy? what error? what environment?
 
 **Good context more than doubles the odds of success—from 36% to 88%.** The same expert, same tools; clear context transforms a likely struggle into a near-win.
 
-<details class="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
-    <summary class="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Mathematical breakdown</summary>
+<details className="animate group rounded-lg border border-black/15 dark:border-white/20 mb-6">
+    <summary className="cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors group-open:bg-black/5 hover:bg-black/5 dark:group-open:bg-white/5 hover:dark:bg-white/5">Mathematical breakdown</summary>
 
-    <div class="py-3 px-6">
+    <div className="py-3 px-6">
     Debugging tasks have high context dependency, so I used these exponents:
 
     - **α** = 0.2 (knowledge exponent): Moderate contribution from domain knowledge
@@ -197,13 +194,13 @@ Almost no information: which deploy? what error? what environment?
        
        
     <Callout>
-    <p class="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.2<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.36 or 36%</p>
+    <p className="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.2<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.36 or 36%</p>
     </Callout>
 
     With rich context (**C** ≈ 0.9), same knowledge (**K** ≈ 0.8), and same tools (**T** ≈ 0.9):
     
     <Callout>
-    <p class="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.9<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.88 or 88%</p>
+    <p className="text-l font-semibold rounded-lg p-2">p = 0.8<sup>0.2</sup> × 0.9<sup>0.6</sup> × 0.9<sup>0.2</sup> ≈ 0.88 or 88%</p>
     </Callout>
     </div>
 </details>
@@ -217,7 +214,7 @@ We neglect context because we carry it invisibly. Our assumptions, mental models
 David Foster Wallace captured this beautifully in his [2005 commencement speech at Kenyon College](https://www.youtube.com/watch?v=8CrOL-ydFMI):
 
 ![Two young fish swimming along meet an older fish who asks 'Morning, boys. How's the water?' The young fish continue swimming, with one eventually asking 'What the hell is water?'](../media/water.png)
-<p class="text-center text-sm italic">Illustration generated by GPT-5</p>
+<p className="text-center text-sm italic">Illustration generated by GPT-5</p>
 
 Context is our water. It's so fundamental to how we navigate the world that we don't even notice it. We assume others share our mental environment: our cultural references, our technical background, our immediate situation. But like those fish, we're often unaware of the medium we're swimming in.
 
@@ -227,8 +224,7 @@ These shortcuts work (somewhat) in human-to-human interaction, because we're goo
 
 Another reason is our fundamental misunderstanding of how models work:
 
-<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">What I find endlessly fascinating:<br /><br />Some engineers really can&#39;t seem to grasp that LLMs are non-deterministic and how to build software taking that into account.<br /><br />For others it immediately clicked, but for some it seems like there&#39;s a real mental barrier to accept it.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">August 14, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<blockquote className="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">What I find endlessly fascinating:<br /><br />Some engineers really can&#39;t seem to grasp that LLMs are non-deterministic and how to build software taking that into account.<br /><br />For others it immediately clicked, but for some it seems like there&#39;s a real mental barrier to accept it.</p>&mdash; Thorsten Ball (@thorstenball) <a href="https://twitter.com/thorstenball/status/1956017792484040731?ref_src=twsrc%5Etfw">August 14, 2025</a></blockquote>
 LLMs have quirks that make context essential:
 - **Nondeterminism:** The same prompt can yield different outputs. Good context narrows the range of possible answers, reducing randomness.
 - **Knowledge cutoffs:** Models don't know anything past their training date. Explicit context about versions, updates, or recent changes patches that gap.
@@ -244,8 +240,7 @@ AI has fundamentally shifted what skills matter. In the pre-AI era, success requ
 
 Tobi Lütke captured this shift perfectly:
 
-<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">I really like the term "context engineering" over prompt engineering. <br /><br />It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM.</p>&mdash; tobi lutke (@tobi) <a href="https://twitter.com/tobi/status/1935533422589399127?ref_src=twsrc%5Etfw">June 19, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<blockquote className="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">I really like the term "context engineering" over prompt engineering. <br /><br />It describes the core skill better: the art of providing all the context for the task to be plausibly solvable by the LLM.</p>&mdash; tobi lutke (@tobi) <a href="https://twitter.com/tobi/status/1935533422589399127?ref_src=twsrc%5Etfw">June 19, 2025</a></blockquote>
 Context engineering is becoming as fundamental as programming was in the software era. Just as developers learned to structure code, debug systems, and design architectures, we now need to learn how to:
 
 - **Structure information** for AI consumption
@@ -262,7 +257,7 @@ The professionals who master context engineering will have the same advantage ea
 Context engineering is about providing all the context needed to make a task plausibly solvable by the LLM. A well-structured prompt includes:
 
 ![Prompt structure diagram showing the 10 essential components for effective AI communication](../media/prompt-engineering.png)
-<p class="text-center text-sm italic">Diagram from <a href="https://www.youtube.com/watch?v=ysPbXH0LpIE">Advanced Prompt Engineering</a> by Anthropic</p>
+<p className="text-center text-sm italic">Diagram from <a href="https://www.youtube.com/watch?v=ysPbXH0LpIE">Advanced Prompt Engineering</a> by Anthropic</p>
 
 1. **Task context** - The specific situation and background
 2. **Tone context** - How the AI should communicate
@@ -289,9 +284,8 @@ Humans succeed despite limited knowledge because we're rich in context and adapt
 
 As Guillermo Rauch observed:
 
-<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<blockquote className="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">Imagine success being determined purely based on the quality of your thoughts. That's the promise of AI</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/1956356467898114443?ref_src=twsrc%5Etfw">August 15, 2025</a></blockquote>
 
 The quality of your thoughts (expressed through clear context) now determines success.  
 
-Next time you give a task to an AI (or a teammate), ask yourself: Does it have enough <span class="term-knowledge">knowledge</span>? Did I give it enough <span class="term-context">context</span>? Does it have access to the right <span class="term-tools">tools</span>?
+Next time you give a task to an AI (or a teammate), ask yourself: Does it have enough <span className="term-knowledge">knowledge</span>? Did I give it enough <span className="term-context">context</span>? Does it have access to the right <span className="term-tools">tools</span>?

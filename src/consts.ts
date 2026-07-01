@@ -1,5 +1,5 @@
-import type { Metadata, Site, Socials } from "@types";
-import { ui, defaultLang } from "./i18n/ui";
+import type { Metadata, Site, Socials } from "@/types";
+import { routing, type Locale } from "@/i18n/routing";
 
 export const SITE: Site = {
   TITLE: "Daniel Paiva",
@@ -10,7 +10,7 @@ export const SITE: Site = {
 };
 
 // Localized metadata
-export const HOME: Record<keyof typeof ui, Metadata> = {
+export const HOME: Record<Locale, Metadata> = {
   en: {
     TITLE: "Home",
     DESCRIPTION: "Personal site and blog.",
@@ -21,7 +21,7 @@ export const HOME: Record<keyof typeof ui, Metadata> = {
   },
 };
 
-export const BLOG: Record<keyof typeof ui, Metadata> = {
+export const BLOG: Record<Locale, Metadata> = {
   en: {
     TITLE: "Blog",
     DESCRIPTION: "A collection of articles on topics I am passionate about.",
@@ -32,7 +32,7 @@ export const BLOG: Record<keyof typeof ui, Metadata> = {
   },
 };
 
-export const PROJECTS: Record<keyof typeof ui, Metadata> = {
+export const PROJECTS: Record<Locale, Metadata> = {
   en: {
     TITLE: "Projects",
     DESCRIPTION:
@@ -71,9 +71,9 @@ export const SOCIALS: Socials = [
 ];
 
 // Helper function to get localized metadata
-export function getLocalizedMetadata<T extends Record<keyof typeof ui, Metadata>>(
+export function getLocalizedMetadata<T extends Record<Locale, Metadata>>(
   metadata: T,
-  locale: keyof typeof ui
+  locale: Locale
 ): Metadata {
-  return metadata[locale] || metadata[defaultLang];
+  return metadata[locale] || metadata[routing.defaultLocale];
 }

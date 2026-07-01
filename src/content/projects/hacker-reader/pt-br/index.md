@@ -1,7 +1,7 @@
 ---
 title: "Hacker Reader"
 description: "Um leitor nativo do Hacker News para iOS, construído com React Native e Expo."
-date: "11/08/2025"
+date: "2025-11-08"
 demoURL: "https://www.hackerreader.app/"
 repoURL: "https://github.com/danielcspaiva/hacker-reader"
 locale: "pt-br"

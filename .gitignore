@@ -1,6 +1,13 @@
-# build output
+# next.js
+.next/
+next-env.d.ts
+
+# velite content layer (generated) + copied assets
+.velite/
+public/static/
+
+# astro (legacy, kept until removal)
 dist/
-# generated types
 .astro/
 
 # dependencies

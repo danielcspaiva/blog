@@ -1,6 +1,7 @@
+"use client";
+
 import { useMemo, useState } from "react";
-import { useTranslations } from "@/i18n/utils";
-import type { ui } from "@/i18n/ui";
+import { useTranslations } from "next-intl";
 import * as recharts from "recharts";
 import {
   ChartContainer,
@@ -8,12 +9,6 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-
-type Lang = keyof typeof ui;
-
-interface Props {
-  lang: Lang;
-}
 
 type Factor = "K" | "C" | "T";
 
@@ -35,8 +30,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function TaskEquationVisualizer({ lang }: Props) {
-  const t = useTranslations(lang);
+export default function TaskEquationVisualizer() {
+  const t = useTranslations();
 
   const [alpha, setAlpha] = useState(0.2);
   const [beta, setBeta] = useState(0.6);
@@ -226,7 +221,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
     <div className="mx-auto w-full max-w-4xl space-y-8">
       {/* Presets */}
       <section className="space-y-4">
-        <h3 className="text-navy-900 font-semibold dark:text-neutral-50">
+        <h3 className="text-ink-900 font-semibold dark:text-neutral-50">
           {t("equation.presets")}
         </h3>
         <div className="flex flex-wrap items-center gap-2">
@@ -236,14 +231,14 @@ export default function TaskEquationVisualizer({ lang }: Props) {
           >
             {t("equation.reset")}
           </button>
-          <span className="text-navy-800/50 text-xs dark:text-neutral-100/50">
+          <span className="text-ink-800/50 text-xs dark:text-neutral-100/50">
             •
           </span>
           <button
             onClick={applyPresetDataAnalysis}
             className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
               activePreset === "dataAnalysis"
-                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-white"
+                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-ink-50"
                 : "border-black/15 hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
             }`}
           >
@@ -253,7 +248,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
             onClick={applyPresetCustomerService}
             className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
               activePreset === "customerService"
-                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-white"
+                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-ink-50"
                 : "border-black/15 hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
             }`}
           >
@@ -263,7 +258,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
             onClick={applyPresetResearch}
             className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
               activePreset === "research"
-                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-white"
+                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-ink-50"
                 : "border-black/15 hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
             }`}
           >
@@ -273,7 +268,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
             onClick={applyPresetAIPrompting}
             className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
               activePreset === "aiPrompting"
-                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-white"
+                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-ink-50"
                 : "border-black/15 hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
             }`}
           >
@@ -288,10 +283,10 @@ export default function TaskEquationVisualizer({ lang }: Props) {
       <div className="flex flex-col gap-8 md:flex-row md:gap-0">
         <section className="flex-1 space-y-4 md:pr-8">
           <div>
-            <h3 className="text-navy-900 !mt-0 font-semibold dark:text-neutral-50">
-              {t("equation.weights")}
+            <h3 className="text-ink-900 !mt-0 font-semibold dark:text-neutral-50">
+              {t("equation.weights.title")}
             </h3>
-            <p className="text-navy-800/70 mt-1 text-sm dark:text-neutral-100/70">
+            <p className="text-ink-800/70 mt-1 text-sm dark:text-neutral-100/70">
               {t("equation.weights.description")}
             </p>
           </div>
@@ -336,10 +331,10 @@ export default function TaskEquationVisualizer({ lang }: Props) {
 
         <section className="flex-1 space-y-4 md:pl-8">
           <div>
-            <h3 className="text-navy-900 !mt-0 font-semibold dark:text-neutral-50">
-              {t("equation.factors")}
+            <h3 className="text-ink-900 !mt-0 font-semibold dark:text-neutral-50">
+              {t("equation.factors.title")}
             </h3>
-            <p className="text-navy-800/70 mt-1 text-sm dark:text-neutral-100/70">
+            <p className="text-ink-800/70 mt-1 text-sm dark:text-neutral-100/70">
               {t("equation.factors.description")}
             </p>
           </div>
@@ -390,10 +385,10 @@ export default function TaskEquationVisualizer({ lang }: Props) {
       <section className="space-y-4 pt-0">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="flex-1">
-            <h3 className="text-navy-900 !mt-0 !mb-1 font-semibold dark:text-neutral-50">
+            <h3 className="text-ink-900 !mt-0 !mb-1 font-semibold dark:text-neutral-50">
               {t("equation.title")}
             </h3>
-            <p className="text-navy-800/70 !mt-0 text-sm dark:text-neutral-100/70">
+            <p className="text-ink-800/70 !mt-0 text-sm dark:text-neutral-100/70">
               {t("equation.subtitle")}
             </p>
           </div>
@@ -425,10 +420,10 @@ export default function TaskEquationVisualizer({ lang }: Props) {
               />
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-navy-800/70 dark:text-neutral-100/70">
+              <span className="text-ink-800/70 dark:text-neutral-100/70">
                 {t("equation.currentProbability")}
               </span>
-              <span className="text-navy-900 font-semibold tabular-nums dark:text-neutral-50">
+              <span className="text-ink-900 font-semibold tabular-nums dark:text-neutral-50">
                 {gauge.label}
               </span>
             </div>
@@ -442,10 +437,10 @@ export default function TaskEquationVisualizer({ lang }: Props) {
       <section className="space-y-4 pt-0">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="flex-1">
-            <h3 className="text-navy-900 !mt-0 !mb-1 font-semibold dark:text-neutral-50">
+            <h3 className="text-ink-900 !mt-0 !mb-1 font-semibold dark:text-neutral-50">
               {t("equation.chart.title")}
             </h3>
-            <p className="text-navy-800/70 !mt-0 text-sm dark:text-neutral-100/70">
+            <p className="text-ink-800/70 !mt-0 text-sm dark:text-neutral-100/70">
               {t("equation.chart.subtitle")}
             </p>
           </div>
@@ -457,7 +452,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
                   onClick={() => setSweep(f)}
                   className={`flex-1 px-3 py-1.5 transition-colors duration-300 ease-in-out ${
                     sweep === f
-                      ? "dark:text-navy-950 text-white"
+                      ? "dark:text-ink-950 text-white"
                       : "hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
                   } ${idx < 2 ? "border-r border-black/15 dark:border-white/20" : ""}`}
                   style={
@@ -483,7 +478,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
           </div>
         </div>
 
-        <div className="dark:bg-navy-950/50 rounded-lg border border-black/15 bg-white/50 p-4 dark:border-white/20">
+        <div className="dark:bg-ink-950/50 rounded-lg border border-black/15 bg-white/50 p-4 dark:border-white/20">
           <ChartContainer config={chartConfig} className="h-64 w-full">
             <recharts.LineChart data={sweepData}>
               <recharts.CartesianGrid strokeDasharray="3 3" />
@@ -567,7 +562,7 @@ export default function TaskEquationVisualizer({ lang }: Props) {
             </recharts.LineChart>
           </ChartContainer>
         </div>
-        <p className="text-navy-800/70 text-center text-xs dark:text-neutral-100/70">
+        <p className="text-ink-800/70 text-center text-xs dark:text-neutral-100/70">
           {t("equation.sweep.description")}
         </p>
       </section>
@@ -599,11 +594,11 @@ function LabeledSlider({
     <div className="space-y-2">
       <div className="flex items-center justify-between text-sm">
         <span
-          className={`text-navy-800 dark:text-neutral-100 ${labelClass ?? ""}`}
+          className={`text-ink-800 dark:text-neutral-100 ${labelClass ?? ""}`}
         >
           {label}
         </span>
-        <span className="text-navy-800/70 font-mono text-xs tabular-nums dark:text-neutral-100/70">
+        <span className="text-ink-800/70 font-mono text-xs tabular-nums dark:text-neutral-100/70">
           {value.toFixed(2)}
         </span>
       </div>

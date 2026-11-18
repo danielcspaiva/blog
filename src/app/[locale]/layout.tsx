@@ -10,6 +10,7 @@ import { Footer } from "@/components/Footer";
 import { Newsletter } from "@/components/Newsletter";
 import { ScrollEffects } from "@/components/scroll-effects";
 import { CalEmbed } from "@/components/CalEmbed";
+import { TopBand } from "@/components/TopBand";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,10 +33,13 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <Providers>
             <Header />
-            <main>
-              {children}
-              <div className="pt-12">
-                <Newsletter locale={locale} />
+            <main className="site-main">
+              <TopBand />
+              <div className="relative">
+                {children}
+                <div className="pt-16">
+                  <Newsletter locale={locale} />
+                </div>
               </div>
             </main>
             <Footer />

@@ -7,6 +7,8 @@
     "build": "velite && next build",
     "start": "next start",
     "velite": "velite",
+    "dither": "node scripts/dither-tiles.mjs",
+    "portrait": "node scripts/portrait-tone.mjs",
     "format": "prettier --write ."
   },
   "dependencies": {

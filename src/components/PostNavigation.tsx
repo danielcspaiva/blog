@@ -2,70 +2,55 @@ import { Link as IntlLink } from "@/i18n/navigation";
 
 type Adjacent = { title: string; href: string } | undefined;
 
+const labels = {
+  en: { prev: "Newer", next: "Older" },
+  "pt-br": { prev: "Mais recente", next: "Mais antigo" },
+} as const;
+
+function NavCard({
+  item,
+  label,
+  align,
+}: {
+  item: NonNullable<Adjacent>;
+  label: string;
+  align: "left" | "right";
+}) {
+  return (
+    <IntlLink
+      href={item.href}
+      className={`card not-prose flex flex-col gap-1.5 px-4 py-3.5 ${
+        align === "right" ? "items-end text-right" : ""
+      }`}
+    >
+      <span className="eyebrow text-ink-faint text-[0.65rem]">
+        {align === "left" ? `← ${label}` : `${label} →`}
+      </span>
+      <span className="font-pixel text-ink leading-snug tracking-tight text-balance">
+        {item.title}
+      </span>
+    </IntlLink>
+  );
+}
+
 export function PostNavigation({
   prev,
   next,
+  locale = "en",
 }: {
   prev?: Adjacent;
   next?: Adjacent;
+  locale?: string;
 }) {
+  const l = labels[locale as keyof typeof labels] ?? labels.en;
   return (
-    <div className="grid grid-cols-2 gap-1.5 sm:gap-3">
+    <nav className="grid grid-cols-1 gap-5 sm:grid-cols-2">
       {prev ? (
-        <IntlLink
-          href={prev.href}
-          className="eink-card group flex flex-nowrap px-4 py-3 pl-10 no-underline"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="absolute left-2 top-1/2 size-5 -translate-y-1/2 fill-none stroke-current stroke-2"
-          >
-            <line
-              x1="5"
-              y1="12"
-              x2="19"
-              y2="12"
-              className="translate-x-3 scale-x-0 transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-hover:scale-x-100 group-focus-visible:translate-x-0 group-focus-visible:scale-x-100"
-            />
-            <polyline
-              points="12 5 5 12 12 19"
-              className="translate-x-1 transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-focus-visible:translate-x-0"
-            />
-          </svg>
-          <div className="flex items-center text-sm">{prev.title}</div>
-        </IntlLink>
+        <NavCard item={prev} label={l.prev} align="left" />
       ) : (
-        <div className="invisible" />
+        <div className="hidden sm:block" />
       )}
-
-      {next ? (
-        <IntlLink
-          href={next.href}
-          className="eink-card group flex grow flex-row-reverse flex-nowrap px-4 py-4 pr-10 no-underline"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="absolute right-2 top-1/2 size-5 -translate-y-1/2 fill-none stroke-current stroke-2"
-          >
-            <line
-              x1="5"
-              y1="12"
-              x2="19"
-              y2="12"
-              className="translate-x-3 scale-x-0 transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-hover:scale-x-100 group-focus-visible:translate-x-0 group-focus-visible:scale-x-100"
-            />
-            <polyline
-              points="12 5 19 12 12 19"
-              className="-translate-x-1 transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-focus-visible:translate-x-0"
-            />
-          </svg>
-          <div className="flex items-center text-sm">{next.title}</div>
-        </IntlLink>
-      ) : (
-        <div className="invisible" />
-      )}
-    </div>
+      {next ? <NavCard item={next} label={l.next} align="right" /> : null}
+    </nav>
   );
 }

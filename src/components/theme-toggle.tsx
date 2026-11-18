@@ -3,10 +3,20 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
+// Lives on the footer's ink bar, so its colours are the page's inverted.
 const BTN =
-  "group flex size-9 items-center justify-center rounded-[2px] border border-ink-950/20 hover:bg-ink-950/5 focus-visible:bg-ink-950/5 dark:border-ink-50/20 dark:hover:bg-ink-50/5 dark:focus-visible:bg-ink-50/5";
-const ICON =
-  "transition-colors duration-300 ease-in-out group-hover:animate-pulse group-hover:stroke-black group-focus-visible:animate-pulse group-focus-visible:stroke-black dark:group-hover:stroke-white dark:group-focus-visible:stroke-white";
+  "flex size-8 cursor-pointer items-center justify-center border border-paper/40 text-paper hover:border-paper hover:bg-paper hover:text-ink focus-visible:bg-paper focus-visible:text-ink focus-visible:outline-paper aria-pressed:border-paper aria-pressed:bg-paper aria-pressed:text-ink";
+
+const ICON = {
+  width: 16,
+  height: 16,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.75,
+  strokeLinecap: "square",
+  strokeLinejoin: "miter",
+} as const;
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -14,79 +24,50 @@ export function ThemeToggle() {
   useEffect(() => setMounted(true), []);
 
   const active = mounted ? theme : undefined;
-  const cls = (value: string) =>
-    `${BTN}${active === value ? " bg-black/5 dark:bg-white/5" : ""}`;
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5">
+    <div className="flex items-center gap-1.5">
       <button
+        type="button"
         aria-label="Light theme"
-        className={cls("light")}
+        aria-pressed={active === "light"}
+        className={BTN}
         onClick={() => setTheme("light")}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={ICON}
-        >
-          <circle cx="12" cy="12" r="5" />
-          <line x1="12" y1="1" x2="12" y2="3" />
-          <line x1="12" y1="21" x2="12" y2="23" />
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-          <line x1="1" y1="12" x2="3" y2="12" />
-          <line x1="21" y1="12" x2="23" y2="12" />
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        <svg xmlns="http://www.w3.org/2000/svg" {...ICON}>
+          <circle cx="12" cy="12" r="4.5" />
+          <line x1="12" y1="1.5" x2="12" y2="3.5" />
+          <line x1="12" y1="20.5" x2="12" y2="22.5" />
+          <line x1="4.6" y1="4.6" x2="6" y2="6" />
+          <line x1="18" y1="18" x2="19.4" y2="19.4" />
+          <line x1="1.5" y1="12" x2="3.5" y2="12" />
+          <line x1="20.5" y1="12" x2="22.5" y2="12" />
+          <line x1="4.6" y1="19.4" x2="6" y2="18" />
+          <line x1="18" y1="6" x2="19.4" y2="4.6" />
         </svg>
       </button>
       <button
+        type="button"
         aria-label="Dark theme"
-        className={cls("dark")}
+        aria-pressed={active === "dark"}
+        className={BTN}
         onClick={() => setTheme("dark")}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={ICON}
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" {...ICON}>
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       </button>
       <button
+        type="button"
         aria-label="System theme"
-        className={cls("system")}
+        aria-pressed={active === "system"}
+        className={BTN}
         onClick={() => setTheme("system")}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={ICON}
-        >
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-          <line x1="8" y1="21" x2="16" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
+        <svg xmlns="http://www.w3.org/2000/svg" {...ICON}>
+          <rect x="2.5" y="3.5" width="19" height="13" />
+          <line x1="8" y1="20.5" x2="16" y2="20.5" />
+          <line x1="12" y1="16.5" x2="12" y2="20.5" />
         </svg>
       </button>
     </div>

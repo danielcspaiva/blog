@@ -29,14 +29,18 @@ export function CodeCopyButtons() {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "copy-code";
-      button.innerText = "📋";
+      button.innerText = "Copy";
 
       const onClick = async () => {
         const code = pre.querySelector("code")?.innerText ?? pre.innerText;
         try {
           await navigator.clipboard.writeText(code);
-          button.innerText = "✅";
-          setTimeout(() => (button.innerText = "📋"), 2000);
+          button.innerText = "Copied";
+          button.dataset.copied = "";
+          setTimeout(() => {
+            button.innerText = "Copy";
+            delete button.dataset.copied;
+          }, 2000);
         } catch {
           /* clipboard unavailable */
         }

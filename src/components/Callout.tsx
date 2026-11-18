@@ -2,16 +2,20 @@ import { cn } from "@/lib/utils";
 
 type CalloutType = "default" | "info" | "warning" | "error" | "success";
 
-const typeClasses: Record<CalloutType, string> = {
-  default:
-    "border-cyan-800 bg-ink-100 text-ink-950 dark:border-cyan-200/20 dark:bg-cyan-950/20 dark:text-cyan-200",
-  info: "border-blue-800 bg-blue-100 text-blue-950 dark:border-blue-200/20 dark:bg-blue-950/20 dark:text-blue-200",
-  warning:
-    "border-yellow-800 bg-yellow-100 text-yellow-950 dark:border-yellow-200/20 dark:bg-yellow-950/20 dark:text-yellow-200",
-  error:
-    "border-red-800 bg-red-100 text-red-950 dark:border-red-200/20 dark:bg-red-950/20 dark:text-red-200",
-  success:
-    "border-green-800 bg-green-100 text-green-950 dark:border-green-200/20 dark:bg-green-950/20 dark:text-green-200",
+// Each type is told apart by a mono glyph and by the tint and density of its
+// dithered stripe — colour only ever shows up *through* the dither.
+const types: Record<CalloutType, { glyph: string; stripe: string }> = {
+  default: { glyph: "→", stripe: "text-ink dither-50" },
+  info: { glyph: "i", stripe: "text-blue-900 dark:text-blue-300 dither-75" },
+  warning: {
+    glyph: "!",
+    stripe: "text-yellow-600 dark:text-yellow-300 dither-75",
+  },
+  error: { glyph: "×", stripe: "text-red-600 dark:text-red-400 dither-75" },
+  success: {
+    glyph: "✓",
+    stripe: "text-green-600 dark:text-green-300 dither-75",
+  },
 };
 
 export function Callout({
@@ -21,14 +25,21 @@ export function Callout({
   type?: CalloutType;
   children?: React.ReactNode;
 }) {
+  const { glyph, stripe } = types[type] ?? types.default;
   return (
-    <div
-      className={cn(
-        "not-prose relative my-4 flex rounded border p-3",
-        typeClasses[type],
-      )}
-    >
-      {children}
+    <div className="callout not-prose border-ink bg-paper-2 text-ink-soft relative my-5 flex border">
+      <div
+        aria-hidden="true"
+        className="border-ink relative flex w-9 shrink-0 items-start justify-center border-r pt-3"
+      >
+        <span className={cn("dither absolute inset-0", stripe)} />
+        <span className="bg-ink text-paper relative grid size-5 place-items-center font-mono text-xs leading-none font-bold">
+          {glyph}
+        </span>
+      </div>
+      <div className="min-w-0 flex-1 px-4 py-3 text-[0.95em] leading-relaxed [&_a]:underline [&_a]:underline-offset-[3px]">
+        {children}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Container } from "@/components/Container";
+import { SectionHead } from "@/components/SectionHead";
 
 const content = {
   en: {
@@ -24,43 +25,33 @@ export function Newsletter({ locale = "en" }: { locale?: string }) {
 
   return (
     <Container>
-      <aside className="mt-4 space-y-5">
-        <div className="hr-eink animate border-t pt-4">
-          <h2 className="eyebrow text-xs text-ink-700 dark:text-ink-200">
-            {pageContent.title}
-          </h2>
-        </div>
-        <div className="space-y-6">
-          <article className="space-y-4">
-            <p className="animate text-ink-600 dark:text-ink-300">
-              {pageContent.description}
-            </p>
-          </article>
-          <form
-            className="animate flex flex-col gap-3 sm:flex-row"
-            action="https://buttondown.com/api/emails/embed-subscribe/danielcspaiva"
-            method="post"
-            target="popupwindow"
-            onSubmit={() =>
-              window.open("https://buttondown.com/danielcspaiva", "popupwindow")
-            }
-          >
-            <input
-              type="email"
-              name="email"
-              id="bd-email"
-              placeholder={pageContent.placeholder}
-              required
-              className="flex-1 rounded-[2px] border border-ink-950/25 bg-transparent px-4 py-2 font-mono text-sm text-ink-900 transition-colors placeholder:text-ink-400 focus:border-ink-950 focus:outline-none dark:border-ink-50/25 dark:text-ink-50 dark:placeholder:text-ink-500 dark:focus:border-ink-50"
-            />
-            <button
-              type="submit"
-              className="eyebrow rounded-[2px] border border-ink-950 bg-ink-950 px-6 py-2 text-xs text-ink-50 transition-colors duration-200 ease-out hover:bg-transparent hover:text-ink-950 focus-visible:bg-transparent focus-visible:text-ink-950 dark:border-ink-50 dark:bg-ink-50 dark:text-ink-950 dark:hover:bg-transparent dark:hover:text-ink-50 dark:focus-visible:bg-transparent dark:focus-visible:text-ink-50"
-            >
-              {pageContent.buttonText}
-            </button>
-          </form>
-        </div>
+      <aside className="animate space-y-6">
+        <SectionHead title={pageContent.title} />
+        <p className="text-ink-muted text-pretty">{pageContent.description}</p>
+        <form
+          className="flex flex-col gap-4 sm:flex-row sm:gap-3"
+          action="https://buttondown.com/api/emails/embed-subscribe/danielcspaiva"
+          method="post"
+          target="popupwindow"
+          onSubmit={() =>
+            window.open("https://buttondown.com/danielcspaiva", "popupwindow")
+          }
+        >
+          <label htmlFor="bd-email" className="sr-only">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="bd-email"
+            placeholder={pageContent.placeholder}
+            required
+            className="border-ink bg-paper-2 text-ink placeholder:text-ink-faint focus:bg-paper focus:outline-ink min-w-0 flex-1 rounded-none border px-3.5 py-2 font-mono text-sm focus:outline-2 focus:outline-offset-2"
+          />
+          <button type="submit" className="btn btn-solid mr-[3px] sm:mr-0">
+            {pageContent.buttonText}
+          </button>
+        </form>
       </aside>
     </Container>
   );

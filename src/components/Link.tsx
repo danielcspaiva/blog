@@ -22,8 +22,8 @@ export function Link({
   ...rest
 }: Props) {
   const classes = cn(
-    "inline-block text-current decoration-black/30 transition-colors duration-300 ease-in-out hover:text-black hover:decoration-black/50 focus-visible:text-black focus-visible:decoration-black/50 dark:decoration-white/30 dark:hover:text-white dark:hover:decoration-white/50 dark:focus-visible:text-white dark:focus-visible:decoration-white/50",
-    underline && "underline underline-offset-[3px]",
+    "inline-block text-current",
+    underline ? "link" : "hover:text-ink focus-visible:text-ink",
     group && "group",
     className,
   );

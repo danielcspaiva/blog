@@ -26,7 +26,7 @@ function pow(x: number, e: number): number {
 const chartConfig = {
   p: {
     label: "Success Probability",
-    color: "hsl(var(--chart-1))",
+    color: "var(--ink)",
   },
 } satisfies ChartConfig;
 
@@ -138,7 +138,8 @@ export default function TaskEquationVisualizer() {
   const barFillStyle = useMemo(() => {
     return {
       width: `${gauge.pct}%`,
-      backgroundColor: `hsl(${probabilityHue}, 90%, 40%)`,
+      // red → green, desaturated to sit with the term colours
+      backgroundColor: `hsl(${probabilityHue}, 34%, 45%)`,
     } as const;
   }, [gauge.pct, probabilityHue]);
 
@@ -218,17 +219,12 @@ export default function TaskEquationVisualizer() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-4xl space-y-8">
+    <div className="not-prose mx-auto w-full max-w-4xl space-y-8 p-4 sm:p-6">
       {/* Presets */}
       <section className="space-y-4">
-        <h3 className="text-ink-900 font-semibold dark:text-neutral-50">
-          {t("equation.presets")}
-        </h3>
+        <h3 className="font-pixel text-ink text-lg">{t("equation.presets")}</h3>
         <div className="flex flex-wrap items-center gap-2">
-          <button
-            onClick={resetAll}
-            className="rounded-lg border border-black/15 px-3 py-1.5 text-xs transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-          >
+          <button onClick={resetAll} className="chip cursor-pointer">
             {t("equation.reset")}
           </button>
           <span className="text-ink-800/50 text-xs dark:text-neutral-100/50">
@@ -236,54 +232,42 @@ export default function TaskEquationVisualizer() {
           </span>
           <button
             onClick={applyPresetDataAnalysis}
-            className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
-              activePreset === "dataAnalysis"
-                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-ink-50"
-                : "border-black/15 hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-            }`}
+            className="chip cursor-pointer"
+            aria-pressed={activePreset === "dataAnalysis"}
           >
             {t("equation.preset.dataAnalysis")}
           </button>
           <button
             onClick={applyPresetCustomerService}
-            className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
-              activePreset === "customerService"
-                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-ink-50"
-                : "border-black/15 hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-            }`}
+            className="chip cursor-pointer"
+            aria-pressed={activePreset === "customerService"}
           >
             {t("equation.preset.customerService")}
           </button>
           <button
             onClick={applyPresetResearch}
-            className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
-              activePreset === "research"
-                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-ink-50"
-                : "border-black/15 hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-            }`}
+            className="chip cursor-pointer"
+            aria-pressed={activePreset === "research"}
           >
             {t("equation.preset.research")}
           </button>
           <button
             onClick={applyPresetAIPrompting}
-            className={`rounded-lg border px-3 py-2 text-xs transition-colors duration-300 ease-in-out ${
-              activePreset === "aiPrompting"
-                ? "border-cyan-600 bg-cyan-600 text-white dark:border-cyan-500 dark:bg-cyan-500 dark:text-ink-50"
-                : "border-black/15 hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-            }`}
+            className="chip cursor-pointer"
+            aria-pressed={activePreset === "aiPrompting"}
           >
             {t("equation.preset.aiPrompting")}
           </button>
         </div>
       </section>
 
-      <div className="h-px bg-black/10 dark:bg-white/10" />
+      <div className="dither-rule text-ink" />
 
       {/* Controls */}
       <div className="flex flex-col gap-8 md:flex-row md:gap-0">
         <section className="flex-1 space-y-4 md:pr-8">
           <div>
-            <h3 className="text-ink-900 !mt-0 font-semibold dark:text-neutral-50">
+            <h3 className="font-pixel text-ink !mt-0 text-lg">
               {t("equation.weights.title")}
             </h3>
             <p className="text-ink-800/70 mt-1 text-sm dark:text-neutral-100/70">
@@ -327,11 +311,11 @@ export default function TaskEquationVisualizer() {
           </div>
         </section>
 
-        <div className="hidden md:block md:w-px md:bg-black/10 dark:md:bg-white/10"></div>
+        <div className="dither text-ink hidden md:block md:w-0.5"></div>
 
         <section className="flex-1 space-y-4 md:pl-8">
           <div>
-            <h3 className="text-ink-900 !mt-0 font-semibold dark:text-neutral-50">
+            <h3 className="font-pixel text-ink !mt-0 text-lg">
               {t("equation.factors.title")}
             </h3>
             <p className="text-ink-800/70 mt-1 text-sm dark:text-neutral-100/70">
@@ -379,13 +363,13 @@ export default function TaskEquationVisualizer() {
         </section>
       </div>
 
-      <div className="h-px bg-black/10 dark:bg-white/10" />
+      <div className="dither-rule text-ink" />
 
       {/* Equation Display */}
       <section className="space-y-4 pt-0">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="flex-1">
-            <h3 className="text-ink-900 !mt-0 !mb-1 font-semibold dark:text-neutral-50">
+            <h3 className="font-pixel text-ink !mt-0 !mb-1 text-lg">
               {t("equation.title")}
             </h3>
             <p className="text-ink-800/70 !mt-0 text-sm dark:text-neutral-100/70">
@@ -411,11 +395,12 @@ export default function TaskEquationVisualizer() {
 
           <div>
             <div
-              className="mb-2 h-3 w-full overflow-hidden rounded-full bg-black/10 dark:bg-white/10"
+              className="border-ink relative mb-2 h-3 w-full overflow-hidden border"
               aria-hidden="true"
             >
+              <span className="dither dither-25 text-ink absolute inset-0" />
               <div
-                className="h-full rounded-full transition-all duration-300"
+                className="relative h-full transition-all duration-300"
                 style={barFillStyle}
               />
             </div>
@@ -431,13 +416,13 @@ export default function TaskEquationVisualizer() {
         </div>
       </section>
 
-      <div className="h-px bg-black/10 dark:bg-white/10" />
+      <div className="dither-rule text-ink" />
 
       {/* Chart */}
       <section className="space-y-4 pt-0">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="flex-1">
-            <h3 className="text-ink-900 !mt-0 !mb-1 font-semibold dark:text-neutral-50">
+            <h3 className="font-pixel text-ink !mt-0 !mb-1 text-lg">
               {t("equation.chart.title")}
             </h3>
             <p className="text-ink-800/70 !mt-0 text-sm dark:text-neutral-100/70">
@@ -445,16 +430,16 @@ export default function TaskEquationVisualizer() {
             </p>
           </div>
           <div className="flex flex-col items-start gap-2 sm:items-end">
-            <div className="flex overflow-hidden rounded-lg border border-black/15 text-xs dark:border-white/20">
+            <div className="border-ink flex overflow-hidden border font-mono text-xs">
               {(["K", "C", "T"] as Factor[]).map((f, idx) => (
                 <button
                   key={f}
                   onClick={() => setSweep(f)}
                   className={`flex-1 px-3 py-1.5 transition-colors duration-300 ease-in-out ${
                     sweep === f
-                      ? "dark:text-ink-950 text-white"
+                      ? "text-paper"
                       : "hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
-                  } ${idx < 2 ? "border-r border-black/15 dark:border-white/20" : ""}`}
+                  } ${idx < 2 ? "border-ink border-r" : ""}`}
                   style={
                     sweep === f
                       ? {
@@ -478,7 +463,7 @@ export default function TaskEquationVisualizer() {
           </div>
         </div>
 
-        <div className="dark:bg-ink-950/50 rounded-lg border border-black/15 bg-white/50 p-4 dark:border-white/20">
+        <div className="border-ink bg-paper-2 border p-4">
           <ChartContainer config={chartConfig} className="h-64 w-full">
             <recharts.LineChart data={sweepData}>
               <recharts.CartesianGrid strokeDasharray="3 3" />
@@ -521,7 +506,10 @@ export default function TaskEquationVisualizer() {
                     formatter={(value) => {
                       const numValue = Number(value);
                       if (isNaN(numValue)) {
-                        return [t("equation.tooltip.invalidData"), "Success Probability"];
+                        return [
+                          t("equation.tooltip.invalidData"),
+                          "Success Probability",
+                        ];
                       }
                       return [
                         `${Math.round(numValue * 100)}%`,

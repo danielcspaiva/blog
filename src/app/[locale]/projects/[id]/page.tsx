@@ -6,15 +6,17 @@ import { Container } from "@/components/Container";
 import { BackToPrevious } from "@/components/BackToPrevious";
 import { FormattedDate } from "@/components/FormattedDate";
 import { TableOfContents } from "@/components/TableOfContents";
-import { Link } from "@/components/Link";
 import { MDXContent } from "@/lib/mdx/mdx-content";
 import { CodeCopyButtons } from "@/components/mdx/code-copy-buttons";
 import { getLocalizedProject, allProjectSlugs } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
 const strings = {
-  en: { backToProjects: "Back to projects" },
-  "pt-br": { backToProjects: "Voltar para projetos" },
+  en: { backToProjects: "Back to projects", minuteRead: "min read" },
+  "pt-br": {
+    backToProjects: "Voltar para projetos",
+    minuteRead: "min de leitura",
+  },
 };
 
 export function generateStaticParams() {
@@ -60,33 +62,47 @@ export default async function ProjectDetail({
       <div className="animate">
         <BackToPrevious href="/projects">{s.backToProjects}</BackToPrevious>
       </div>
-      <div className="animate my-10 space-y-1">
-        <div className="eyebrow flex items-center gap-2 text-[0.7rem] text-ink-500 dark:text-ink-400">
+      <header className="animate mt-10 mb-10 space-y-5">
+        <div className="eyebrow text-ink-faint flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.7rem]">
           <FormattedDate date={project.date} locale={locale} />
-          <span className="text-ink-400 dark:text-ink-500">·</span>
-          <span>{project.readingTime}</span>
+          <span aria-hidden="true">·</span>
+          <span>
+            {project.readingTime} {s.minuteRead}
+          </span>
         </div>
-        <h1 className="font-pixel text-3xl leading-tight tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">
+        <h1 className="font-pixel text-ink text-4xl leading-[1.08] tracking-tight text-balance sm:text-5xl">
           {project.title}
         </h1>
+        <p className="text-ink-muted text-lg text-pretty">
+          {project.description}
+        </p>
         {(project.demoURL || project.repoURL) && (
-          <nav className="flex gap-1">
+          <nav className="flex flex-wrap gap-3 pt-1">
             {project.demoURL && (
-              <Link href={project.demoURL} external>
-                demo
-              </Link>
+              <a
+                href={project.demoURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-solid"
+              >
+                Demo <span aria-hidden="true">↗</span>
+              </a>
             )}
-            {project.demoURL && project.repoURL && <span>/</span>}
             {project.repoURL && (
-              <Link href={project.repoURL} external>
-                repo
-              </Link>
+              <a
+                href={project.repoURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+              >
+                Repo <span aria-hidden="true">↗</span>
+              </a>
             )}
           </nav>
         )}
-      </div>
-      <TableOfContents toc={project.toc} />
-      <article className="animate prose prose-sm max-w-none dark:prose-invert sm:prose-base">
+      </header>
+      <TableOfContents toc={project.toc} locale={locale} />
+      <article className="animate prose prose-sm sm:prose-base max-w-none">
         <MDXContent code={project.code} />
       </article>
       <CodeCopyButtons />

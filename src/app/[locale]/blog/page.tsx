@@ -3,9 +3,12 @@ import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Container } from "@/components/Container";
 import { ArrowCard } from "@/components/ArrowCard";
+import { PageHeader } from "@/components/PageHeader";
+import { SectionHead } from "@/components/SectionHead";
 import { BLOG, getLocalizedMetadata } from "@/consts";
 import { getPosts, type Post } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
+import { formatStamp } from "@/lib/utils";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -46,41 +49,40 @@ export default async function BlogIndex({
 
   return (
     <Container>
-      <aside>
-        <div className="space-y-10">
-          <section className="space-y-2">
-            <h1 className="font-pixel text-3xl tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">
-              {m.TITLE}
-            </h1>
-            <p className="text-ink-600 dark:text-ink-300">{m.DESCRIPTION}</p>
-          </section>
-          <div className="space-y-8">
-            {years.map((year) => (
-              <section key={year} className="animate space-y-4">
-                <div className="hr-eink flex items-baseline justify-between border-t pt-4">
-                  <h2 className="eyebrow text-xs text-ink-700 dark:text-ink-200">
-                    {year}
-                  </h2>
-                  <span className="eyebrow text-[0.7rem] text-ink-500 dark:text-ink-400">
-                    [{String(postsByYear[year].length).padStart(2, "0")}]
-                  </span>
-                </div>
-                <ul className="not-prose flex flex-col gap-4">
-                  {postsByYear[year].map((post) => (
-                    <li key={post.slug}>
-                      <ArrowCard
-                        href={`/blog/${post.slug}`}
-                        title={post.title}
-                        description={post.description}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
+      <div className="space-y-12">
+        <PageHeader
+          eyebrow={`${String(posts.length).padStart(2, "0")} ${locale === "pt-br" ? "artigos" : "entries"}`}
+          title={m.TITLE}
+          description={m.DESCRIPTION}
+        />
+        <div className="space-y-12">
+          {years.map((year) => (
+            <section key={year} className="animate space-y-6">
+              <SectionHead title={year}>
+                [{String(postsByYear[year].length).padStart(2, "0")}]
+              </SectionHead>
+              <ul className="not-prose flex flex-col gap-5">
+                {postsByYear[year].map((post) => (
+                  <li key={post.slug}>
+                    <ArrowCard
+                      href={`/blog/${post.slug}`}
+                      title={post.title}
+                      description={post.description}
+                      meta={
+                        <>
+                          {formatStamp(post.date)}
+                          <span className="px-1.5">·</span>
+                          {post.readingTime} min
+                        </>
+                      }
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
-      </aside>
+      </div>
     </Container>
   );
 }

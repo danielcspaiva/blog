@@ -4,8 +4,10 @@ import { routing } from "@/i18n/routing";
 import { Container } from "@/components/Container";
 import { ArrowCard } from "@/components/ArrowCard";
 import { BackToPrevious } from "@/components/BackToPrevious";
+import { PageHeader } from "@/components/PageHeader";
 import { getPostsByTag, getTags } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
+import { formatStamp } from "@/lib/utils";
 
 const strings = (id: string) => ({
   en: {
@@ -55,17 +57,28 @@ export default async function TagDetail({
   return (
     <Container>
       <div className="space-y-10">
-        <BackToPrevious href="/tags">{s.allTags}</BackToPrevious>
-        <h1 className="animate font-pixel text-3xl tracking-tight text-ink-950 dark:text-ink-50">
-          {s.postsTaggedWith}
-        </h1>
-        <ul className="animate flex flex-col gap-4">
+        <div className="animate">
+          <BackToPrevious href="/tags">{s.allTags}</BackToPrevious>
+        </div>
+        <PageHeader
+          eyebrow={`Tag · ${String(posts.length).padStart(2, "0")} posts`}
+          title={`#${id}`}
+          description={s.postsTaggedWith}
+        />
+        <ul className="animate flex flex-col gap-5">
           {posts.map((post) => (
             <li key={post.slug}>
               <ArrowCard
                 href={`/blog/${post.slug}`}
                 title={post.title}
                 description={post.description}
+                meta={
+                  <>
+                    {formatStamp(post.date)}
+                    <span className="px-1.5">·</span>
+                    {post.readingTime} min
+                  </>
+                }
               />
             </li>
           ))}

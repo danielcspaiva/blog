@@ -8,15 +8,19 @@ export default function GlobalNotFound() {
     <html lang="en" className={fontVariables} suppressHydrationWarning>
       <body>
         <main className="grid min-h-screen place-items-center">
-          <div className="grid place-items-center gap-3 px-4 text-center">
-            <h1 className="font-pixel text-2xl tracking-tight text-ink-950 dark:text-ink-50">
-              404: Not Found
-            </h1>
-            <p>The page you were looking for doesn&apos;t exist.</p>
-            <Link
-              href="/"
-              className="eyebrow rounded-[2px] border border-ink-950/22 px-3 py-1.5 text-[0.7rem] text-ink-600 transition-colors hover:border-ink-950 hover:text-ink-950 dark:border-ink-50/20 dark:text-ink-300 dark:hover:border-ink-50 dark:hover:text-white"
+          <div className="grid place-items-center gap-5 px-4 text-center">
+            <p
+              aria-hidden="true"
+              className="wordmark text-ink text-8xl leading-none tracking-tight sm:text-9xl"
             >
+              404
+            </p>
+            <h1 className="plate">404: Not Found</h1>
+            <p className="text-ink-muted">
+              The page you were looking for doesn&apos;t exist.
+            </p>
+            <Link href="/" className="btn">
+              <span aria-hidden="true">←</span>
               Back to Home
             </Link>
           </div>

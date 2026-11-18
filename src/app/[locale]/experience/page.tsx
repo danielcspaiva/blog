@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Container } from "@/components/Container";
+import { PageHeader } from "@/components/PageHeader";
 import { createCommonLinks } from "@/lib/linkUtils";
 import { buildMetadata } from "@/lib/metadata";
 
@@ -106,41 +107,45 @@ export default async function Experience({
 
   return (
     <Container>
-      <aside>
-        <div className="space-y-8 sm:space-y-16">
-          <section>
-            <h1 className="font-pixel text-3xl tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">
-              {d.title}
-            </h1>
-            <section className="animate mt-4 space-y-6">
-              <article className="space-y-8 sm:space-y-16">
-                {d.jobs.map((job) => (
-                  <div key={job.company} className="mb-0 mt-2 py-2">
-                    <div className="my-0 flex items-baseline justify-between gap-4 py-0">
-                      <p className="my-0 text-lg font-bold tracking-tight text-ink-950 dark:text-ink-50">
-                        {job.companyLink ? (
-                          <span
-                            dangerouslySetInnerHTML={{ __html: job.companyLink }}
-                          />
-                        ) : (
-                          job.company
-                        )}
-                      </p>
-                      <span className="eyebrow shrink-0 text-[0.7rem] text-ink-500 dark:text-ink-400">
-                        {job.duration}
-                      </span>
-                    </div>
-                    <p className="text-sm font-medium text-ink-600 dark:text-ink-300">
-                      {job.position}
-                    </p>
-                    <p>{job.description}</p>
-                  </div>
-                ))}
+      <div className="space-y-12">
+        <PageHeader
+          eyebrow={`${String(d.jobs.length).padStart(2, "0")} ${locale === "pt-br" ? "posições" : "roles"}`}
+          title={d.title}
+          description={d.description}
+        />
+        <ol className="animate">
+          {d.jobs.map((job, i) => (
+            <li key={job.company}>
+              {i > 0 ? (
+                <span
+                  aria-hidden="true"
+                  className="dither-rule text-ink my-10"
+                />
+              ) : null}
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <h2 className="font-pixel text-ink text-2xl tracking-tight">
+                  {job.companyLink ? (
+                    <span
+                      dangerouslySetInnerHTML={{ __html: job.companyLink }}
+                    />
+                  ) : (
+                    job.company
+                  )}
+                </h2>
+                <span className="eyebrow text-ink-faint shrink-0 text-[0.7rem]">
+                  {job.duration}
+                </span>
+              </div>
+              <p className="mt-2">
+                <span className="plate">{job.position}</span>
+              </p>
+              <article className="mt-4">
+                <p>{job.description}</p>
               </article>
-            </section>
-          </section>
-        </div>
-      </aside>
+            </li>
+          ))}
+        </ol>
+      </div>
     </Container>
   );
 }

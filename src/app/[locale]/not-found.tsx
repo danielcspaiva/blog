@@ -8,14 +8,16 @@ export default function NotFound() {
   const t = useTranslations("notFound");
   return (
     <Container>
-      <div className="mt-16 grid place-items-center gap-3">
-        <h4 className="animate show font-pixel text-2xl tracking-tight text-ink-950 dark:text-ink-50">
-          {t("title")}
-        </h4>
-        <p className="animate show text-center">{t("message")}</p>
-        <span className="animate show">
-          <BackToPrevious href="/">{t("backHome")}</BackToPrevious>
-        </span>
+      <div className="mt-10 grid place-items-center gap-5 text-center">
+        <p
+          aria-hidden="true"
+          className="wordmark text-ink text-8xl leading-none tracking-tight sm:text-9xl"
+        >
+          404
+        </p>
+        <h1 className="plate">{t("title")}</h1>
+        <p className="text-ink-muted">{t("message")}</p>
+        <BackToPrevious href="/">{t("backHome")}</BackToPrevious>
       </div>
     </Container>
   );

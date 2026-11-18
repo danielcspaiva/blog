@@ -68,47 +68,50 @@ export default async function BlogPost({
       <div className="animate">
         <BackToPrevious href="/blog">{s.backToBlog}</BackToPrevious>
       </div>
-      <div className="my-10 space-y-1">
-        <div className="animate eyebrow flex items-center gap-2 text-[0.7rem] text-ink-500 dark:text-ink-400">
+      <header className="mt-10 mb-10 space-y-5">
+        <div className="animate eyebrow text-ink-faint flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.7rem]">
           <FormattedDate date={post.date} locale={locale} />
-          <span className="text-ink-400 dark:text-ink-500">·</span>
+          <span aria-hidden="true">·</span>
           <span>
             {post.readingTime} {s.minuteRead}
           </span>
         </div>
-        <h1 className="animate py-4 font-pixel text-3xl leading-tight tracking-tight text-ink-950 sm:text-4xl dark:text-ink-50">
+        <h1 className="animate font-pixel text-ink text-4xl leading-[1.08] tracking-tight text-balance sm:text-5xl">
           {post.title}
         </h1>
-        <p className="animate mb-4 text-ink-600 dark:text-ink-300">
+        <p className="animate text-ink-muted text-lg text-pretty">
           {post.description}
         </p>
         {post.tags && post.tags.length > 0 ? (
-          <div className="animate flex gap-2 pt-1">
+          <div className="animate flex flex-wrap gap-2">
             {post.tags.map((tag) => (
-              <IntlLink
-                key={tag}
-                href={`/tags/${tag}`}
-                className="eyebrow rounded-[2px] border border-ink-950/25 px-2 py-1 text-[0.7rem] text-ink-600 transition-colors duration-200 ease-out hover:border-ink-950 hover:text-ink-950 focus-visible:border-ink-950 focus-visible:text-ink-950 dark:border-ink-50/25 dark:text-ink-300 dark:hover:border-ink-50 dark:hover:text-white dark:focus-visible:border-ink-50 dark:focus-visible:text-white"
-              >
+              <IntlLink key={tag} href={`/tags/${tag}`} className="chip">
                 {tag}
               </IntlLink>
             ))}
           </div>
         ) : null}
-      </div>
-      {!post.hideTableOfContents && <TableOfContents toc={post.toc} />}
-      <article className="animate prose prose-sm max-w-none dark:prose-invert sm:prose-base">
+      </header>
+      {!post.hideTableOfContents && (
+        <TableOfContents toc={post.toc} locale={locale} />
+      )}
+      <article className="animate prose prose-sm sm:prose-base max-w-none">
         <MDXContent code={post.code} />
-        <div className="mt-24">
-          <PostNavigation
-            prev={prev ? { title: prev.title, href: `/blog/${prev.slug}` } : undefined}
-            next={next ? { title: next.title, href: `/blog/${next.slug}` } : undefined}
-          />
-        </div>
-        <div className="mt-24">
-          <Comments lang={locale} />
-        </div>
       </article>
+      <div className="mt-20">
+        <PostNavigation
+          locale={locale}
+          prev={
+            prev ? { title: prev.title, href: `/blog/${prev.slug}` } : undefined
+          }
+          next={
+            next ? { title: next.title, href: `/blog/${next.slug}` } : undefined
+          }
+        />
+      </div>
+      <div className="mt-20">
+        <Comments lang={locale} />
+      </div>
       <CodeCopyButtons />
       <TwitterEmbed />
     </Container>

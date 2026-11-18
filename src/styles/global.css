@@ -561,10 +561,11 @@ html.scrolled #back-to-top {
   font-weight: 700;
 }
 
-/* Hero wordmark — Geist Pixel Grid, regular weight */
-.wordmark {
-  font-family: var(--font-geist-pixel-grid), var(--font-mono);
-  font-weight: 500;
+/* Text printed by DitherField: once the canvas has drawn the letterforms
+   (it flags its parent), the real text steps aside — still selectable, still
+   read aloud. Without JS the text simply stays as set. */
+[data-dither-printed] [data-dither-text] {
+  color: transparent;
 }
 
 /* ─────────────────────────────────────────────────────────────

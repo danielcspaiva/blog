@@ -17,6 +17,10 @@ import { useEffect, useRef } from "react";
  *   data-dither-clear     an ellipse around the element is kept free of dots
  *   data-dither-portrait  `portraitSrc` is printed into the element's box,
  *                         through the same matrix, feathered into the field
+ *   data-dither-text      the element's (single-line) text is printed in its
+ *                         own font as dithered letterforms; the DOM text stays
+ *                         for assistive tech and selection but turns
+ *                         transparent once the print is up
  */
 
 const CELL = 2; // CSS px per dot — matches scripts/dither-tiles.mjs
@@ -55,6 +59,14 @@ type Portrait = {
   lum: Float32Array;
   /** Feathered head-shaped mask 0–1: how much the portrait replaces the field. */
   mask: Float32Array;
+};
+
+/** Canvas-sized layers for printed text. */
+type TextPrint = {
+  /** Letterform coverage 0–1 per cell. */
+  mask: Float32Array;
+  /** Position down the capital height, 0 (top) – 1 (baseline), per cell. */
+  depth: Float32Array;
 };
 
 const smoothstep = (a: number, b: number, x: number) => {
@@ -104,6 +116,7 @@ export function DitherField({
     let clear: CellBox | null = null;
     let tones: { size: number; lum: Float32Array } | null = null;
     let portrait: Portrait | null = null;
+    let text: TextPrint | null = null;
     let raf = 0;
     let last = 0;
     let onScreen = true;
@@ -125,9 +138,81 @@ export function DitherField({
       };
     };
 
+    /** Rasterise every `data-dither-text` element at one texel per cell. */
+    const layoutText = () => {
+      text = null;
+      delete host.dataset.ditherPrinted;
+      const els = host.querySelectorAll<HTMLElement>("[data-dither-text]");
+      if (!els.length || !w || !h) return;
+
+      const scratch = document.createElement("canvas");
+      scratch.width = w;
+      scratch.height = h;
+      const sctx = scratch.getContext("2d", { willReadFrequently: true });
+      if (!sctx) return;
+
+      const depth = new Float32Array(w * h);
+      const origin = canvas.getBoundingClientRect();
+
+      for (const el of els) {
+        const style = getComputedStyle(el);
+        const size = parseFloat(style.fontSize);
+        const family = style.fontFamily;
+        // Until the web font is in, leave the real text showing instead.
+        // (Check the primary face only: fallback faces never report loaded.)
+        const primary = family.split(",")[0];
+        if (!document.fonts.check(`${style.fontWeight} ${size}px ${primary}`)) {
+          return;
+        }
+        const rect = el.getBoundingClientRect();
+        const left = (rect.left - origin.left) / CELL;
+        const top = (rect.top - origin.top) / CELL;
+        const content =
+          style.textTransform === "uppercase"
+            ? (el.textContent ?? "").toUpperCase()
+            : (el.textContent ?? "");
+
+        sctx.font = `${style.fontStyle} ${style.fontWeight} ${size / CELL}px ${family}`;
+        sctx.letterSpacing = `${(parseFloat(style.letterSpacing) || 0) / CELL}px`;
+        sctx.textBaseline = "alphabetic";
+        const line = sctx.measureText(content);
+        const ascent = line.fontBoundingBoxAscent;
+        const descent = line.fontBoundingBoxDescent;
+        // Single line: the font box is centred in the element's line box.
+        const baseline =
+          top + (rect.height / CELL - (ascent + descent)) / 2 + ascent;
+        const cap = sctx.measureText("H").actualBoundingBoxAscent;
+        sctx.fillText(content, left, baseline);
+
+        const y0 = Math.max(0, Math.floor(top));
+        const y1 = Math.min(h, Math.ceil(top + rect.height / CELL));
+        const x0 = Math.max(0, Math.floor(left));
+        const x1 = Math.min(w, Math.ceil(left + rect.width / CELL));
+        // Small type has few cells to spare: flatten the fade so thin strokes
+        // stay close to solid.
+        const strength = Math.min(1, cap / 30);
+        for (let y = y0; y < y1; y++) {
+          const d =
+            strength *
+            Math.min(1, Math.max(0, (y + 0.5 - (baseline - cap)) / cap));
+          for (let x = x0; x < x1; x++) depth[y * w + x] = d;
+        }
+      }
+
+      const { data } = sctx.getImageData(0, 0, w, h);
+      const mask = new Float32Array(w * h);
+      // Tighten the antialiased edge so the letter outlines stay crisp.
+      for (let i = 0; i < mask.length; i++) {
+        mask[i] = smoothstep(0.3, 0.62, data[i * 4 + 3] / 255);
+      }
+      text = { mask, depth };
+      host.dataset.ditherPrinted = "";
+    };
+
     /** (Re)measure the anchors and resample the portrait to the cell grid. */
     const layout = () => {
       clear = cellBox("[data-dither-clear]");
+      layoutText();
 
       const box = tones ? cellBox("[data-dither-portrait]") : null;
       if (!tones || !box || !box.w || !box.h) {
@@ -187,6 +272,7 @@ export function DitherField({
       const ry = clear ? clear.h * 0.85 + 26 : 1;
 
       const p = portrait;
+      const tx = text;
 
       for (let y = 0; y < h; y++) {
         const v = (y + 0.5) / h;
@@ -227,6 +313,16 @@ export function DitherField({
                   : Math.pow(1 - lum, 1.25) * (0.74 + 0.4 * wave);
                 tone += (ink - tone) * k;
               }
+            }
+          }
+
+          if (tx) {
+            const m = tx.mask[offset + x];
+            if (m > 0) {
+              // Letters run from solid ink at the cap line down to a drifting
+              // mid-tone at the baseline.
+              const fill = 1.04 - tx.depth[offset + x] * (0.3 + 0.22 * wave);
+              tone += (fill - tone) * m;
             }
           }
 

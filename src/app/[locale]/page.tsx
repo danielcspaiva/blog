@@ -87,19 +87,37 @@ export default async function Home({
 
   return (
     <>
-      {/* Hero: the portrait and wordmark sit in a clearing of a full-bleed
-          dither field that dissolves down the page. */}
       <section className="relative -mt-28 overflow-hidden sm:-mt-36">
         <DitherField portraitSrc="/images/portrait-tone.jpg" />
         <Container>
-          <div className="relative flex flex-col items-center pt-16 pb-16 text-center sm:pt-[4.5rem]">
+          {/* Masthead: name set low on the left, portrait off to the right
+              where its dark backdrop runs into the dense end of the field. */}
+          <div className="relative flex items-end justify-between pt-20 pb-14 sm:pt-[5.5rem] sm:pb-16">
+            <div data-dither-clear className="min-w-0 pb-3 sm:pb-6">
+              {/* DitherField prints these two lines as dithered letterforms. */}
+              <h1 className="text-ink text-[clamp(2.6rem,13vw,5.5rem)] leading-[0.86] font-black tracking-[-0.015em] uppercase">
+                <span data-dither-text className="block w-fit">
+                  Daniel
+                </span>{" "}
+                <span data-dither-text className="block w-fit">
+                  Paiva
+                </span>
+              </h1>
+              <p className="mt-5 flex flex-wrap gap-1.5">
+                {c.roles.map((role) => (
+                  <span key={role} className="plate">
+                    {role}
+                  </span>
+                ))}
+              </p>
+            </div>
             {/* The portrait is not an <img>: DitherField prints the photo's
                 tones into this box with the same dots as the field. */}
             <div
               data-dither-portrait
               role="img"
               aria-label={c.portraitAlt}
-              className="size-[300px] sm:size-[340px]"
+              className="-mr-6 size-[46vw] max-h-[290px] max-w-[290px] shrink-0 sm:-mr-16"
             >
               <noscript>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -121,18 +139,6 @@ export default async function Home({
                   style={{ imageRendering: "pixelated" }}
                 />
               </noscript>
-            </div>
-            <div data-dither-clear className="-mt-2 flex flex-col items-center">
-              <h1 className="wordmark text-ink text-[clamp(2rem,10.5vw,2.75rem)] leading-[0.95] tracking-tight whitespace-nowrap sm:text-7xl">
-                DANIEL PAIVA
-              </h1>
-              <p className="mt-5 flex flex-wrap justify-center gap-1.5">
-                {c.roles.map((role) => (
-                  <span key={role} className="plate">
-                    {role}
-                  </span>
-                ))}
-              </p>
             </div>
           </div>
         </Container>

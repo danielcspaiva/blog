@@ -11,7 +11,7 @@ export default function NotFound() {
       <div className="mt-10 grid place-items-center gap-5 text-center">
         <p
           aria-hidden="true"
-          className="wordmark text-ink text-8xl leading-none tracking-tight sm:text-9xl"
+          className="font-pixel text-ink text-8xl leading-none tracking-tight sm:text-9xl"
         >
           404
         </p>

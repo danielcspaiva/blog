@@ -9,7 +9,6 @@ type Assets = {
   regular: Buffer;
   bold: Buffer;
   pixelSquare: Buffer;
-  pixelGrid: Buffer;
   portrait: string;
 };
 
@@ -18,19 +17,16 @@ async function loadAssets() {
   if (!assetsPromise) {
     assetsPromise = (async () => {
       const p = (rel: string) => join(process.cwd(), rel);
-      const [regular, bold, pixelSquare, pixelGrid, portraitBuf] =
-        await Promise.all([
-          readFile(p("public/fonts/GeistSans-Regular.ttf")),
-          readFile(p("public/fonts/GeistSans-Bold.ttf")),
-          readFile(p("public/fonts/geist-pixel/GeistPixel-Square.ttf")),
-          readFile(p("public/fonts/geist-pixel/GeistPixel-Grid.ttf")),
-          readFile(p("public/images/portrait-dither-light.png")),
-        ]);
+      const [regular, bold, pixelSquare, portraitBuf] = await Promise.all([
+        readFile(p("public/fonts/GeistSans-Regular.ttf")),
+        readFile(p("public/fonts/GeistSans-Bold.ttf")),
+        readFile(p("public/fonts/geist-pixel/GeistPixel-Square.ttf")),
+        readFile(p("public/images/portrait-dither-light.png")),
+      ]);
       return {
         regular,
         bold,
         pixelSquare,
-        pixelGrid,
         portrait: `data:image/png;base64,${portraitBuf.toString("base64")}`,
       };
     })();
@@ -95,8 +91,7 @@ export async function renderOG({
   description?: string;
   eyebrow?: string;
 }) {
-  const { regular, bold, pixelSquare, pixelGrid, portrait } =
-    await loadAssets();
+  const { regular, bold, pixelSquare, portrait } = await loadAssets();
 
   return new ImageResponse(
     <div
@@ -224,9 +219,9 @@ export async function renderOG({
         <div
           style={{
             display: "flex",
-            fontFamily: "GeistPixelGrid",
-            fontSize: 24,
-            letterSpacing: 2,
+            fontWeight: 700,
+            fontSize: 22,
+            letterSpacing: 4,
           }}
         >
           DANIEL PAIVA
@@ -241,12 +236,6 @@ export async function renderOG({
         {
           name: "GeistPixelSquare",
           data: pixelSquare,
-          weight: 400,
-          style: "normal",
-        },
-        {
-          name: "GeistPixelGrid",
-          data: pixelGrid,
           weight: 400,
           style: "normal",
         },

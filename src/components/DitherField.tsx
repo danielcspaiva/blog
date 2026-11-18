@@ -11,15 +11,17 @@ import { useEffect, useRef } from "react";
  * `--field-density` custom property, so it follows the theme with no props.
  * Pauses when off-screen; draws a single still frame under reduced motion.
  *
- * Content laid over the field can shape it through two data attributes on
- * elements inside the same positioned parent:
+ * Content laid over the field does not sit on top of it — it bends it. Two
+ * data attributes on elements inside the same positioned parent:
  *
- *   data-dither-clear     an ellipse around the element is kept free of dots
- *   data-dither-portrait  `portraitSrc` is printed into the element's box,
- *                         through the same matrix, feathered into the field
+ *   data-dither-portrait  `portraitSrc` modulates the field inside the
+ *                         element's box: the photo's backdrop *is* the field,
+ *                         and only what differs from it (lit skin, hair) takes
+ *                         dots away or adds them
  *   data-dither-text      the element's (single-line) text is printed in its
- *                         own font as dithered letterforms; the DOM text stays
- *                         for assistive tech and selection but turns
+ *                         own font as denser letterforms, with the field
+ *                         thinned in a soft halo around them; the DOM text
+ *                         stays for assistive tech and selection but turns
  *                         transparent once the print is up
  */
 
@@ -57,8 +59,12 @@ type Portrait = {
   box: CellBox;
   /** Luminance 0–1, resampled to one value per cell. */
   lum: Float32Array;
-  /** Feathered head-shaped mask 0–1: how much the portrait replaces the field. */
+  /** Feathered head-shaped mask 0–1: where the photo may bend the field. */
   mask: Float32Array;
+  /** Separable Gaussian around the head, per row / per column of the canvas:
+   *  a soft, edgeless region where the field is steadied behind the face. */
+  rowGlow: Float32Array;
+  colGlow: Float32Array;
 };
 
 /** Canvas-sized layers for printed text. */
@@ -67,7 +73,42 @@ type TextPrint = {
   mask: Float32Array;
   /** Position down the capital height, 0 (top) – 1 (baseline), per cell. */
   depth: Float32Array;
+  /** Blurred coverage 0–1: how far the field is thinned around the letters. */
+  halo: Float32Array;
 };
+
+/** Separable box blur, two passes (≈ a tent kernel), in place. */
+function blur(src: Float32Array, w: number, h: number, radius: number) {
+  const tmp = new Float32Array(src.length);
+  const norm = 1 / (radius * 2 + 1);
+  for (let pass = 0; pass < 2; pass++) {
+    for (let y = 0; y < h; y++) {
+      let acc = 0;
+      for (let x = -radius; x <= radius; x++) {
+        acc += src[y * w + Math.min(w - 1, Math.max(0, x))];
+      }
+      for (let x = 0; x < w; x++) {
+        tmp[y * w + x] = acc * norm;
+        acc +=
+          src[y * w + Math.min(w - 1, x + radius + 1)] -
+          src[y * w + Math.max(0, x - radius)];
+      }
+    }
+    for (let x = 0; x < w; x++) {
+      let acc = 0;
+      for (let y = -radius; y <= radius; y++) {
+        acc += tmp[Math.min(h - 1, Math.max(0, y)) * w + x];
+      }
+      for (let y = 0; y < h; y++) {
+        src[y * w + x] = acc * norm;
+        acc +=
+          tmp[Math.min(h - 1, y + radius + 1) * w + x] -
+          tmp[Math.max(0, y - radius) * w + x];
+      }
+    }
+  }
+  return src;
+}
 
 const smoothstep = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
@@ -89,7 +130,17 @@ async function loadTones(src: string) {
   const { data } = ctx.getImageData(0, 0, size, size);
   const lum = new Float32Array(size * size);
   for (let i = 0; i < lum.length; i++) lum[i] = data[i * 4] / 255;
-  return { size, lum };
+
+  // The backdrop's own tone, sampled from the two top corners: the level at
+  // which the photo neither adds nor removes dots.
+  const patch = Math.max(1, Math.round(size * 0.14));
+  let sum = 0;
+  for (let y = 0; y < patch; y++) {
+    for (let x = 0; x < patch; x++) {
+      sum += lum[y * size + x] + lum[y * size + (size - 1 - x)];
+    }
+  }
+  return { size, lum, backdrop: sum / (patch * patch * 2) };
 }
 
 export function DitherField({
@@ -113,8 +164,7 @@ export function DitherField({
     let pixels: Uint32Array | null = null;
     let rowWarp = new Float32Array(0);
     let colWarp = new Float32Array(0);
-    let clear: CellBox | null = null;
-    let tones: { size: number; lum: Float32Array } | null = null;
+    let tones: Awaited<ReturnType<typeof loadTones>> | null = null;
     let portrait: Portrait | null = null;
     let text: TextPrint | null = null;
     let raf = 0;
@@ -205,13 +255,17 @@ export function DitherField({
       for (let i = 0; i < mask.length; i++) {
         mask[i] = smoothstep(0.3, 0.62, data[i * 4 + 3] / 255);
       }
-      text = { mask, depth };
+      // The halo is the letter shapes blurred outwards by ~10px.
+      const halo = blur(Float32Array.from(mask), w, h, 5);
+      for (let i = 0; i < halo.length; i++) {
+        halo[i] = smoothstep(0.02, 0.42, halo[i]);
+      }
+      text = { mask, depth, halo };
       host.dataset.ditherPrinted = "";
     };
 
     /** (Re)measure the anchors and resample the portrait to the cell grid. */
     const layout = () => {
-      clear = cellBox("[data-dither-clear]");
       layoutText();
 
       const box = tones ? cellBox("[data-dither-portrait]") : null;
@@ -238,13 +292,26 @@ export function DitherField({
             (src[i + size] * (1 - fx) + src[i + size + 1] * fx) * fy;
 
           // Head-shaped feather: an ellipse that fully holds the face and
-          // lets the backdrop and shoulders melt into the field.
+          // lets the shoulders fall away.
           const dx = (u - 0.5) / 0.47;
           const dy = (v - 0.47) / 0.53;
-          mask[y * box.w + x] = 1 - smoothstep(0.32, 1, dx * dx + dy * dy);
+          mask[y * box.w + x] = 1 - smoothstep(0.3, 1, dx * dx + dy * dy);
         }
       }
-      portrait = { box, lum, mask };
+
+      const rowGlow = new Float32Array(h);
+      const colGlow = new Float32Array(w);
+      const gy = box.y + box.h * 0.45;
+      const gx = box.x + box.w * 0.5;
+      for (let y = 0; y < h; y++) {
+        const d = (y - gy) / (box.h * 0.5);
+        rowGlow[y] = Math.exp(-d * d);
+      }
+      for (let x = 0; x < w; x++) {
+        const d = (x - gx) / (box.w * 0.56);
+        colGlow[x] = Math.exp(-d * d);
+      }
+      portrait = { box, lum, mask, rowGlow, colGlow };
     };
 
     const draw = (now: number) => {
@@ -265,14 +332,12 @@ export function DitherField({
       for (let x = 0; x < w; x++)
         colWarp[x] = Math.sin(x * CELL * 0.0029 + t * 0.13);
 
-      // Clearing ellipse: the anchor's box, padded so its corners are covered.
-      const cx = clear ? clear.x + clear.w / 2 : 0;
-      const cy = clear ? clear.y + clear.h / 2 : 0;
-      const rx = clear ? Math.min(clear.w * 0.85 + 30, w * 0.75) : 1;
-      const ry = clear ? clear.h * 0.85 + 26 : 1;
-
       const p = portrait;
       const tx = text;
+      // The backdrop's tone in each printing sense (see the portrait step).
+      const backdrop = tones?.backdrop ?? 0;
+      const backdropInk = Math.pow(1 - backdrop, 0.86);
+      const backdropGlow = Math.pow(backdrop, 1.1);
 
       for (let y = 0; y < h; y++) {
         const v = (y + 0.5) / h;
@@ -280,7 +345,6 @@ export function DitherField({
         const fall = Math.pow(linear, falloff);
         const floor = anchor ? Math.pow(linear, 7) * 1.4 : 0;
         const Y = y * CELL;
-        const dy = (y - cy) / ry;
         const bayerRow = (y & 7) << 3;
         const offset = y * w;
         const py = p ? y - p.box.y : -1;
@@ -295,32 +359,50 @@ export function DitherField({
           const wave = 0.5 + 0.28 * a + 0.22 * c; // 0–1
           let tone = fall * (0.34 + 0.92 * wave) * peak + floor;
 
-          if (clear) {
-            const dx = (x - cx) / rx;
-            tone *= smoothstep(0.5, 1.45, dx * dx + dy * dy);
-          }
+          if (p) {
+            // Steady the field behind the head — no edge, just a Gaussian —
+            // so there is always enough tone for the face to read against:
+            // ink on paper wants a mid-dark ground, light on dark a dim one.
+            const glow = p.rowGlow[y] * p.colGlow[x];
+            if (glow > 0.004) {
+              if (lightDots) {
+                tone *= 1 - 0.66 * glow;
+              } else {
+                const ground = 0.52 + 0.3 * wave;
+                if (ground > tone) tone += (ground - tone) * glow * 0.92;
+              }
+            }
 
-          if (inPortraitRow) {
-            const px = x - p.box.x;
-            if (px >= 0 && px < p.box.w) {
-              const i = py * p.box.w + px;
-              const k = p.mask[i];
-              if (k > 0) {
-                const lum = p.lum[i];
-                // The field keeps breathing through the portrait's darks.
-                const ink = lightDots
-                  ? Math.pow(lum, 1.1) * (0.9 + 0.25 * wave)
-                  : Math.pow(1 - lum, 1.25) * (0.74 + 0.4 * wave);
-                tone += (ink - tone) * k;
+            // Then let the photo bend it: only its difference from its own
+            // backdrop counts, so the backdrop is simply the field carrying on.
+            if (inPortraitRow) {
+              const px = x - p.box.x;
+              if (px >= 0 && px < p.box.w) {
+                const i = py * p.box.w + px;
+                const k = p.mask[i];
+                if (k > 0) {
+                  const lum = p.lum[i];
+                  let bend = lightDots
+                    ? Math.pow(lum, 1.1) - backdropGlow
+                    : (Math.pow(1 - lum, 0.86) - backdropInk) * 0.84;
+                  // Taking dots away from an already dim ground cuts a hard
+                  // silhouette; ease it so hair and shadow sink in softly.
+                  if (lightDots && bend < 0) bend *= 0.5;
+                  tone += bend * k;
+                }
               }
             }
           }
 
           if (tx) {
+            // The field runs right up to the letters, thinned in a soft halo
+            // so their edges hold…
+            const halo = tx.halo[offset + x];
+            if (halo > 0) tone *= 1 - 0.9 * halo;
+            // …and the letters are the same dots, packed tighter: solid at
+            // the cap line, easing to a drifting mid-tone at the baseline.
             const m = tx.mask[offset + x];
             if (m > 0) {
-              // Letters run from solid ink at the cap line down to a drifting
-              // mid-tone at the baseline.
               const fill = 1.04 - tx.depth[offset + x] * (0.3 + 0.22 * wave);
               tone += (fill - tone) * m;
             }

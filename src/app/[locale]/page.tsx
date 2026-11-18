@@ -93,7 +93,7 @@ export default async function Home({
           {/* Masthead: name set low on the left, portrait off to the right
               where its dark backdrop runs into the dense end of the field. */}
           <div className="relative flex items-end justify-between pt-20 pb-14 sm:pt-[5.5rem] sm:pb-16">
-            <div data-dither-clear className="min-w-0 pb-3 sm:pb-6">
+            <div className="min-w-0 pb-3 sm:pb-6">
               {/* DitherField prints these two lines as dithered letterforms. */}
               <h1 className="text-ink text-[clamp(2.6rem,13vw,5.5rem)] leading-[0.86] font-black tracking-[-0.015em] uppercase">
                 <span data-dither-text className="block w-fit">
